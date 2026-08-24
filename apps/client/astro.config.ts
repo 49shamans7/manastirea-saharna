@@ -7,8 +7,10 @@ import { defaultLocale, locales } from "./src/i18n";
 export default defineConfig({
   prefetch: true,
   output: "static",
-  site: "https://victor-apostol.github.io",
-  base: "/msaharna",
+  // Deployment target. When the real domain (manastirea-saharna.md) goes live,
+  // set SITE to it and BASE to "/" — nothing else needs to change.
+  site: process.env.SITE_URL || "https://49shamans7.github.io",
+  base: process.env.BASE_PATH || "/manastirea-saharna",
 
   integrations: [
     i18n({
