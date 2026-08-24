@@ -2,7 +2,9 @@
 import type { Locale } from "@i18n";
 import { useTranslations } from "@i18n/utils";
 
-import logoUrl from "../../../../../../Logo_preview_big.png?url";
+import { Image } from "astro:assets";
+
+import logoSrc from "@assets/logo.png";
 
 type Props = {
   lang: Locale;
@@ -30,9 +32,10 @@ const aboutParagraphs = [t("home.figmaAboutParagraphOne"), t("home.figmaAboutPar
     <div class="bg-parchment-deep relative min-h-[460px] rounded-sm p-8 max-sm:min-h-0">
       <div
         class="border-sacred-gold bg-parchment mx-auto grid h-28 w-28 place-items-center overflow-hidden rounded-full border-2">
-        <img
+        <Image
           class="h-full w-full object-cover object-center mix-blend-multiply"
-          src={logoUrl}
+          src={logoSrc}
+          width={384}
           alt={t("home.figmaAboutLogoAlt")}
           loading="lazy"
         />
