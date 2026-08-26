@@ -39,3 +39,6 @@ pnpm-debug.log*
 
 # local archive of scraped data + pre-rewrite backup (not for git)
 _archive/
+
+design/extracted/images/
+design/extracted/_review/
