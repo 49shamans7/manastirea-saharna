@@ -4,8 +4,6 @@ on:
   push:
     branches: [dev]
   workflow_dispatch:
-  repository_dispatch:
-    types: [payload_publish]
 
 permissions:
   contents: read
@@ -38,16 +36,15 @@ jobs:
 
       - name: Build client
         run: bun run build:client
+        # Only the repo's own variables. No fallbacks: the previous developer's
+        # worker and Turnstile key must never be wired in. Unset = the form
+        # renders without a backend until the monastery's worker exists.
         env:
-          PAYLOAD_API_URL: ${{ vars.PAYLOAD_API_URL || 'https://msaharna-rgvd.onrender.com' }}
-          PUBLIC_POMELNIC_WORKER_URL: ${{ vars.PUBLIC_POMELNIC_WORKER_URL || 'https://manastirea-saharna-pomelnic.victorapostol679.workers.dev' }}
-          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAADRMyvsUgNG0uZo4'}}
+          PUBLIC_POMELNIC_WORKER_URL: ${{ vars.PUBLIC_POMELNIC_WORKER_URL }}
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
 
       - name: Add nojekyll
         run: touch apps/client/dist/.nojekyll
-
-      - name: Debug build output
-        run: find apps/client/dist -maxdepth 2 -type f | sort
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

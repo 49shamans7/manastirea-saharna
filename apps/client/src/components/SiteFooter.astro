@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "@i18n";
 import { getLocalizedPath, useTranslations } from "@i18n/utils";
+import Icon from "@components/marks/Icon.astro";
 
 type Props = {
   lang: Locale;
@@ -8,15 +9,20 @@ type Props = {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const homePath = getLocalizedPath("/", lang);
-const homeAnchor = (id: string) => `${homePath}#${id}`;
+// The footer carries the descent too — every zone reachable from the bottom
+// of any page, and every link a real route.
 const footerLinks = [
-  { key: "nav.presentation", href: homeAnchor("prezentare") },
-  { key: "nav.directions", href: homeAnchor("cum-de-ajuns") },
-  { key: "nav.serviceSchedule", href: homeAnchor("programul-slujbelor") },
-  { key: "nav.pomelnic", href: "#pomelnic-modal" },
+  { key: "zone.istoria", href: getLocalizedPath("/istoria", lang) },
+  { key: "zone.obstea", href: getLocalizedPath("/obstea", lang) },
+  { key: "zone.cronica", href: getLocalizedPath("/posts", lang) },
+  { key: "zone.macarie", href: getLocalizedPath("/macarie", lang) },
+  { key: "nav.serviceSchedule", href: getLocalizedPath("/slujbe", lang) },
+  { key: "nav.directions", href: getLocalizedPath("/cum-de-ajuns", lang) },
+  { key: "zone.cazare", href: getLocalizedPath("/cazare", lang) },
+  { key: "nav.pomelnic", href: getLocalizedPath("/pomelnic", lang) },
   { key: "nav.contact", href: getLocalizedPath("/contact", lang) },
   { key: "nav.donations", href: getLocalizedPath("/donations", lang) },
+  { key: "search.title", href: getLocalizedPath("/cautare", lang) },
 ] as const;
 const socialLinks = [
   { key: "social.youtube", href: "https://www.youtube.com/@manastirea.saharna", icon: "youtube", mark: "" },
@@ -25,52 +31,146 @@ const socialLinks = [
 ] as const;
 ---
 
-<footer class="bg-church-green border-sacred-gold/70 text-parchment/80 border-t-4 px-5 py-10">
-  <div class="mx-auto w-[min(1200px,calc(100%_-_20px))]">
-    <div class="mb-8">
-      <p class="text-parchment font-serif text-lg font-bold uppercase">{t("main.title")}</p>
-      <!-- <p class="mt-2 text-sm italic">{t("footer.description")}</p> -->
-    </div>
-    <nav class="mb-8 grid grid-cols-6 gap-5 text-sm max-lg:grid-cols-2 max-sm:grid-cols-1" aria-label={t("nav.menu")}>
-      {
-        footerLinks.map((item) => (
-          <a class="hover:text-sacred-gold" href={item.href}>
-            {t(item.key)}
-          </a>
-        ))
-      }
+{/* the lintel: a 4px solid bar closes every page; hairlines divide inside */}
+<footer class="footer">
+  <div class="frame-wide">
+    <p class="title">{t("main.title")}</p>
+    <nav class="links" aria-label={t("nav.menu")}>
+      {footerLinks.map((item) => <a href={item.href}>{t(item.key)}</a>)}
     </nav>
-    <div class="border-t border-white/20 pt-5 text-sm">
-      <div class="flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-center max-sm:text-center">
-        <p class="m-0">{t("footer.copyright")}</p>
-        <nav class="ml-auto flex shrink-0 items-center justify-end gap-2 max-sm:ml-0" aria-label={t("social.label")}>
-          {
-            socialLinks.map((item) => (
-              <a
-                class="border-parchment/30 text-parchment/85 hover:border-sacred-gold hover:bg-sacred-gold hover:text-ink inline-flex h-7 w-7 items-center justify-center rounded-full border text-xs font-bold no-underline transition"
-                href={item.href}
-                aria-label={t(item.key)}
-                title={t(item.key)}
-                target="_blank"
-                rel="noreferrer">
-                {
-                  item.icon === "youtube" ? (
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z" />
-                    </svg>
-                  ) : item.icon === "tiktok" ? (
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M16.6 2c.3 2.6 1.8 4.2 4.3 4.4v3.1a7.6 7.6 0 0 1-4.3-1.3v7.6c0 3.9-2.6 6.2-6.1 6.2-3.6 0-6.4-2.7-6.4-6.1 0-3.7 3.1-6.5 7-6.1v3.2c-2-.3-3.7.9-3.7 2.8 0 1.7 1.4 3 3.1 3 1.8 0 2.8-1.1 2.8-3.3V2h3.3Z" />
-                    </svg>
-                  ) : (
-                    <span aria-hidden="true">{item.mark}</span>
-                  )
-                }
-              </a>
-            ))
-          }
-        </nav>
-      </div>
+    <div class="base">
+      <p class="copyright">{t("footer.copyright")}</p>
+      <nav class="social" aria-label={t("social.label")}>
+        {
+          socialLinks.map((item) => (
+            <a href={item.href} aria-label={t(item.key)} title={t(item.key)} target="_blank" rel="noreferrer">
+              {item.icon === "youtube" ? (
+                <Icon name="youtube" size={16} />
+              ) : item.icon === "tiktok" ? (
+                <Icon name="tiktok" size={16} />
+              ) : (
+                <span aria-hidden="true">{item.mark}</span>
+              )}
+            </a>
+          ))
+        }
+      </nav>
     </div>
   </div>
 </footer>
+
+<style>
+  .footer {
+    padding: var(--s-8) 0;
+    border-top: var(--bar) solid var(--ochre);
+    background: var(--header);
+    color: color-mix(in srgb, var(--parchment) 80%, transparent);
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .title {
+    margin: 0 0 var(--s-6);
+    color: var(--parchment);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* five columns of real routes, ruled off from the title and the base */
+  .links {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--s-2) var(--s-5);
+    margin-bottom: var(--s-6);
+    padding-top: var(--s-5);
+    border-top: var(--rule) solid color-mix(in srgb, var(--ochre) 30%, transparent);
+  }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--s-6);
+    transition: color var(--dur-1) var(--ease-out);
+  }
+  .links a:hover {
+    color: var(--ochre);
+  }
+
+  .base {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding-top: var(--s-5);
+    border-top: var(--rule) solid color-mix(in srgb, var(--ochre) 30%, transparent);
+  }
+  .copyright {
+    margin: 0;
+  }
+
+  /* one joined strip of square cells: neighbours share a hairline */
+  .social {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+  .social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--tap);
+    height: var(--tap);
+    margin-left: calc(-1 * var(--rule));
+    border: var(--rule) solid color-mix(in srgb, var(--parchment) 30%, transparent);
+    color: color-mix(in srgb, var(--parchment) 85%, transparent);
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      color var(--dur-1) var(--ease-out),
+      border-color var(--dur-1) var(--ease-out);
+  }
+  .social a:first-child {
+    margin-left: 0;
+  }
+  .social a:hover {
+    border-color: var(--ochre);
+    color: var(--ochre);
+  }
+
+  @media (width < 64rem) {
+    .links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 0;
+    }
+    .links a {
+      min-height: var(--tap);
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+  @media (width < 40rem) {
+    .footer {
+      padding: var(--s-7) 0 var(--s-6);
+    }
+    .links {
+      grid-template-columns: 1fr;
+      padding-top: var(--s-2);
+    }
+    .links a {
+      border-bottom: var(--rule) solid color-mix(in srgb, var(--ochre) 20%, transparent);
+    }
+    .links a:last-child {
+      border-bottom: 0;
+    }
+    .base {
+      flex-direction: column;
+      text-align: center;
+    }
+    .social {
+      margin-left: 0;
+    }
+  }
+</style>

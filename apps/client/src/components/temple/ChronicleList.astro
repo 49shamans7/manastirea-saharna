@@ -1,0 +1,125 @@
+---
+// One entry per row: date, title, excerpt, lead photograph. Used by the
+// cronică index, the year pages and the paginated pages — the list is written
+// once, the way the templates are.
+import type { PostItem } from "@data/posts";
+import type { Locale } from "@i18n";
+import { getLocalizedPath, useTranslations } from "@i18n/utils";
+
+interface Props {
+  posts: PostItem[];
+  lang: Locale;
+}
+
+const { posts, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+{
+  posts.length > 0 ? (
+    <ol class="entries">
+      {posts.map((post) => (
+        <li class="entry">
+          <a href={getLocalizedPath(`/posts/${post.slug}`, lang)}>
+            {post.image ? (
+              <img
+                src={post.image.thumb}
+                srcset={post.image.smallSrcset}
+                sizes="(max-width: 680px) calc(100vw - 32px), 176px"
+                width="480"
+                height="360"
+                alt={post.image.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <span class="no-image" aria-hidden="true" />
+            )}
+            <div class="entry-text">
+              <time datetime={post.isoDate}>{post.date}</time>
+              <h2>{post.title}</h2>
+              {post.excerpt && <p>{post.excerpt}</p>}
+              {post.archiveImages > 1 && <p class="meta">{`${post.archiveImages} ${t("gallery.count")}`}</p>}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
+  ) : (
+    <p class="empty">{t("home.noPosts")}</p>
+  )
+}
+
+<style>
+  .entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--rule) solid var(--line);
+  }
+  .entry a {
+    display: grid;
+    grid-template-columns: 176px minmax(0, 1fr);
+    gap: var(--s-6);
+    align-items: start;
+    padding: var(--s-5) 0;
+    border-bottom: var(--rule) solid var(--line);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color var(--dur-1) var(--ease-out);
+  }
+  .entry a:hover {
+    background: rgb(244 239 228 / 5%);
+  }
+  .entry img,
+  .no-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: rgb(13 17 22 / 32%);
+  }
+  .entry time {
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ochre);
+  }
+  .entry h2 {
+    font-size: clamp(18px, 1.9vw, 25px);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.32;
+    margin: var(--s-2) 0 0;
+  }
+  .entry p {
+    margin: var(--s-2) 0 0;
+    opacity: 0.72;
+    font-size: 16px;
+    line-height: 1.65;
+    max-width: var(--measure);
+  }
+  .entry .meta {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--parchment) 65%, transparent);
+    opacity: 1; /* not the excerpt's 0.72 on top: 5:1 on green */
+  }
+  .empty {
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  @media (max-width: 1100px) {
+    .entry a {
+      gap: var(--s-5);
+    }
+  }
+  @media (max-width: 680px) {
+    .entry a {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--s-4);
+    }
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+// TEMPLATE C · TABLE — the hours, verbatim from the monastery's own page.
+// Saharna serves two Liturgies on Thursday, Saturday and Sunday, in three
+// different churches; that structure is the information, so the table keeps it.
+import TableLayout from "@layouts/TableLayout.astro";
+import { schedule, serviceText } from "@data/schedule";
+import type { AllTranslationKeys } from "@i18n";
+import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "@i18n/utils";
+
+const lang = getLocaleFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<TableLayout title={t("zone.slujbe")} eyebrow={t("slujbe.eyebrow")} lead={t("slujbe.lead")}>
+  {
+    schedule.map((day) => (
+      <section class="day">
+        <h2>{t(`schedule.${day.key}` as AllTranslationKeys)}</h2>
+        {day.blocks.map((block) => (
+          <>
+            {block.titleKey && <h3 class="liturgy">{t(block.titleKey as AllTranslationKeys)}</h3>}
+            <dl>
+              {block.services.map((service) => (
+                <>
+                  <dt>{service.time}</dt>
+                  <dd>
+                    {serviceText(service.name, lang)}
+                    {service.note && <span class="note">{serviceText(service.note, lang)}</span>}
+                  </dd>
+                </>
+              ))}
+            </dl>
+          </>
+        ))}
+      </section>
+    ))
+  }
+
+  <p class="caveat">{t("schedule.caveat")}</p>
+  <p><a href={getLocalizedPath("/posts", lang)}>{t("zone.cronica")}</a></p>
+</TableLayout>
+
+<style>
+  .day {
+    break-inside: avoid;
+  }
+  .liturgy {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--river-link);
+    margin: var(--s-6) 0 var(--s-2);
+  }
+  .note {
+    display: block;
+    font-size: 14px;
+    opacity: 0.66;
+    font-style: italic;
+    margin-top: var(--s-1);
+  }
+  @media (max-width: 767px) {
+    .note,
+    .caveat {
+      font-size: 16px;
+    }
+  }
+  .caveat {
+    margin-top: var(--s-8);
+    padding-top: var(--s-4);
+    border-top: var(--rule) solid var(--line);
+    font-size: 14px;
+    opacity: 0.72;
+  }
+</style>

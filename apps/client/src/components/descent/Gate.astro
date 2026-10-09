@@ -1,0 +1,89 @@
+---
+// A GATE — the seam between two strata, not a margin. Each wider than the
+// last (ARCHITECTURE.md § The gates). Drawn as flat fills on the descent's
+// column grid — no diagonal stretched by preserveAspectRatio, nothing that
+// lands between columns.
+//
+//   narrow  Rock → Green. A cut in the cliff; the shaft stays tight. The cut
+//           is exactly the well's width, on the well's axis, so the shaft
+//           runs through the rock into the green below.
+//   full    Gold → River. The gorge opens; sky enters for the first time.
+//           Flat steps of the river's measured palette, full bleed —
+//           deep → mid → the pale river ground itself; never a wash.
+// (The Green → Gold seam is the shrine door itself, not a gate.)
+interface Props {
+  width: "narrow" | "full";
+}
+
+const { width } = Astro.props;
+---
+
+<div class:list={["gate", `is-${width}`]} aria-hidden="true">
+  {
+    width === "narrow" ? (
+      <div class="gate-col">
+        <span class="cut" />
+      </div>
+    ) : (
+      <>
+        <span class="step s-deep" />
+        <span class="step s-mid" />
+      </>
+    )
+  }
+</div>
+
+<style>
+  .gate {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* — narrow: the cliff, with the well's cut through it — */
+  .is-narrow {
+    height: var(--s-8, 48px);
+    background: var(--rock-deep);
+    border-top: var(--rule, 1px) solid rgb(244 239 228 / 14%);
+  }
+  .gate-col {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: var(--col-max, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--col-pad, var(--s-4));
+  }
+  .cut {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: var(--well-w, 64px);
+    transform: translateX(-50%);
+    background: var(--green);
+    border-left: var(--rule, 1px) solid rgb(244 239 228 / 30%);
+    border-right: var(--rule, 1px) solid rgb(244 239 228 / 30%);
+  }
+
+  /* — full: the horizon, in two steps onto the pale river ground — */
+  .step {
+    display: block;
+    height: var(--s-8, 48px);
+  }
+  .s-deep {
+    background: var(--river-deep);
+  }
+  .s-mid {
+    background: var(--river);
+  }
+
+  @media (min-width: 1101px) {
+    .is-narrow {
+      height: var(--s-9, 64px);
+    }
+    .step {
+      height: var(--s-9, 64px);
+    }
+  }
+</style>

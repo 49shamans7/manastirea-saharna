@@ -1,41 +1,54 @@
 ---
-import Pagination from "@components/Pagination.astro";
-import PostCard from "@components/PostCard.astro";
-import { getPaginatedPosts, getPublishedPosts, getTotalPostPages } from "@data/posts";
+// CRONICĂ — Zone II. 302 entries, 2013 → 2026, written by Arhimandritul
+// Iuvenalie and Pr. Mihail Bortă. Each entry is a chamber with a date.
 import Layout from "@layouts/Layout.astro";
+import TempleFrame from "@layouts/TempleFrame.astro";
+import ChronicleList from "@components/temple/ChronicleList.astro";
+import YearRail from "@components/temple/YearRail.astro";
+import Pagination from "@components/Pagination.astro";
+import { getPaginatedPosts, getPostYears, getPublishedPosts, getTotalPostPages } from "@data/posts";
 import { getLocaleFromUrl, useTranslations } from "@i18n/utils";
+import "@styles/temple.css";
 
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
 const allPosts = await getPublishedPosts(lang);
 const posts = getPaginatedPosts(allPosts, 1);
 const totalPages = getTotalPostPages(allPosts.length);
+const years = getPostYears(allPosts);
 ---
 
 <Layout>
-  <main class="bg-site-gray min-h-screen">
-    <section class="bg-white py-16 max-sm:py-12" aria-labelledby="posts-title">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_20px))] max-sm:w-[calc(100%_-_32px)]">
-        <span class="bg-gold mb-8 block h-0.5 w-[70px]"></span>
-        <h1
-          id="posts-title"
-          class="font-display text-church-green m-0 text-[clamp(42px,5vw,72px)] leading-none font-bold tracking-normal uppercase">
-          {t("news.title")}
-        </h1>
-        <p class="mt-5 mb-0 max-w-[720px] text-xl leading-8 text-neutral-600">{t("news.subtitle")}</p>
-      </div>
-    </section>
+  <TempleFrame lang={lang} zone="green" path={Astro.url.pathname}>
+    <main class="cronica">
+      <header class="cronica-head">
+        <p class="label">{t("zone.green")}</p>
+        <h1 class="stratum-title">{t("zone.cronica")}</h1>
+        <p class="lead">{t("news.subtitle")}</p>
+        <p class="tally">{`${allPosts.length} ${t("home.postCount")}`}</p>
+      </header>
 
-    {
-      posts.length > 0 && (
-        <section class="py-16 max-sm:py-10">
-          <div class="mx-auto grid w-[min(1090px,calc(100%_-_20px))] grid-cols-3 gap-[42px] max-lg:grid-cols-1 max-sm:w-[calc(100%_-_32px)]">
-            {posts.map((post) => <PostCard post={post} lang={lang} />)}
-          </div>
-
-          <Pagination currentPage={1} totalPages={totalPages} lang={lang} />
-        </section>
-      )
-    }
-  </main>
+      <YearRail years={years} current={null} lang={lang} />
+      <ChronicleList posts={posts} lang={lang} />
+      <Pagination currentPage={1} totalPages={totalPages} lang={lang} />
+    </main>
+  </TempleFrame>
 </Layout>
+
+<style>
+  .cronica {
+    padding: var(--page-top) 0 var(--page-bottom);
+  }
+  .cronica-head {
+    padding-bottom: var(--s-6);
+    margin-bottom: var(--s-6);
+    border-bottom: var(--rule) solid var(--line);
+  }
+  .tally {
+    margin: var(--s-4) 0 0;
+    font-size: var(--t-label);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ochre);
+  }
+</style>

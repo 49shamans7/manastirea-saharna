@@ -1,9 +1,7 @@
 {
   "recommendations": [
     "astro-build.astro-vscode",
-    "esbenp.prettier-vscode",
-    "edwinhuish.better-comments-next",
-    "dbaeumer.vscode-eslint"
+    "esbenp.prettier-vscode"
   ],
   "unwantedRecommendations": []
 }

@@ -1,0 +1,151 @@
+---
+// One register of the descent. A page belongs to exactly one zone.
+//
+// A plate fills a slot the stratum already decided (temple.css). Two slots:
+//   ground — the photograph IS the ground, under the words (Rock: the cave
+//            you start in; the first screen). Held down to a flat tint.
+//   band   — the photograph is a register of its own, full width, never
+//            under text. The 800×600 plates were being stretched across
+//            1400px-tall strata and cropped to a quarter of themselves; as a
+//            band they keep their own proportion.
+// Flat grounds only — no gradient, no vignette, no blur (SOLID).
+interface Props {
+  zone: "rock" | "green" | "gold" | "river";
+  id?: string;
+  plate?: string;
+  /** ground: under the words · band-top / band-bottom: a register of its own */
+  plateSlot?: "ground" | "band-top" | "band-bottom";
+  /** CSS object-position for the band crop */
+  focus?: string;
+  opacity?: number;
+  /** The first stratum's plate is the first thing seen — don't lazy-load it. */
+  eager?: boolean;
+  /** Let the page's scroll-reveal bring this stratum's content in. */
+  reveal?: boolean;
+  labelledby?: string;
+}
+const {
+  zone,
+  id,
+  plate,
+  plateSlot = "ground",
+  focus = "50% 50%",
+  opacity = 1,
+  eager = false,
+  reveal = false,
+  labelledby,
+} = Astro.props;
+const band = plateSlot !== "ground";
+const imgClass = band ? "plate-band" : "plate";
+const imgStyle = `--plate-opacity:${opacity};object-position:${focus}`;
+---
+
+<section class:list={["stratum", `z-${zone}`]} id={id} data-zone={zone} aria-labelledby={labelledby}>
+  {
+    plate && plateSlot !== "band-bottom" && (
+      <img
+        class={imgClass}
+        src={plate}
+        alt=""
+        aria-hidden="true"
+        width="800"
+        height="600"
+        style={imgStyle}
+        loading={eager ? "eager" : "lazy"}
+        fetchpriority={eager ? "high" : "auto"}
+        decoding="async"
+      />
+    )
+  }
+  <div class="wrap" data-reveal={reveal ? "" : undefined}><slot /></div>
+  {
+    plate && plateSlot === "band-bottom" && (
+      <img
+        class={imgClass}
+        src={plate}
+        alt=""
+        aria-hidden="true"
+        width="800"
+        height="600"
+        style={imgStyle}
+        loading={eager ? "eager" : "lazy"}
+        fetchpriority={eager ? "high" : "auto"}
+        decoding="async"
+      />
+    )
+  }
+</section>
+
+<style>
+  /* the stratum's content column — one column, one gutter, every stratum.
+     --col-pad / --col-max are set once by the descent (index.astro). */
+  .wrap {
+    width: 100%;
+    max-width: var(--col-max, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--col-pad, var(--s-4));
+  }
+
+  /* a band plate: its own register, full bleed, no text over it */
+  .plate-band {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    max-height: 432px;
+    object-fit: cover;
+    opacity: var(--plate-opacity, 1);
+  }
+  @media (min-width: 1101px) {
+    .plate-band {
+      aspect-ratio: 21 / 9;
+    }
+  }
+
+  /* I · ROCK — origin, silence, subtraction. movement: down.
+     Fills the first screen under the header; the words sit at its foot and
+     the well runs out of the bottom edge into the gate. */
+  .z-rock {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: calc(100vh - var(--nav-h, 80px));
+    min-height: calc(100svh - var(--nav-h, 80px));
+    padding-top: var(--s-9, var(--s-9));
+    background: var(--rock-deep);
+  }
+
+  /* II · GREEN — the living monastery. the strata widen. */
+  .z-green {
+    padding-bottom: var(--stratum-pad, var(--s-11));
+    background: var(--green);
+  }
+  .z-green > .wrap {
+    padding-top: var(--stratum-pad, var(--s-11));
+  }
+
+  /* III · GOLD & PALL — the hinge. you do not pass through. you stop. */
+  .z-gold {
+    padding: var(--stratum-pad, var(--s-11)) 0;
+    background: var(--pall);
+    border-top: var(--rule, 1px) solid rgb(192 169 116 / 32%);
+    /* thread gold: line work, never a field */
+    --line: rgb(192 169 116 / 32%);
+    --line-strong: var(--gold);
+  }
+
+  /* IV · RIVER — the only wide horizon. down stops here. Bright: practical,
+     read in a car park — the same ground and ink as the river tables. */
+  .z-river {
+    background: var(--river-pale);
+    color: var(--river-ink);
+    --line: rgb(22 50 61 / 20%);
+    --line-strong: var(--river-ink);
+  }
+  .z-river > .wrap {
+    padding-top: var(--stratum-pad, var(--s-11));
+    padding-bottom: var(--stratum-pad, var(--s-11));
+  }
+</style>

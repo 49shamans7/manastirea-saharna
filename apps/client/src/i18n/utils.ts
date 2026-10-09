@@ -1,7 +1,10 @@
-import { isKey } from "@utils/types";
 import { defaultLocale, locales, ui } from "@i18n";
 import type { AllTranslationKeys, Locale } from "@i18n";
 import { stripBasePath, withBasePath } from "@utils/paths";
+
+function isKey<T extends object>(obj: T, key: PropertyKey): key is keyof T {
+  return key in obj;
+}
 
 function getNestedValue(obj: object | undefined, path: string): string | undefined {
   const keys = path.split(".");
@@ -61,4 +64,14 @@ export function getLocalizedPath(path: string, locale: Locale): string {
   const localizedUrl = `${localizedUrlPath === "/" ? localizedUrlPath : `${localizedUrlPath}/`}${hash}`;
 
   return withBasePath(localizedUrl);
+}
+
+/**
+ * A phone number as the monastery writes it ("0254 78600", "+373 254 78737")
+ * → a dialable tel: href in international form ("tel:+37325478600").
+ */
+export function telHref(display: string): string {
+  const digits = display.replace(/[^\d+]/g, "");
+
+  return `tel:${digits.startsWith("+") ? digits : `+373${digits.replace(/^0/, "")}`}`;
 }

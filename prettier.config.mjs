@@ -9,8 +9,7 @@ export default {
     arrowParens: "always",
     bracketSameLine: true,
 
-    tailwindFunctions: ["tw"],
-    plugins: ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
+    plugins: ["prettier-plugin-astro"],
 
     overrides: [
         {

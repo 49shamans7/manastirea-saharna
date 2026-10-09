@@ -1,52 +1,55 @@
 ---
+import Layout from "@layouts/Layout.astro";
+import TempleFrame from "@layouts/TempleFrame.astro";
+import ChronicleList from "@components/temple/ChronicleList.astro";
+import YearRail from "@components/temple/YearRail.astro";
 import Pagination from "@components/Pagination.astro";
-import PostCard from "@components/PostCard.astro";
-import { getPaginatedPosts, getPublishedPosts, getTotalPostPages } from "@data/posts";
+import { getPaginatedPosts, getPostYears, getPublishedPosts, getTotalPostPages } from "@data/posts";
 import { defaultLocale } from "@i18n";
 import { getLocaleFromUrl, useTranslations } from "@i18n/utils";
-import Layout from "@layouts/Layout.astro";
+import "@styles/temple.css";
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts(defaultLocale);
   const totalPages = getTotalPostPages(posts.length);
 
-  return Array.from({ length: totalPages }, (_, index) => ({
-    params: { page: String(index + 1) },
+  // page 1 is /posts itself
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => ({
+    params: { page: String(index + 2) },
   }));
 }
 
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
-const currentPage = Number(Astro.params.page || "1");
+const currentPage = Number(Astro.params.page) || 2;
 const allPosts = await getPublishedPosts(lang);
-const totalPages = getTotalPostPages(allPosts.length);
 const posts = getPaginatedPosts(allPosts, currentPage);
+const totalPages = getTotalPostPages(allPosts.length);
+const years = getPostYears(allPosts);
 ---
 
 <Layout>
-  <main class="bg-site-gray min-h-screen">
-    <section class="bg-white py-16 max-sm:py-12" aria-labelledby="posts-title">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_20px))] max-sm:w-[calc(100%_-_32px)]">
-        <span class="bg-gold mb-8 block h-0.5 w-[70px]"></span>
-        <h1
-          id="posts-title"
-          class="font-display text-church-green m-0 text-[clamp(42px,5vw,72px)] leading-none font-bold tracking-normal uppercase">
-          {t("news.title")}
-        </h1>
-        <p class="mt-5 mb-0 max-w-[720px] text-xl leading-8 text-neutral-600">{t("news.subtitle")}</p>
-      </div>
-    </section>
+  <TempleFrame lang={lang} zone="green" path={Astro.url.pathname}>
+    <main class="cronica">
+      <header class="cronica-head">
+        <p class="label">{t("zone.cronica")}</p>
+        <h1 class="stratum-title">{currentPage} / {totalPages}</h1>
+      </header>
 
-    {
-      posts.length > 0 && (
-        <section class="py-16 max-sm:py-10">
-          <div class="mx-auto grid w-[min(1090px,calc(100%_-_20px))] grid-cols-3 gap-[42px] max-lg:grid-cols-1 max-sm:w-[calc(100%_-_32px)]">
-            {posts.map((post) => <PostCard post={post} lang={lang} />)}
-          </div>
-
-          <Pagination currentPage={currentPage} totalPages={totalPages} lang={lang} />
-        </section>
-      )
-    }
-  </main>
+      <YearRail years={years} current={null} lang={lang} />
+      <ChronicleList posts={posts} lang={lang} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} lang={lang} />
+    </main>
+  </TempleFrame>
 </Layout>
+
+<style>
+  .cronica {
+    padding: var(--page-top) 0 var(--page-bottom);
+  }
+  .cronica-head {
+    padding-bottom: var(--s-6);
+    margin-bottom: var(--s-6);
+    border-bottom: var(--rule) solid var(--line);
+  }
+</style>

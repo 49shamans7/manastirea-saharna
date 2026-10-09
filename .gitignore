@@ -20,9 +20,6 @@ pnpm-debug.log*
 
 **/.env
 
-# keep client env
-# !apps/client/.env
-
 .cache/
 .eslintcache
 
@@ -37,8 +34,8 @@ pnpm-debug.log*
 # astro-i18n-aut
 **/astro_tmp_pages_*
 
-# local archive of scraped data + pre-rewrite backup (not for git)
-_archive/
-
 design/extracted/images/
 design/extracted/_review/
+
+# agent scratch (screenshots, audits)
+.work/

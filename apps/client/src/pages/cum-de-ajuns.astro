@@ -1,0 +1,58 @@
+---
+// TEMPLATE C · TABLE — directions. Reads fast on a phone in a car park.
+import TableLayout from "@layouts/TableLayout.astro";
+import { getLocaleFromUrl, telHref, useTranslations } from "@i18n/utils";
+
+const lang = getLocaleFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const mapQuery = "Manastirea Saharna Rezina Moldova";
+const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=${lang}&output=embed`;
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+---
+
+<TableLayout title={t("zone.directions")} eyebrow={t("directions.eyebrow")} lead={t("directions.lead")}>
+  <h2>{t("directions.address")}</h2>
+  <dl>
+    <dt>{t("footer.addressName")}</dt>
+    <dd>
+      <a class="tap" href={mapLink} rel="noopener" target="_blank">{t("footer.addressLine")}</a>
+    </dd>
+    <dt>{t("contact.secretariatLabel")}</dt>
+    <dd>
+      <a class="tap" href={telHref(t("contact.phoneSecretariat"))}>{t("contact.phoneSecretariat")}</a>
+    </dd>
+  </dl>
+
+  <h2>{t("directions.byBus")}</h2>
+  <p>{t("directions.busText")}</p>
+
+  <h2>{t("directions.byCar")}</h2>
+  <p>
+    <a class="tap" href={mapLink} rel="noopener" target="_blank">{t("directions.openMapLabel")}</a>
+  </p>
+
+  <div class="map">
+    <iframe src={mapEmbed} title={t("home.mapTitle")} loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</TableLayout>
+
+<style>
+  .map {
+    margin-top: var(--s-6);
+    border: var(--rule-2) solid var(--river-ink);
+    aspect-ratio: 16 / 9;
+  }
+  .map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  @media print {
+    .map {
+      display: none;
+    }
+  }
+</style>

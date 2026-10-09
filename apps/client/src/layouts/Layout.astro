@@ -1,15 +1,40 @@
 ---
 import Navbar from "@components/Navbar.astro";
 import SiteFooter from "@components/SiteFooter.astro";
-import PomelnicModal from "@components/home/PomelnicModal.astro";
-import { getLocaleFromUrl, useTranslations } from "@i18n/utils";
+import RailDrawer from "@components/temple/RailDrawer.astro";
+import { locales, type Locale } from "@i18n";
+import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "@i18n/utils";
 import { publicAsset } from "@utils/paths";
 
 import "@styles/global.css";
 
+interface Props {
+  /** Page name. The site name is appended; the home page passes nothing. */
+  title?: string;
+  /** One sentence for search results and link previews; defaults to the site's. */
+  description?: string | undefined;
+}
+
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
 const faviconHref = publicAsset("/favicon.ico");
+const siteTitle = t("main.title");
+// "Page — Sfânta Mănăstire Saharna" (WCAG 2.4.2: every page names itself)
+// (the three-line logo name is Romanian in every locale; en/ru keep their own)
+const houseName =
+  lang === "ro" ? [t("main.logoLineOne"), t("main.logoLineTwo"), t("main.logoLineThree")].join(" ") : siteTitle;
+const pageTitle =
+  Astro.props.title && Astro.props.title !== siteTitle ? `${Astro.props.title} — ${houseName}` : siteTitle;
+const description = Astro.props.description?.trim() || t("main.description");
+// absolute URLs for search engines and link previews (site + base path)
+const absolute = (path: string) => new URL(path, Astro.site).href;
+const canonical = absolute(Astro.url.pathname);
+const alternates = (Object.keys(locales) as Locale[]).map((code) => ({
+  code,
+  href: absolute(getLocalizedPath(Astro.url.pathname, code)),
+}));
+const ogLocale = { ro: "ro_RO", en: "en_US", ru: "ru_RU" }[lang];
+const ogImage = absolute(publicAsset("/og.jpg"));
 ---
 
 <!doctype html>
@@ -18,16 +43,39 @@ const faviconHref = publicAsset("/favicon.ico");
     <meta charset="UTF-8" />
     <meta name="darkreader-lock" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={t("main.description")} />
-    <link rel="icon" type="image/svg+xml" href={faviconHref} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((alt) => <link rel="alternate" hreflang={alt.code} href={alt.href} />)}
+    <link rel="alternate" hreflang="x-default" href={alternates.find((alt) => alt.code === "ro")?.href} />
+    <link rel="alternate" type="application/rss+xml" title={siteTitle} href={absolute(publicAsset("/rss.xml"))} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href={faviconHref} sizes="any" />
+    <link rel="icon" href={publicAsset("/favicon.svg")} type="image/svg+xml" />
+    <link rel="icon" href={publicAsset("/icon-192.png")} type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href={publicAsset("/apple-touch-icon.png")} />
+    <link rel="manifest" href={publicAsset("/site.webmanifest")} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#253528" />
+    {/* lets CSS hold scroll-revealed strata back only when a script will bring them in */}
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
 
-    <title>{t("main.title")}</title>
+    <title>{pageTitle}</title>
   </head>
   <body>
     <Navbar path={Astro.url.pathname} lang={lang} />
-    <PomelnicModal lang={lang} />
     <slot />
     <SiteFooter lang={lang} />
+    <RailDrawer lang={lang} path={Astro.url.pathname} />
   </body>
 </html>

@@ -1,26 +1,26 @@
 {
-    "extends": ["astro/tsconfigs/strictest", "../../tsconfig.json"],
+    "extends": "astro/tsconfigs/strictest",
 
-    "files": ["../../reset.d.ts"],
     "include": ["src", "**/*.d.ts", "./*.config.ts"],
     "exclude": ["**/dist", "**/node_modules", ".git", ".github", ".vscode"],
 
     "compilerOptions": {
-        "jsx": "react-jsx",
-        "jsxImportSource": "@builder.io/qwik",
+        "target": "ESNext",
+        "verbatimModuleSyntax": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
 
-        // * Handled by eslint
         "noUnusedLocals": false,
         "noUnusedParameters": false,
-
-        "noEmit": false,
-        "composite": true,
 
         "baseUrl": ".",
         "paths": {
             "@i18n": ["src/i18n/index"],
 
             "@i18n/*": ["src/i18n/*"],
+            "@temple/*": ["src/temple/*"],
             "@data/*": ["src/data/*"],
             "@utils/*": ["src/utils/*"],
             "@assets/*": ["src/assets/*"],

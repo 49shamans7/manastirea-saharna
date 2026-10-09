@@ -1,36 +1,61 @@
 ---
+// NOT FOUND — Zone I, the rock. A wrong turn underground: the rails stay, so
+// the way back is always in view. Same stratum type as every other page.
 import Layout from "@layouts/Layout.astro";
+import TempleFrame from "@layouts/TempleFrame.astro";
 import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "@i18n/utils";
+import "@styles/temple.css";
 
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout>
-  <main class="bg-site-gray min-h-[calc(100vh_-_116px)]">
-    <section class="flex min-h-[calc(100vh_-_116px)] items-center bg-white py-20">
-      <div class="mx-auto w-[min(760px,calc(100%_-_20px))] text-center max-sm:w-[calc(100%_-_32px)]">
-        <p class="text-gold m-0 text-base font-bold tracking-[0.28em] uppercase">{t("notFound.eyebrow")}</p>
-        <h1
-          class="font-display text-church-green mt-4 mb-5 text-[clamp(42px,6vw,78px)] leading-none font-bold tracking-normal">
-          {t("notFound.title")}
-        </h1>
-        <p class="mx-auto mt-0 mb-9 max-w-[560px] text-xl leading-8 text-neutral-600">
-          {t("notFound.description")}
-        </p>
-        <div class="flex flex-wrap items-center justify-center gap-4">
-          <a
-            class="border-church-green text-church-green inline-flex min-h-12 items-center justify-center rounded-md border-2 px-6 font-bold no-underline transition hover:bg-neutral-50"
-            href={getLocalizedPath("/", lang)}>
-            {t("notFound.home")}
-          </a>
-          <a
-            class="bg-church-green inline-flex min-h-12 items-center justify-center rounded-md px-6 font-bold text-white no-underline shadow-[0_12px_24px_rgb(8_115_61_/_22%)] transition hover:bg-[#065f32]"
-            href={getLocalizedPath("/#pomelnic-modal", lang)}>
-            {t("notFound.pomelnic")}
-          </a>
-        </div>
+<Layout title={t("notFound.title")}>
+  <TempleFrame lang={lang} zone="rock" path={Astro.url.pathname}>
+    <main class="lost">
+      <p class="label">{t("notFound.eyebrow")}</p>
+      <h1 class="stratum-title">{t("notFound.title")}</h1>
+      <p class="lead">{t("notFound.description")}</p>
+      <div class="ways">
+        <a class="way" href={getLocalizedPath("/", lang)}>{t("notFound.home")}</a>
+        <a class="way" href={getLocalizedPath("/pomelnic", lang)}>{t("notFound.pomelnic")}</a>
       </div>
-    </section>
-  </main>
+    </main>
+  </TempleFrame>
 </Layout>
+
+<style>
+  .lost {
+    padding: var(--s-12) 0 var(--s-12);
+    max-width: 40rem;
+  }
+  .lost .lead {
+    margin-top: var(--s-4);
+  }
+  .ways {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    margin-top: var(--s-8);
+  }
+  .way {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--s-5);
+    border: var(--rule) solid rgb(244 239 228 / 40%);
+    color: var(--parchment);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition:
+      border-color var(--dur-1) var(--ease-out),
+      background-color var(--dur-1) var(--ease-out);
+  }
+  .way:first-child {
+    border: var(--rule-2) solid var(--ochre);
+  }
+  .way:hover {
+    background: rgb(244 239 228 / 8%);
+  }
+</style>

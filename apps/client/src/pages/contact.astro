@@ -1,116 +1,68 @@
 ---
-import { Clock, Mail, MapPin, Phone } from "lucide-astro";
-
-import Layout from "@layouts/Layout.astro";
-import { getLocaleFromUrl, useTranslations } from "@i18n/utils";
+// TEMPLATE C · TABLE — Zone IV. Contact details, flat and print-ready.
+// Numbers and addresses from the old site's own contact page and footer
+// (msaharna-archive/text/practical_info.json → _contacts).
+import TableLayout from "@layouts/TableLayout.astro";
+import { getLocaleFromUrl, getLocalizedPath, telHref, useTranslations } from "@i18n/utils";
 
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
-const iconClass = "h-5 w-5";
 const mapQuery = "Manastirea Saharna Rezina Moldova";
-const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`;
-const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
-const contactItems = [
-  {
-    label: t("footer.addressTitle"),
-    value: `${t("footer.addressName")}, ${t("footer.addressLine")}`,
-    href: mapUrl,
-    icon: MapPin,
-  },
-  {
-    label: t("footer.phoneLabel"),
-    value: t("footer.phone"),
-    href: `tel:${t("footer.phone").replace(/\s/g, "")}`,
-    icon: Phone,
-  },
-  {
-    label: t("footer.emailLabel"),
-    value: t("footer.email"),
-    href: `mailto:${t("footer.email").split(",")[0]}`,
-    icon: Mail,
-  },
-  {
-    label: t("home.visitHoursLabel"),
-    value: t("home.visitHours"),
-    href: undefined,
-    icon: Clock,
-  },
-] as const;
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+const emails = t("footer.email")
+  .split(",")
+  .map((address) => address.trim())
+  .filter(Boolean);
+
+const phones = [
+  { label: t("contact.secretariatLabel"), number: t("contact.phoneSecretariat") },
+  { label: t("contact.phoneMainLabel"), number: t("contact.phoneMain") },
+  { label: t("contact.guesthouseLabel"), number: t("contact.phoneMobile"), note: t("contact.guesthouseHours") },
+];
 ---
 
-<Layout>
-  <main class="bg-parchment text-ink min-h-screen">
-    <section
-      class="bg-parchment-deep border-parchment-line border-b py-16 max-sm:py-12"
-      aria-labelledby="contact-title">
-      <div class="mx-auto w-[min(1120px,calc(100%_-_20px))] max-sm:w-[calc(100%_-_32px)]">
-        <span class="bg-sacred-gold mb-8 block h-0.5 w-[70px]"></span>
-        <h1
-          id="contact-title"
-          class="text-ink m-0 font-serif text-[clamp(42px,5vw,72px)] leading-none font-bold tracking-normal uppercase">
-          {t("nav.contact")}
-        </h1>
-      </div>
-    </section>
-
-    <section class="py-16 max-sm:py-10">
-      <div class="mx-auto w-[min(860px,calc(100%_-_20px))] max-sm:w-[calc(100%_-_32px)]">
-        <article
-          class="border-parchment-line bg-parchment border-t-sacred-gold border-t-4 p-7 shadow-[0_0_0_1px_var(--color-parchment-line)] md:p-10">
-          <header class="mb-8">
-            <h2 class="text-ink mt-0 mb-3 font-serif text-[34px] leading-none font-bold uppercase">
-              {t("home.findUsTitle")}
-            </h2>
-            <div class="bg-sacred-gold h-0.5 w-[70px]"></div>
-          </header>
-
-          <div class="grid gap-5">
-            {
-              contactItems.map((item) => {
-                const Icon = item.icon;
-
-                return (
-                  <div class="grid grid-cols-[42px_1fr] gap-4">
-                    <span
-                      class="bg-sacred-gold text-ink grid h-[42px] w-[42px] place-items-center rounded-full"
-                      aria-hidden="true">
-                      <Icon class={iconClass} stroke-width={2.2} />
-                    </span>
-                    <p class="m-0">
-                      <span class="text-muted-brown block font-sans text-xs uppercase">{item.label}</span>
-                      {item.href ? (
-                        <a
-                          class="hover:text-church-green block text-base leading-6 underline-offset-4 hover:underline"
-                          href={item.href}>
-                          {item.value}
-                        </a>
-                      ) : (
-                        <span class="block text-base leading-6">{item.value}</span>
-                      )}
-                    </p>
-                  </div>
-                );
-              })
-            }
-          </div>
-
-          <section class="border-sacred-gold bg-parchment-deep mt-9 overflow-hidden rounded-sm border-t-4">
-            <iframe
-              class="h-[340px] w-full max-sm:h-[280px]"
-              title={t("home.mapTitle")}
-              src={mapEmbedUrl}
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
-            <a
-              class="text-church-green hover:bg-parchment flex min-h-12 items-center justify-center px-5 text-center font-sans text-sm font-bold uppercase no-underline transition"
-              href={mapUrl}
-              target="_blank"
-              rel="noreferrer">
-              {t("home.openMap")}
+<TableLayout title={t("nav.contact")} eyebrow={t("directions.eyebrow")} lead={t("footer.addressName")}>
+  <dl>
+    <dt>{t("contact.addressLabel")}</dt>
+    <dd>
+      <a class="tap" href={mapLink} rel="noopener" target="_blank">{t("footer.addressLine")}</a>
+    </dd>
+    {
+      phones.map((phone) => (
+        <>
+          <dt>{phone.label}</dt>
+          <dd>
+            <a class="tap" href={telHref(phone.number)}>
+              {phone.number}
             </a>
-          </section>
-        </article>
-      </div>
-    </section>
-  </main>
-</Layout>
+            {phone.note && <span class="aside">{phone.note}</span>}
+          </dd>
+        </>
+      ))
+    }
+    <dt>{t("contact.emailLabel")}</dt>
+    <dd>
+      {
+        emails.map((address) => (
+          <a class="tap" href={`mailto:${address}`}>
+            {address}
+          </a>
+        ))
+      }
+    </dd>
+  </dl>
+
+  <h2>{t("zone.directions")}</h2>
+  <p><a class="tap" href={getLocalizedPath("/cum-de-ajuns", lang)}>{t("contact.directionsLink")}</a></p>
+
+  <h2>{t("zone.pomelnic")}</h2>
+  <p><a class="tap" href={getLocalizedPath("/pomelnic", lang)}>{t("pomelnic.title")}</a></p>
+</TableLayout>
+
+<style>
+  .aside {
+    display: block;
+    font-size: 15px;
+    opacity: 0.72;
+  }
+</style>

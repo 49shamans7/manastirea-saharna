@@ -1,0 +1,195 @@
+---
+// TEMPLATE C · TABLE — practical information. Flat, bright, no theatre, no
+// parallax. River palette regardless of what it links from: Zone IV is the
+// zone of arrival and everything useful lives there.
+// Reads fast on a phone in a car park.
+import Layout from "@layouts/Layout.astro";
+import TempleFrame from "@layouts/TempleFrame.astro";
+import { getLocaleFromUrl } from "@i18n/utils";
+import "@styles/temple.css";
+
+interface Props {
+  title: string;
+  eyebrow?: string;
+  lead?: string;
+}
+
+const { title, eyebrow, lead } = Astro.props;
+const lang = getLocaleFromUrl(Astro.url);
+---
+
+<Layout title={title} description={lead}>
+  <TempleFrame lang={lang} zone="river" path={Astro.url.pathname}>
+    <main class="table-page">
+      <header class="table-head">
+        {eyebrow && <p class="table-label">{eyebrow}</p>}
+        <h1 class="table-title">{title}</h1>
+        {lead && <p class="table-lead">{lead}</p>}
+      </header>
+      <div class="table-body">
+        <slot />
+      </div>
+    </main>
+  </TempleFrame>
+</Layout>
+
+<style>
+  .table-page {
+    padding: var(--page-top) 0 var(--page-bottom);
+    color: var(--river-ink);
+    max-width: 64rem;
+  }
+
+  .table-label {
+    margin: 0;
+    font-size: var(--t-label);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--river-link);
+  }
+  .table-title {
+    font-size: var(--t-h1);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.08;
+    margin: 0.35em 0 0;
+  }
+  .table-lead {
+    font-size: var(--t-lead);
+    line-height: 1.7;
+    max-width: var(--measure);
+    margin: 1em 0 0;
+    opacity: 0.82;
+  }
+  /* the head closes on the emphasis rule; rows below are hairlines */
+  .table-head {
+    padding-bottom: var(--s-6);
+    border-bottom: var(--rule-2) solid var(--line-strong);
+    margin-bottom: var(--head-gap);
+  }
+
+  .table-body {
+    font-size: var(--t-body);
+    line-height: 1.75;
+  }
+  .table-body :global(p) {
+    margin: 0 0 1.1em;
+    max-width: var(--measure);
+  }
+  .table-body :global(h2) {
+    font-size: clamp(18px, 1.9vw, 25px);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 2.2em 0 0.8em;
+    color: var(--river-strong);
+  }
+  .table-body :global(h3) {
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 1.8em 0 0.6em;
+    color: var(--river-strong);
+  }
+  .table-body :global(a) {
+    color: var(--river-strong);
+    text-decoration-thickness: var(--rule);
+    text-underline-offset: 0.18em;
+  }
+  .table-body :global(a:focus-visible) {
+    outline: var(--rule-2) solid var(--river-strong);
+    outline-offset: var(--rule-2);
+  }
+  /* phone numbers, e-mails, map links: thumbs, not cursors. ≥44px targets. */
+  .table-body :global(a.tap) {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .table-body :global(dd a.tap) {
+    display: flex;
+    width: fit-content;
+  }
+
+  .table-body :global(ol),
+  .table-body :global(ul) {
+    margin: 0 0 1.4em;
+    padding-left: 1.4em;
+    max-width: var(--measure);
+  }
+  .table-body :global(ol) {
+    list-style: decimal;
+  }
+  .table-body :global(ul) {
+    list-style: disc;
+  }
+  .table-body :global(li) {
+    margin: 0 0 0.7em;
+    padding-left: 0.2em;
+  }
+  .table-body :global(li::marker) {
+    color: var(--river-link);
+  }
+
+  /* a table is a table: rows you scan, not prose you read */
+  .table-body :global(dl) {
+    display: grid;
+    grid-template-columns: 208px minmax(0, 1fr);
+    gap: 0;
+    margin: 0 0 var(--s-6);
+    border-top: var(--rule-2) solid var(--river-ink);
+  }
+  /* straight under the head's emphasis rule a second heavy rule would
+     double it: the first table opens on a hairline */
+  .table-body > :global(dl:first-child) {
+    border-top: var(--rule) solid var(--line);
+  }
+  .table-body :global(dt) {
+    padding: var(--s-3) var(--s-4) var(--s-3) 0;
+    border-bottom: var(--rule) solid var(--line);
+    font-size: 13px;
+    /* the event's own line box, so time and event share a baseline */
+    line-height: calc(var(--t-body) * 1.75);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.66;
+  }
+  .table-body :global(dd) {
+    margin: 0;
+    padding: var(--s-3) 0;
+    border-bottom: var(--rule) solid var(--line);
+    font-variant-numeric: tabular-nums;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .table-body :global(dd:has(> a.tap)) {
+    padding: var(--s-1) 0;
+  }
+  @media (max-width: 620px) {
+    .table-body :global(dl) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .table-body :global(dt) {
+      border-bottom: 0;
+      padding: var(--s-4) 0 0;
+      line-height: var(--s-4);
+    }
+    .table-body :global(dd) {
+      padding-top: var(--s-1);
+    }
+  }
+
+  /* print-ready: a pilgrim prints the hours and the directions */
+  @media print {
+    .table-page {
+      color: #000;
+    }
+    .table-head {
+      border-bottom-color: #000;
+    }
+  }
+</style>
