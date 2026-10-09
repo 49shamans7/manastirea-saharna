@@ -6,12 +6,13 @@ import { getLocaleFromUrl, telHref, useTranslations } from "@i18n/utils";
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const mapQuery = "Manastirea Saharna Rezina Moldova";
+// the old site's exact coordinates of the monastery
+const mapQuery = "47.694979,28.965466";
 const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=${lang}&output=embed`;
 const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
 ---
 
-<TableLayout title={t("zone.directions")} eyebrow={t("directions.eyebrow")} lead={t("directions.lead")}>
+<TableLayout title={t("zone.directions")} lead={t("directions.lead")}>
   <h2>{t("directions.address")}</h2>
   <dl>
     <dt>{t("footer.addressName")}</dt>
@@ -41,7 +42,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 <style>
   .map {
     margin-top: var(--s-6);
-    border: var(--rule-2) solid var(--river-ink);
+    border: var(--rule) solid var(--line);
     aspect-ratio: 16 / 9;
   }
   .map iframe {

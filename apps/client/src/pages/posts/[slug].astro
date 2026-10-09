@@ -105,7 +105,10 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
       {post.galleryImages.length > 0 && (
         <div class="post-gallery">
           {post.galleryImages.map((plate, index) => (
-            <a href={plate.src} data-plate={index + (plates.length - post.galleryImages.length)}>
+            <a
+              href={plate.src}
+              data-plate={index + (plates.length - post.galleryImages.length)}
+              aria-label={`${post.title} · ${index + 1}`}>
               <img
                 src={plate.thumb}
                 srcset={`${plate.thumb} 360w, ${plate.src} 800w`}
@@ -255,12 +258,10 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
 <style>
   .fallback,
   .archive-note {
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    opacity: 0.55;
+    font-size: var(--t-meta);
+    line-height: 1.55;
     font-style: italic;
-    border-left: var(--rule-2) solid var(--line-strong);
-    padding-left: var(--s-4);
+    opacity: 0.72;
     margin-bottom: var(--s-6);
   }
   .archive-note {
@@ -335,9 +336,7 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
     position: absolute;
     left: var(--s-4);
     bottom: var(--s-3);
-    font-size: 12px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
+    font-size: var(--t-meta);
   }
 
   /* a plain grid, not a list: the chamber's prose list styling must not reach it */
@@ -348,7 +347,7 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
     grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
     gap: var(--lattice);
     padding: var(--lattice);
-    background: rgb(13 17 22 / 55%);
+    background: rgb(13 17 22 / 40%);
   }
   .post-gallery a {
     position: relative;
@@ -358,11 +357,10 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
     content: "";
     position: absolute;
     inset: 0;
-    border: var(--rule-2) solid transparent;
-    transition: border-color var(--dur-1) var(--ease-out);
+    transition: background-color var(--dur-2) var(--ease-out);
   }
   .post-gallery a:hover::after {
-    border-color: var(--ochre);
+    background: rgb(244 239 228 / 10%);
   }
   .post-gallery img {
     display: block;
@@ -402,9 +400,9 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
   .lightbox-count {
     margin: var(--s-2) 0 0;
     text-align: center;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    opacity: 0.6;
+    font-size: var(--t-meta);
+    font-variant-numeric: lining-nums tabular-nums;
+    opacity: 0.72;
   }
   .lightbox-controls {
     display: flex;
@@ -415,7 +413,10 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
   .lightbox-controls button {
     min-width: var(--s-9);
     min-height: var(--tap);
-    border: var(--rule) solid rgb(244 239 228 / 32%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: var(--rule) solid rgb(244 239 228 / 24%);
     background: var(--night);
     color: var(--parchment);
     font-size: 18px;
@@ -423,12 +424,11 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
     cursor: pointer;
     transition:
       background-color var(--dur-1) var(--ease-out),
-      color var(--dur-1) var(--ease-out);
+      border-color var(--dur-1) var(--ease-out);
   }
   .lightbox-controls button:hover {
-    background: var(--ochre);
-    border-color: var(--ochre);
-    color: var(--ink);
+    border-color: rgb(244 239 228 / 72%);
+    background: var(--rock-ground);
   }
 
   .entry-foot {
@@ -437,59 +437,64 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
     border-top: var(--rule) solid var(--line);
   }
   .author {
-    font-size: 13px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.55;
+    font-size: var(--t-meta);
+    font-style: italic;
+    opacity: 0.72;
     margin: 0 0 var(--s-5);
   }
 
-  /* two ruled cells sharing one hairline */
+  /* older | newer: two columns, no boxes; the title is the link */
   .neighbours {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border: var(--rule) solid var(--line);
+    gap: var(--s-6);
   }
   .neighbours a {
     display: grid;
     align-content: start;
-    gap: var(--s-2);
+    gap: var(--s-1);
     min-height: var(--tap);
-    padding: var(--s-4) var(--s-5);
+    padding: var(--s-2) 0;
     text-decoration: none;
     color: inherit;
-    transition: background-color var(--dur-1) var(--ease-out);
-  }
-  .neighbours .newer {
-    border-left: var(--rule) solid var(--line);
-  }
-  .neighbours a:hover {
-    background: rgb(244 239 228 / 8%);
   }
   .neighbours .newer {
     text-align: right;
+    justify-items: end;
     grid-column: 2;
   }
   .dir {
+    display: inline-flex;
     color: var(--ochre);
-    font-size: 13px;
   }
   .what {
-    font-size: 15px;
-    line-height: 1.4;
-    opacity: 0.85;
+    font-size: var(--t-ui);
+    line-height: 1.45;
+    opacity: 0.88;
+    text-decoration: underline;
+    text-decoration-thickness: var(--rule);
+    text-decoration-color: transparent;
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color var(--dur-1) var(--ease-out);
+  }
+  .neighbours a:hover .what {
+    text-decoration-color: currentColor;
   }
 
   .all {
     display: inline-flex;
     align-items: center;
     min-height: var(--tap);
-    margin-top: var(--s-4);
-    font-size: var(--t-label);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
+    margin-top: var(--s-5);
+    font-size: var(--t-ui);
     color: var(--ochre);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-thickness: var(--rule);
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    text-underline-offset: 0.25em;
+  }
+  .all:hover {
+    text-decoration-color: currentColor;
   }
 
   @media (max-width: 620px) {
@@ -498,12 +503,12 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
     }
     .neighbours {
       grid-template-columns: 1fr;
+      gap: var(--s-3);
     }
     .neighbours .newer {
       grid-column: 1;
       text-align: left;
-      border-left: 0;
-      border-top: var(--rule) solid var(--line);
+      justify-items: start;
     }
     .lightbox {
       max-width: 100vw;

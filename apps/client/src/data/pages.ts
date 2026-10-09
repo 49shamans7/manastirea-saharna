@@ -90,7 +90,10 @@ const hasBase = (path: string) => stripBasePath(path) !== path;
 function rebase(html: string, locale: Locale): string {
   return html
     .replace(/(\shref)="([^"]*)"/g, (match, attr: string, path: string) =>
-      isSitePath(path) && !hasBase(path) ? `${attr}="${getLocalizedPath(path, locale)}"` : match,
+      isSitePath(path) && !hasBase(path)
+        ? // a file (/fisiere/x.pdf) is the same in every language: base path only
+          `${attr}="${/\.[a-z0-9]{2,5}$/i.test(path.split("#")[0] ?? "") ? withBasePath(path) : getLocalizedPath(path, locale)}"`
+        : match,
     )
     .replace(/(\ssrc)="([^"]*)"/g, (match, attr: string, path: string) =>
       isSitePath(path) && !hasBase(path) ? `${attr}="${withBasePath(path)}"` : match,

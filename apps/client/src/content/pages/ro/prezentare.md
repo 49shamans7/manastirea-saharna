@@ -25,3 +25,10 @@ Valea Nistrului este ținutul de legendă al sufletului moldovenesc. Dincolo de 
 La Saharna, Ortodoxia este vrednică de tradiția ei, iar sufletul basarabean răsuflă spre un răsărit cu multe speranțe. E o dovadă că încă putem răspunde vremurilor pe limba noastră, cu acea simplitate esențială prin care credința și fapta, feciorelnic nuntite, binemerită să intre, cu candelele pline, în cămara Mirelui Ceresc.
 
 Mănăstirea Saharna este un dar și o binecuvântare a lui Dumnezeu nu numai pentru dreptcredinciosul nostru popor cu biserici străvechi și sfințiți slujitori care au păstrat unitatea poporului și a credinței sale apostolice; ci este un dar și o binecuvântare a lui Dumnezeu pentru întreaga lume creștină, iar mai ales pentru Biserica Ortodoxa martiră prin mărturia dată pentru Hristos de-a lungul veacurilor în zbuciumata sa istorie.
+
+
+## Bine ați venit!
+
+Mănăstirea aceasta este locul în care iubirea frumoasă și dătătoare de viață a Sfintei Treimi se revarsă asupra tuturor acelora care-i vor trece pragul cu credință. Aici prescurile și vinul, roade ale pământului și ale muncii voastre, vor deveni Trupul și Sângele lui Hristos, consumate pentru înnoirea vieții și spre fericirea veșnică. Aici primiți adevăratele bunevestiri prin Fecioara-Mamă, care vă recunoaște ca fii și moștenitori ai Împărăției Fiului ei.
+
+*Din pagina de start a vechiului site al mănăstirii.*

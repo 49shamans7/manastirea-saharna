@@ -57,6 +57,24 @@
   --t-quote: 19px;
   --t-label: 11px;
 
+  /* PAGE TYPE — one scale for every page inside the frame (Chamber, Table,
+     the special pages). Ratio ≈1.2 off the 17px body. Uppercase is kept
+     for titles and h2 only; small text is set in sentence case and never
+     tracked wider than --track-kicker. */
+  --t-meta: 14px; /* dates, counts, captions, notes, table labels */
+  --t-kicker: 12px; /* the one small capital line, only where it orients */
+  --t-ui: 15px; /* rail links, buttons, form labels, footer links */
+  --t-h3: 19px;
+  --t-h2: clamp(20px, 1.7vw, 24px);
+  --t-title: clamp(30px, 3.3vw, 46px);
+  --t-title-long: clamp(25px, 2.5vw, 34px); /* titles over ~48 characters */
+  --t-standfirst: clamp(18px, 1.45vw, 20px);
+  --lh-body: 1.72;
+  --lh-lead: 1.55;
+  --lh-title: 1.12;
+  --track-caps: 0.03em; /* uppercase titles and heads */
+  --track-kicker: 0.14em; /* uppercase small text — the widest on the site */
+
   /* the first measurement (2026-08-25), still drawn by the rail ticks and the
      /walk bands: Rock lilac/grey/stone, Green sage/olive */
   --rock-lilac: #b0b9d1;
@@ -200,5 +218,7 @@
     --page-top: var(--s-8);
     --page-bottom: var(--s-9);
     --head-gap: var(--s-6);
+    --t-meta: 15px; /* on a phone nothing that is read runs under 15 */
+    --t-ui: 16px;
   }
 }

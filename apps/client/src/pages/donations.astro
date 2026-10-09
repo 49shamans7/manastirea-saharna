@@ -17,7 +17,7 @@ const bank: { label: string; value: string; copy?: boolean }[] = [
 ];
 ---
 
-<TableLayout title={t("donations.title")} eyebrow={t("directions.eyebrow")} lead={t("donations.greeting")}>
+<TableLayout title={t("donations.title")} lead={t("donations.greeting")}>
   <p>{t("donations.message")}</p>
   <p>{t("donations.detailsIntro")}</p>
 
@@ -85,8 +85,8 @@ const bank: { label: string; value: string; copy?: boolean }[] = [
 
 <style>
   .note {
-    font-size: 16px;
-    opacity: 0.75;
+    font-size: var(--t-meta);
+    color: var(--river-muted);
   }
   .copyable {
     display: flex;
@@ -103,22 +103,21 @@ const bank: { label: string; value: string; copy?: boolean }[] = [
   .copy {
     min-height: var(--tap-min);
     min-width: var(--tap-min);
+    margin-left: auto;
     padding: 0 var(--s-4);
-    border: var(--rule) solid var(--river-strong);
+    border: var(--rule) solid color-mix(in srgb, var(--river-strong) 45%, transparent);
     border-radius: var(--radius);
     background: transparent;
     color: var(--river-strong);
     font: inherit;
-    font-size: 14px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: var(--t-meta);
     cursor: pointer;
     transition:
       background-color var(--dur-1) var(--ease-out),
       color var(--dur-1) var(--ease-out);
   }
-  .copy:hover,
-  .copy:focus-visible {
+  .copy:hover {
+    border-color: var(--river-strong);
     background: var(--river-strong);
     color: var(--river-ground);
   }

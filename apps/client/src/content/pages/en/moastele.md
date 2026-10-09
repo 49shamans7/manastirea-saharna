@@ -3,8 +3,9 @@
 # Romanian original (src/data/pages.ts shows it under lang="ro").
 title: "The Relics of Venerable Macarius"
 eyebrow: "The Reliquary · zone III"
-lead: "The relics of Venerable Macarius rest in the monastery church, buried in fresh flowers. The reliquary is a door, not a destination: you pass it on the way down to the Nistru."
+lead: "The reliquary with the relics of the Venerable Hegumen Macarius Tincu, glorified on 21 December 1995. His memory is kept on 13/26 May."
 zone: gold
 template: chamber
 order: 2
+sourceUrl: "https://manastirea-saharna.md/moastele-sfantului-macarie/"
 ---

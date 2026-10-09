@@ -20,9 +20,8 @@ const t = useTranslations(lang);
       <a
         class:list={["year", !current && "is-current"]}
         href={getLocalizedPath("/posts", lang)}
-        aria-label={t("zone.cronica")}
         aria-current={!current ? "page" : undefined}>
-        <span class="y" aria-hidden="true">·</span>
+        <span class="y">{t("gallery.all")}</span>
       </a>
     </li>
     {
@@ -53,43 +52,42 @@ const t = useTranslations(lang);
 </script>
 
 <style>
-  /* a ruled strip of cells: hairline frame, hairline divisions, the current
-     year underscored at emphasis weight */
+  /* a single run of years on one hairline; the current year is ochre and
+     underscored at emphasis weight. No cells, no frames. */
   .years {
     margin-bottom: var(--s-6);
     overflow-x: auto;
-    scrollbar-width: thin;
+    scrollbar-width: none;
+    border-bottom: var(--rule) solid var(--line);
+  }
+  .years::-webkit-scrollbar {
+    display: none;
   }
   .years ol {
     display: flex;
+    gap: var(--s-1);
     list-style: none;
     margin: 0;
     padding: 0;
     min-width: max-content;
-    border: var(--rule) solid var(--line);
-    border-right: 0;
-  }
-  .years li {
-    border-right: var(--rule) solid var(--line);
   }
   .year {
     position: relative;
-    display: grid;
-    align-content: center;
-    justify-items: center;
-    min-width: var(--tap);
-    min-height: var(--s-9);
+    display: flex;
+    align-items: baseline;
     gap: var(--s-1);
-    padding: 0 var(--s-4);
+    min-width: var(--tap);
+    min-height: var(--tap);
+    padding: var(--s-3) var(--s-3) 0;
     text-decoration: none;
-    color: color-mix(in srgb, currentColor 70%, transparent);
-    transition:
-      color var(--dur-1) var(--ease-out),
-      background-color var(--dur-1) var(--ease-out);
+    color: color-mix(in srgb, currentColor 72%, transparent);
+    transition: color var(--dur-1) var(--ease-out);
+  }
+  .years li:first-child .year {
+    padding-left: 0;
   }
   .year:hover {
     color: inherit;
-    background: rgb(244 239 228 / 6%);
   }
   .year.is-current {
     color: var(--ochre);
@@ -97,23 +95,24 @@ const t = useTranslations(lang);
   .year.is-current::after {
     content: "";
     position: absolute;
-    left: 0;
-    right: 0;
+    left: var(--s-3);
+    right: var(--s-3);
     bottom: 0;
     height: var(--rule-2);
     background: var(--line-strong);
   }
+  .years li:first-child .year.is-current::after {
+    left: 0;
+  }
   .y {
-    font-size: 14px;
-    line-height: var(--s-4);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.06em;
+    font-size: var(--t-ui);
+    line-height: var(--s-6);
+    font-variant-numeric: lining-nums tabular-nums;
   }
   .n {
-    font-size: 11px;
-    line-height: var(--s-3);
-    letter-spacing: 0.16em;
-    color: var(--ochre);
+    font-size: 12px;
+    line-height: var(--s-6);
+    font-variant-numeric: lining-nums tabular-nums;
   }
   .year:focus-visible {
     outline-offset: calc(var(--rule-2) * -1);

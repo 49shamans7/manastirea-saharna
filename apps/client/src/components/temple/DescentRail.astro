@@ -29,7 +29,6 @@ const isUnder = (href: string) => isHere(href) || clean.includes(`${href}/`);
       zones.map((zone) => (
         <li class:list={["stratum-entry", `is-${zone.id}`, current === zone.id && "is-current"]}>
           <a class="stratum-head" href={`${getLocalizedPath("/", lang)}#zona-${zone.id}`}>
-            <span class="numeral">{zone.numeral}</span>
             <span class="zone-name">{t(zone.nameKey)}</span>
           </a>
           <ul class="chambers">
@@ -130,19 +129,15 @@ const isUnder = (href: string) => isHere(href) || clean.includes(`${href}/`);
     min-height: var(--s-4);
     text-decoration: none;
     color: inherit;
-    font-size: var(--t-label);
+    font-size: var(--t-kicker);
     line-height: var(--s-4);
-    letter-spacing: 0.32em;
+    letter-spacing: var(--track-kicker);
     text-transform: uppercase;
-    opacity: 0.72;
+    opacity: 0.78;
     transition: opacity var(--dur-1) var(--ease-out);
   }
   .stratum-head:hover {
     opacity: 1;
-  }
-  .numeral {
-    color: var(--ochre);
-    font-variant-numeric: tabular-nums;
   }
   .is-current .stratum-head {
     opacity: 1;
@@ -156,20 +151,18 @@ const isUnder = (href: string) => isHere(href) || clean.includes(`${href}/`);
     display: flex;
     align-items: center;
     min-height: var(--s-6);
-    font-size: 14px;
+    padding: var(--s-1) 0;
+    font-size: var(--t-ui);
     line-height: 1.3;
-    letter-spacing: 0.02em;
     text-decoration: none;
-    color: inherit;
-    opacity: 0.55;
-    transition: opacity var(--dur-1) var(--ease-out);
+    color: color-mix(in srgb, currentColor 70%, transparent);
+    transition: color var(--dur-1) var(--ease-out);
   }
   .chamber-link:hover {
-    opacity: 1;
+    color: inherit;
   }
   .chamber-link.is-here {
-    opacity: 1;
-    color: var(--ochre);
+    color: var(--here, var(--ochre));
   }
 
   /* below the frame width the rail is not a rail — the drawer carries it */

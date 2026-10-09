@@ -22,7 +22,7 @@ Ne cerem iertare pentru condițiile simple de cazare și pentru incomodități. 
 
 ## Informație
 
-<a class="tap" href="tel:+37369929280">+373 699 29280</a> — între 20:00 și 21:00, ora locală.
+<a class="tap" href="tel:+37369929280">+373 69 929 280</a> — între 20:00 și 21:00, ora locală.
 
 <section lang="ru">
 
@@ -46,7 +46,7 @@ Ne cerem iertare pentru condițiile simple de cazare și pentru incomodități. 
 
 ### Информация
 
-<a class="tap" href="tel:+37369929280">+373 699 29280</a> — с 20:00 до 21:00 по местному времени.
+<a class="tap" href="tel:+37369929280">+373 69 929 280</a> — с 20:00 до 21:00 по местному времени.
 
 </section>
 
@@ -72,6 +72,6 @@ Keeping the daily routine, attending the services and taking part in the obedien
 
 ### Information
 
-<a class="tap" href="tel:+37369929280">+373 699 29280</a> — from 20:00 to 21:00, local time.
+<a class="tap" href="tel:+37369929280">+373 69 929 280</a> — from 20:00 to 21:00, local time.
 
 </section>

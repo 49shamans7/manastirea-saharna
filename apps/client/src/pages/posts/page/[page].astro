@@ -31,9 +31,9 @@ const years = getPostYears(allPosts);
 <Layout>
   <TempleFrame lang={lang} zone="green" path={Astro.url.pathname}>
     <main class="cronica">
-      <header class="cronica-head">
-        <p class="label">{t("zone.cronica")}</p>
-        <h1 class="stratum-title">{currentPage} / {totalPages}</h1>
+      <header class="page-head cronica-head">
+        <h1 class="page-title">{t("zone.cronica")}</h1>
+        <p class="page-meta">{`${currentPage} / ${totalPages}`}</p>
       </header>
 
       <YearRail years={years} current={null} lang={lang} />
@@ -47,9 +47,10 @@ const years = getPostYears(allPosts);
   .cronica {
     padding: var(--page-top) 0 var(--page-bottom);
   }
+  /* the year run under the head is the head's rule */
   .cronica-head {
-    padding-bottom: var(--s-6);
-    margin-bottom: var(--s-6);
-    border-bottom: var(--rule) solid var(--line);
+    margin-bottom: var(--s-5);
+    padding-bottom: 0;
+    border-bottom: 0;
   }
 </style>

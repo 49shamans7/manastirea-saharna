@@ -7,7 +7,8 @@ import { getLocaleFromUrl, getLocalizedPath, telHref, useTranslations } from "@i
 
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
-const mapQuery = "Manastirea Saharna Rezina Moldova";
+// the old site's exact coordinates of the monastery
+const mapQuery = "47.694979,28.965466";
 const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
 const emails = t("footer.email")
   .split(",")
@@ -21,10 +22,11 @@ const phones = [
 ];
 ---
 
-<TableLayout title={t("nav.contact")} eyebrow={t("directions.eyebrow")} lead={t("footer.addressName")}>
+<TableLayout title={t("nav.contact")}>
   <dl>
     <dt>{t("contact.addressLabel")}</dt>
     <dd>
+      <span class="house">{t("footer.addressName")}</span>
       <a class="tap" href={mapLink} rel="noopener" target="_blank">{t("footer.addressLine")}</a>
     </dd>
     {
@@ -62,7 +64,11 @@ const phones = [
 <style>
   .aside {
     display: block;
-    font-size: 15px;
-    opacity: 0.72;
+    padding-bottom: var(--s-2);
+    font-size: var(--t-meta);
+    color: var(--river-muted);
+  }
+  .house {
+    display: block;
   }
 </style>

@@ -10,16 +10,33 @@ import "@styles/temple.css";
 
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
+const guide = [
+  "pomelnicPage.guide1",
+  "pomelnicPage.guide2",
+  "pomelnicPage.guide3",
+  "pomelnicPage.guide4",
+  "pomelnicPage.guide5",
+  "pomelnicPage.guide6",
+  "pomelnicPage.guide7",
+  "pomelnicPage.guide8",
+] as const;
 ---
 
 <Layout title={t("pomelnic.title")}>
   <TempleFrame lang={lang} zone="rock" path={Astro.url.pathname}>
     <main class="well-page" id="pomelnic-form">
-      <header class="well-head">
-        <p class="label">{t("pomelnicPage.eyebrow")}</p>
-        <h1 class="stratum-title">{t("pomelnic.title")}</h1>
-        <p class="lead">{t("pomelnicPage.lead")}</p>
+      <header class="page-head well-head">
+        <h1 class="page-title">{t("pomelnic.title")}</h1>
+        <p class="page-lead">{t("pomelnicPage.lead")}</p>
       </header>
+
+      {/* the house's own instructions, folded: read once, then the form */}
+      <details class="guide">
+        <summary>{t("pomelnicPage.guideTitle")}</summary>
+        <div class="guide-body">
+          {guide.map((key) => <p>{t(key)}</p>)}
+        </div>
+      </details>
 
       {/* the shaft: the form sits inside it, not beside it */}
       <div class="shaft">
@@ -39,18 +56,67 @@ const t = useTranslations(lang);
     max-width: 48rem;
     margin: 0 auto;
   }
+  /* the well is on the axis: its head is centred, and the shaft below
+     is its rule — the head draws none of its own */
   .well-head {
     text-align: center;
-    margin-bottom: var(--head-gap);
+    border-bottom: 0;
+    padding-bottom: 0;
   }
-  .well-head .label {
-    justify-content: center;
+  .well-head .page-lead {
+    margin-inline: auto;
   }
-  .well-head .label::after {
+
+  /* the guide: one ruled row that opens; the text inside is prose */
+  .guide {
+    max-width: var(--measure);
+    margin: 0 auto var(--s-8);
+    border-top: var(--rule) solid var(--line);
+    border-bottom: var(--rule) solid var(--line);
+  }
+  .guide summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    min-height: var(--tap);
+    font-size: var(--t-ui);
+    color: var(--ochre);
+    cursor: pointer;
+    list-style: none;
+  }
+  .guide summary::-webkit-details-marker {
     display: none;
   }
-  .well-head .lead {
-    margin: 1em auto 0;
+  .guide summary::after {
+    content: "";
+    width: var(--s-2);
+    height: var(--s-2);
+    margin-right: var(--s-2);
+    border-right: var(--rule-2) solid currentColor;
+    border-bottom: var(--rule-2) solid currentColor;
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+  .guide[open] summary::after {
+    transform: rotate(-135deg);
+  }
+  .guide-body {
+    padding: var(--s-2) 0 var(--s-5);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .guide-body p {
+    margin: 0 0 1em;
+    opacity: 0.86;
+  }
+  .guide-body p:last-child {
+    margin-bottom: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .guide summary::after {
+      transition: none;
+    }
   }
 
   /* The shaft: two emphasis walls, a flat recessed fill, the ochre mouth
@@ -84,38 +150,41 @@ const t = useTranslations(lang);
     }
   }
 
-  /* the form is Tailwind-skinned for a bright page; in the shaft it is dark */
-  .form-well :global(label) {
-    color: var(--parchment);
-    opacity: 0.9;
+  /* the form is neutral for a bright page; in the shaft it is dark. It
+     takes its colours from here through its own custom properties. */
+  .form-well {
+    --field-label: var(--parchment);
+    --field-muted: rgb(244 239 228 / 70%);
+    --field-ink: var(--parchment);
+    --f-accent: var(--ochre);
   }
   .form-well :global(input),
   .form-well :global(textarea) {
     background: var(--well-floor);
-    border-color: rgb(244 239 228 / 40%);
+    border-color: rgb(244 239 228 / 34%);
     color: var(--parchment);
-    border-radius: 0;
-    box-shadow: none;
+  }
+  .form-well :global(input:hover),
+  .form-well :global(textarea:hover) {
+    border-color: rgb(244 239 228 / 60%);
   }
   .form-well :global(input::placeholder),
   .form-well :global(textarea::placeholder) {
-    color: rgb(244 239 228 / 40%);
+    color: rgb(244 239 228 / 50%);
   }
   .form-well :global(input:focus),
   .form-well :global(textarea:focus) {
     border-color: var(--ochre);
     outline: var(--rule) solid var(--ochre);
     outline-offset: 0;
-    box-shadow: none;
   }
   .form-well :global(button) {
-    border-radius: 0;
+    border-color: var(--ochre);
     background: var(--ochre);
     color: var(--ink);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
   }
-  .form-well :global(p) {
-    color: var(--parchment);
+  .form-well :global(button:hover) {
+    border-color: var(--parchment);
+    background: var(--parchment);
   }
 </style>

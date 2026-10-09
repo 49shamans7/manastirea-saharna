@@ -35,6 +35,8 @@ const PAGES = {
   "/biserica-sfanta-treime/": "/sfanta-treime/",
   "/casa-de-oaspeti-sfantul-avraam/": "/cazare/",
   "/contacte/": "/contact/",
+  // "Întreabă preotul" was a menu item; the page was never archived
+  "/intreaba-preotul/": "/contact/",
   "/cronica/": "/cronologie/",
   "/donatii/": "/donations/",
   "/donation-confirmation/": "/donations/",

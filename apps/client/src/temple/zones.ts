@@ -45,14 +45,17 @@ export const zones: Zone[] = [
     nameKey: "zone.green",
     movement: "down",
     palette: ["#2E4328", "#4B6136", "#6F8A73"],
+    // The hours first: the service schedule is what a pilgrim opens this zone
+    // for, and feasts are announced in the chronicle, so it follows. Then the
+    // people (brotherhood, metropolitan, abbot), then the churches.
     pages: [
+      { href: "/slujbe", labelKey: "zone.slujbe" },
+      { href: "/posts", labelKey: "zone.cronica" },
       { href: "/obstea", labelKey: "zone.obstea" },
       { href: "/mitropolitul", labelKey: "zone.mitropolitul" },
       { href: "/staretul", labelKey: "zone.staretul" },
       { href: "/sfanta-treime", labelKey: "zone.sfantaTreime" },
       { href: "/nasterea-maicii-domnului", labelKey: "zone.nasterea" },
-      { href: "/slujbe", labelKey: "zone.slujbe" },
-      { href: "/posts", labelKey: "zone.cronica" },
       { href: "/galerie", labelKey: "zone.galerie" },
     ],
   },

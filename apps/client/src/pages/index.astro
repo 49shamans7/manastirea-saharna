@@ -1,46 +1,44 @@
 ---
-// TEMPLATE A · STRATUM — home only. The whole site in one scroll.
-// A descent through strata, not a page stack: cave → green church → river.
-// Scrolling is descending into shade, so the page gets DARKER downward,
-// inverting the usual web instinct. ARCHITECTURE.md.
+// TEMPLATE A · STRATUM — home only. The four zones in one scroll, top to
+// bottom: Stânca → Mănăstirea vie → Racla → Nistru (ARCHITECTURE.md). The
+// page still darkens through the first three and opens onto the river.
 //
-// One column, one gutter, one rhythm for all four strata (--col-*, --stratum-pad,
-// --head-gap below). Every stratum is built the same way, top to bottom:
-//   head   numeral · zone label → title → lead
-//   act    the stratum's one job (Rock: the well · Green: the hours ·
-//          Gold: the door · River: the four practical tiles)
-//   index  the chambers behind it, as ruled rows
+// Each zone is presented the same calm way: a photograph of the place, then
+// its words and its one job. No ornament stands in for meaning — the
+// photographs are the place, the ground colours are measured from them.
+//   I    the name, one line of purpose, the Pomelnic (first phone screen)
+//   II   the hours and the chronicle
+//   III  the shrine — photograph beside the prayer, the chambers behind it
+//   IV   the practical: address, telephone, the four pages for the journey
 //
 // The horizontal reading of the same four zones is kept at /walk.
 import Layout from "@layouts/Layout.astro";
-import Stratum from "@components/descent/Stratum.astro";
-import Well from "@components/descent/Well.astro";
-import ShrineDoor from "@components/descent/ShrineDoor.astro";
 import DescentRail from "@components/temple/DescentRail.astro";
 import CalendarRail from "@components/temple/CalendarRail.astro";
-import Gate from "@components/descent/Gate.astro";
-import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "@i18n/utils";
+import { getLocaleFromUrl, getLocalizedPath, telHref, useTranslations } from "@i18n/utils";
 import { getRecentPosts } from "@data/posts";
-import { homeHours, serviceText } from "@data/schedule";
+import { schedule, serviceText } from "@data/schedule";
+import type { AllTranslationKeys } from "@i18n";
 import { zoneById } from "@temple/zones";
 import { publicAsset } from "@utils/paths";
-import "@styles/temple.css";
-import Seal from "@components/marks/Seal.astro";
-import Icon from "@components/marks/Icon.astro";
 
 const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
 const posts = await getRecentPosts(lang, 3);
 const plate = (name: string) => publicAsset(`/plates/${name}.webp`);
+// every plate ships at 1600w and 800w (scripts/build-plates.mjs)
+const plateSet = (name: string) => `${publicAsset(`/plates/${name}-800.webp`)} 800w, ${plate(name)} 1600w`;
+const plateSizes = "(min-width: 1101px) 900px, 100vw";
 const href = (path: string) => getLocalizedPath(path, lang);
 
-// the hours and the chronicle have their own blocks; every other green
-// chamber is listed under them
-const greenChambers = zoneById.green.pages.filter((p) => p.href !== "/slujbe" && p.href !== "/posts");
+// One line of purpose under the name. The lead's second sentence describes
+// the page rather than the monastery, so only its first sentence is used
+// (as /walk already does).
+const purpose = (t("home.descentLead").split(/(?<=\.)\s/)[0] ?? "").trim();
+
 const goldChambers = zoneById.gold.pages;
-// the lit door opens onto the first chamber behind it (Cuviosul Macarie)
-const doorHref = goldChambers[0] ? href(goldChambers[0].href) : undefined;
 const riverPages = zoneById.river.pages;
+const phone = t("contact.phoneMain");
 ---
 
 <Layout>
@@ -48,171 +46,190 @@ const riverPages = zoneById.river.pages;
     <DescentRail lang={lang} current={null} />
 
     <main class="descent-main">
-      {
-        /* ═══ I · ROCK — origin, silence, subtraction. movement: down ═══
-          The first screen: seal, title, lead and the one act — the well. */
-      }
-      <Stratum zone="rock" id="zona-rock" plate={plate("rock")} opacity={0.42} eager labelledby="rock-head">
-        {/* 388px source; drawn at ≤112 css px, so 1×/2×/3× covers every phone */}
-        <Seal class="seal" size={112} loading="eager" />
-        <header class="head">
-          <p class="label"><span class="num">{zoneById.rock.numeral}</span><span>{t("zone.rock")}</span></p>
-          <h1 id="rock-head" class="stratum-title">{t("home.descentTitle")}</h1>
-          <p class="lead">{t("home.descentLead")}</p>
-        </header>
+      {/* ═══ I · STÂNCA — the name, the purpose, the Pomelnic ═══ */}
+      <section class="zone z-rock" id="zona-rock" data-zone="rock" aria-labelledby="rock-head">
+        <img
+          class="photo photo-hero"
+          src={plate("rock")}
+          srcset={plateSet("rock")}
+          sizes={plateSizes}
+          alt=""
+          width="800"
+          height="600"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <div class="col hero">
+          <h1 id="rock-head" class="h1">{t("main.title")}</h1>
+          <p class="dedication">{t("home.descentTitle")}</p>
+          <p class="purpose">{purpose}</p>
+          <div class="actions">
+            <a class="btn btn-primary" href={href("/pomelnic")}>{t("notFound.pomelnic")}</a>
+            <a class="btn btn-quiet" href={href("/slujbe")}>{t("nav.serviceSchedule")}</a>
+          </div>
+        </div>
+      </section>
 
-        {
-          /* The well is the pomelnic: a shaft you lower names down. Its mouth is
-            the action; the shaft opens directly under it, on the column's
-            centre axis, and runs out of the stratum through the gate. */
-        }
-        <a class="act well-mouth" href={href("/pomelnic")}>
-          <span class="act-text">
-            <span class="act-label">{t("zone.pomelnic")}</span>
-            <span class="act-hint">{t("home.wellHint")}</span>
-          </span>
-          <span class="act-arrow"><Icon name="arrow-down" size={20} /></span>
-        </a>
-        <div class="well-run"><Well x="50%" mouthAt="4px" /></div>
-      </Stratum>
+      {/* ═══ II · MĂNĂSTIREA VIE — the hours and the chronicle ═══ */}
+      <section class="zone z-green" id="zona-green" data-zone="green" aria-labelledby="green-head">
+        <figure class="figure" data-reveal>
+          <img
+            class="photo photo-wide"
+            src={plate("green")}
+          srcset={plateSet("green")}
+          sizes={plateSizes}
+            alt={t("gallery.complex")}
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption class="col caption">{t("gallery.complex")}</figcaption>
+        </figure>
 
-      {/* gate — a cut in the cliff; the shaft stays tight */}
-      <Gate width="narrow" />
+        <div class="col zone-body" data-reveal>
+          <header class="zone-head">
+            <h2 id="green-head" class="h2">{t("home.greenTitle")}</h2>
+            <p class="lead">{t("home.greenLead")}</p>
+          </header>
 
-      {/* ═══ II · GREEN — the living monastery. the strata widen ═══ */}
-      <Stratum
-        zone="green"
-        id="zona-green"
-        plate={plate("green")}
-        plateSlot="band-top"
-        focus="50% 38%"
-        opacity={0.88}
-        reveal
-        labelledby="green-head">
-        <header class="head">
-          <p class="label"><span class="num">{zoneById.green.numeral}</span><span>{t("zone.green")}</span></p>
-          <h2 id="green-head" class="stratum-title">{t("home.greenTitle")}</h2>
-          <p class="lead">{t("home.greenLead")}</p>
-        </header>
-
-        <div class="green-grid">
-          <section class="block" aria-labelledby="ceasuri">
-            <h3 id="ceasuri" class="block-head">{t("zone.slujbe")}</h3>
-            <p class="block-meta">{t("schedule.monWed")}</p>
-            <dl class="hours">
+          <div class="pair">
+            <section class="block" aria-labelledby="ceasuri">
+              <h3 id="ceasuri" class="h3">{t("zone.slujbe")}</h3>
+              {/* every day's order is in the page; a script shows today's (Chișinău time).
+                  Without it, Monday–Wednesday stands, as before. */}
               {
-                homeHours.map((h) => (
-                  <div class="hour">
-                    <dt>{h.time}</dt>
-                    <dd>{serviceText(h.name, lang)}</dd>
+                schedule.map((day) => (
+                  <div class="day" data-day={day.key} hidden={day.key !== "monWed"}>
+                    <p class="meta">{t(`schedule.${day.key}` as AllTranslationKeys)}</p>
+                    {day.blocks.map((block) => (
+                      <>
+                        {block.titleKey && <p class="meta">{t(block.titleKey as AllTranslationKeys)}</p>}
+                        <dl class="hours">
+                          {block.services.map((h) => (
+                            <div class="hour">
+                              <dt>{h.time}</dt>
+                              <dd>{serviceText(h.name, lang)}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      </>
+                    ))}
                   </div>
                 ))
               }
-            </dl>
-            <a class="more" href={href("/slujbe")}>{t("home.fullSchedule")}</a>
-          </section>
+              <a class="more" href={href("/slujbe")}>{t("home.fullSchedule")}</a>
+            </section>
 
-          <section class="block" aria-labelledby="cronica-head">
-            <h3 id="cronica-head" class="block-head">{t("zone.cronica")}</h3>
-            {
-              posts.length > 0 ? (
-                <ul class="post-list">
-                  {posts.map((post) => (
-                    <li>
-                      <a href={href(`/posts/${post.slug}`)}>
-                        <time datetime={post.isoDate}>{post.date}</time>
-                        <span class="post-title">{post.title}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p class="empty">{t("home.noPosts")}</p>
-              )
-            }
-            <a class="more" href={href("/posts")}>{t("home.allNews")}</a>
-          </section>
+            <section class="block" aria-labelledby="cronica-head">
+              <h3 id="cronica-head" class="h3">{t("zone.cronica")}</h3>
+              {
+                posts.length > 0 ? (
+                  <ul class="posts">
+                    {posts.map((post) => (
+                      <li>
+                        <a href={href(`/posts/${post.slug}`)}>
+                          <time datetime={post.isoDate}>{post.date}</time>
+                          <span class="post-title">{post.title}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="empty">{t("home.noPosts")}</p>
+                )
+              }
+              <a class="more" href={href("/posts")}>{t("home.allNews")}</a>
+            </section>
+          </div>
         </div>
-
-        <ul class="index index-green">
-          {
-            greenChambers.map((p) => (
-              <li>
-                <a href={href(p.href)}>{t(p.labelKey)}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </Stratum>
+      </section>
 
       {
-        /* ═══ III · GOLD & PALL — the hinge. you do not pass through. ═══
-          Not a destination you navigate to — something you walk past on the
-          way down, exactly as the relics sit inside the church you pass on
-          the way to the Nistru. Inward and downward differ only here.
-          The door stands off the axis, to the right of the words. */
+        /* ═══ III · RACLA — the hinge. You stop here. ═══
+          The photograph stands beside the prayer, off the axis of the words:
+          the relics are something you turn aside to, not pass through. */
       }
-      <Stratum zone="gold" id="zona-gold" reveal labelledby="hinge-head">
-        <ShrineDoor plate={plate("gold-door")} href={doorHref}>
-          <Fragment slot="head">
-            <p class="label gold-label">
-              <span class="num">{zoneById.gold.numeral}</span><span>{t("zone.gold")}</span>
-            </p>
-            <h2 id="hinge-head" class="stratum-title gold-title">{t("home.shrineTitle")}</h2>
-          </Fragment>
-          <blockquote slot="quote" class="acatist">{t("home.shrineQuote")}</blockquote>
-          <ul class="index index-gold">
-            {
-              goldChambers.map((p) => (
-                <li>
-                  <a href={href(p.href)}>{t(p.labelKey)}</a>
-                </li>
-              ))
-            }
-          </ul>
-        </ShrineDoor>
-      </Stratum>
+      <section class="zone z-gold" id="zona-gold" data-zone="gold" aria-labelledby="gold-head">
+        <div class="col shrine" data-reveal>
+          <picture class="photo-shrine-frame">
+            {/* beside the text on wide screens the shrine stands as a 4:5 portrait */}
+            <source media="(min-width: 900px)" srcset={plateSet("gold-door-portrait")} sizes="450px" />
+            <img
+            class="photo photo-shrine"
+            src={plate("gold-door")}
+            srcset={plateSet("gold-door")}
+            sizes="100vw"
+            alt={t("gallery.relics")}
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+          />
+          </picture>
+          <div class="shrine-text">
+            <h2 id="gold-head" class="h2 gold">{t("home.shrineTitle")}</h2>
+            <blockquote class="prayer">{t("home.shrineQuote")}</blockquote>
+            <ul class="rows">
+              {
+                goldChambers.map((p) => (
+                  <li>
+                    <a href={href(p.href)}>{t(p.labelKey)}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </section>
 
-      {/* gate — the gorge opens; sky enters for the first time */}
-      <Gate width="full" />
+      {/* ═══ IV · NISTRU — the practical: where, how, whom to call ═══ */}
+      <section class="zone z-river" id="zona-river" data-zone="river" aria-labelledby="river-head">
+        <img
+          class="photo photo-river"
+          src={plate("river")}
+          srcset={plateSet("river")}
+          sizes={plateSizes}
+          alt=""
+          width="800"
+          height="600"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="col zone-body" data-reveal>
+          <header class="zone-head">
+            <h2 id="river-head" class="h2">{t("home.riverTitle")}</h2>
+            <p class="lead">{t("home.riverLead")}</p>
+          </header>
 
-      {
-        /* ═══ IV · RIVER — the only wide horizon. down stops here. ═══
-          Practical: four tiles, read at a glance; the photograph of the
-          water closes the descent beneath them. */
-      }
-      <Stratum
-        zone="river"
-        id="zona-river"
-        plate={plate("river")}
-        plateSlot="band-bottom"
-        focus="50% 58%"
-        reveal
-        labelledby="river-head">
-        <header class="head">
-          <p class="label river-label-head">
-            <span class="num">{zoneById.river.numeral}</span><span>{t("zone.river")}</span>
-          </p>
-          <h2 id="river-head" class="stratum-title">{t("home.riverTitle")}</h2>
-          <p class="lead">{t("home.riverLead")}</p>
-        </header>
+          <div class="pair">
+            <dl class="facts">
+              <div>
+                <dt>{t("contact.addressLabel")}</dt>
+                <dd>
+                  {t("footer.addressName")}<br />
+                  {t("footer.addressLine")}
+                </dd>
+              </div>
+              <div>
+                <dt>{t("contact.phoneMainLabel")}</dt>
+                <dd><a class="tel" href={telHref(phone)}>{phone}</a></dd>
+              </div>
+            </dl>
 
-        {/* the single horizontal on the site */}
-        <ul class="river-row">
-          {
-            riverPages.map((p) => (
-              <li>
-                <a href={href(p.href)}>
-                  <span class="tile-label">{t(p.labelKey)}</span>
-                  <span class="tile-arrow">
-                    <Icon name="arrow-right" size={16} />
-                  </span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </Stratum>
+            <ul class="rows rows-river">
+              {
+                riverPages.map((p) => (
+                  <li>
+                    <a href={href(p.href)}>{t(p.labelKey)}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </section>
     </main>
 
     <CalendarRail lang={lang} />
@@ -220,9 +237,8 @@ const riverPages = zoneById.river.pages;
 </Layout>
 
 <script>
-  // Mark the stratum you are in, so the left rail reads as a position: the
-  // stratum that crosses the middle of the screen is the current one (a
-  // ratio threshold never fires on strata taller than the viewport).
+  // Mark the zone you are in, so the left rail reads as a position: the zone
+  // that crosses the middle of the screen is the current one.
   const strata = document.querySelectorAll<HTMLElement>(".descent-main [data-zone]");
   const marks = new Map<string, Element>();
 
@@ -247,10 +263,8 @@ const riverPages = zoneById.river.pages;
     strata.forEach((s) => observer.observe(s));
   }
 
-  // The descent, felt on a phone: each stratum settles into place as you
-  // reach it. Opacity and a short transform only; nothing at all under
-  // reduced motion (the CSS never hides anything there). Anything already on
-  // screen, or anything a hash jumps to, is shown at once.
+  // Content settles in as it is reached: opacity and 8px, once. Nothing at
+  // all under reduced motion (the CSS never hides anything there).
   const revealables = document.querySelectorAll<HTMLElement>("[data-reveal]");
   const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -271,37 +285,41 @@ const riverPages = zoneById.river.pages;
   }
 
   // Return from a chamber lands at that zone's depth (#zona-<id>), never the
-  // top. Nothing to do here beyond letting the hash land — but the descent is
-  // tall, so honour reduced motion.
+  // top: show its content at once and jump without smooth scrolling.
   if (location.hash.startsWith("#zona-")) {
     const target = document.querySelector<HTMLElement>(location.hash);
     target?.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-revealed"));
-    if (target?.matches("[data-reveal]")) target.classList.add("is-revealed");
     target?.scrollIntoView({ behavior: "auto", block: "start" });
   }
 </script>
 
+<script>
+  // today's order of services, by the monastery's clock
+  const day = new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Chisinau", weekday: "short" }).format(new Date());
+  const key = ({ Mon: "monWed", Tue: "monWed", Wed: "monWed", Thu: "thu", Fri: "fri", Sat: "sat", Sun: "sun" } as Record<string, string>)[day];
+  document.querySelectorAll<HTMLElement>("[data-day]").forEach((el) => {
+    el.hidden = el.dataset.day !== key;
+  });
+</script>
+
 <style>
   /* ─── the frame and the column ───────────────────────────────────────
-     Same frame as every chamber (TempleFrame): rail | centre | rail, from
-     SOLID's tokens. Inside the centre, one column for all four strata. */
+     Same frame as every chamber (TempleFrame): rail | centre | rail. Inside
+     the centre, one column and one vertical rhythm for all four zones. */
   .descent {
-    /* one column, one gutter */
-    --col-max: var(--centre-max, 1200px);
-    --col-pad: var(--frame-pad, 16px);
-    /* one vertical rhythm */
-    --stratum-pad: var(--s-9, 64px);
-    --head-gap: var(--s-8, 48px);
-    --block-gap: var(--s-8, 48px);
-    /* the well and the door, snapped to the field */
-    --well-w: var(--s-9, 64px);
-    --door-w: var(--s-11, 96px);
+    --col-max: var(--centre-max);
+    --col-pad: var(--s-5);
+    --zone-pad: var(--s-9);
+    --head-gap: var(--s-7);
+    /* hairlines drawn from the ground's own text colour */
+    --hair: color-mix(in srgb, currentColor 20%, transparent);
+    --hair-strong: color-mix(in srgb, currentColor 55%, transparent);
 
     display: grid;
-    grid-template-columns: var(--rail-l, 208px) minmax(0, var(--centre-max, 1200px)) var(--rail-r, 240px);
+    grid-template-columns: var(--rail-l) minmax(0, var(--centre-max)) var(--rail-r);
     justify-content: center;
-    gap: 0 var(--frame-gap, var(--s-8));
-    padding: 0 var(--frame-pad, var(--s-7));
+    gap: 0 var(--frame-gap);
+    padding: 0 var(--frame-pad);
     background: var(--rock-deep);
     color: var(--parchment);
   }
@@ -310,42 +328,48 @@ const riverPages = zoneById.river.pages;
   }
   @media (min-width: 600px) {
     .descent {
-      --stratum-pad: var(--s-10, 80px);
-      --door-w: 192px;
+      --col-pad: var(--s-7);
+      --zone-pad: var(--s-11);
+      --head-gap: var(--s-8);
     }
   }
   @media (min-width: 1101px) {
     .descent {
-      /* inside the centre field the strata are framed by their own ground */
-      --col-pad: var(--s-9, 64px);
-      --stratum-pad: var(--s-11, 96px);
-      --head-gap: var(--s-9, 64px);
-      --well-w: var(--s-11, 96px);
-      --door-w: 240px;
+      --col-pad: var(--s-9);
+      --zone-pad: var(--s-12);
+      --head-gap: var(--s-9);
     }
   }
   @media (max-width: 1360px) {
     .descent {
-      grid-template-columns: var(--rail-l, 208px) minmax(0, 1fr);
+      grid-template-columns: var(--rail-l) minmax(0, 1fr);
     }
   }
   @media (max-width: 1100px) {
-    /* the rail is a drawer; the strata go full bleed */
+    /* the rail is a drawer; the zones go full bleed */
     .descent {
       grid-template-columns: minmax(0, 1fr);
       padding: 0;
     }
   }
 
-  /* scroll reveal — phones and tablets, where the descent is the whole
-     screen. Short and crisp: 8px, one duration, no overshoot. */
+  /* below 1360px the calendar is a fold after the descent, on the column */
+  @media (max-width: 1360px) {
+    .descent > :global(.rail-right) {
+      margin: 0;
+      padding: var(--s-8) var(--col-pad) var(--s-9);
+      border-top: 0;
+    }
+  }
+
+  /* scroll reveal — phones and tablets. 8px, one duration, no overshoot. */
   @media (max-width: 1100px) and (prefers-reduced-motion: no-preference) {
     :global(html.js .descent [data-reveal]) {
       opacity: 0;
-      transform: translateY(var(--s-2, 8px));
+      transform: translateY(var(--s-2));
       transition:
-        opacity var(--dur-3, 220ms) var(--ease-out, ease-out),
-        transform var(--dur-3, 220ms) var(--ease-out, ease-out);
+        opacity var(--dur-3) var(--ease-out),
+        transform var(--dur-3) var(--ease-out);
     }
     :global(html.js .descent [data-reveal].is-revealed) {
       opacity: 1;
@@ -353,404 +377,432 @@ const riverPages = zoneById.river.pages;
     }
   }
 
-  /* below 1360px the calendar is not a rail but a fold after the descent:
-     on the same column as the strata, the foundation course above the
-     footer. */
-  @media (max-width: 1360px) {
-    .descent > :global(.rail-right) {
-      margin: 0;
-      padding: var(--s-4, var(--s-4)) var(--col-pad) var(--s-8, var(--s-8));
-      border-top: 0;
-    }
-  }
-  @media (min-width: 1101px) and (max-width: 1360px) {
-    /* beside the left rail: the fold sits under the strata, so it takes the
-       strata's inner gutter too */
-    .descent > :global(.rail-right) {
-      padding-left: var(--col-pad);
-      padding-right: var(--col-pad);
-    }
+  .col {
+    width: 100%;
+    max-width: var(--col-max);
+    margin: 0 auto;
+    padding: 0 var(--col-pad);
   }
 
-  /* ─── the head: label → title → lead, identical in every stratum ───── */
-  .label {
-    gap: var(--s-3, var(--s-3));
+  /* ─── type: one hierarchy, sentence case, Georgia throughout ───────── */
+  .h1,
+  .h2,
+  .h3 {
     margin: 0;
-  }
-  .num {
-    font-variant-numeric: tabular-nums;
-  }
-  .stratum-title {
-    margin: var(--s-4, var(--s-4)) 0 0;
+    font-weight: 400;
+    text-wrap: balance;
     overflow-wrap: break-word;
   }
-  .lead {
-    margin: var(--s-5, var(--s-5)) 0 0;
+  .h1 {
+    font-size: clamp(36px, 5.2vw, 64px);
+    line-height: 1.08;
+    letter-spacing: -0.005em;
   }
-  @media (max-width: 1100px) {
-    /* "CASA DUMNEZEIEȘTII" is one word long; it must fit 320 css px */
-    .stratum-title {
-      font-size: clamp(26px, 8vw, 52px);
-    }
+  .h2 {
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.15;
   }
-  @media (max-width: 599px) {
-    /* the first screen holds seal, title, lead and the well on a 360×780
-       phone; the lead steps down one size to make that true */
-    .lead {
-      font-size: 18px;
-      line-height: 1.6;
-    }
-  }
-
-  /* ─── I · ROCK ──────────────────────────────────────────────────────── */
-  .seal {
-    display: block;
-    width: var(--s-9, 64px);
-    height: auto;
-    margin-bottom: var(--s-6, var(--s-6));
-  }
-  @media (min-width: 1101px) {
-    .seal {
-      width: var(--s-11, 96px);
-    }
-  }
-
-  /* the act — one per stratum, never mistaken for text: a solid slab, a
-     hairline frame, the label in capitals and a square arrow box */
-  .act {
-    position: relative;
-    z-index: 4;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--s-4, var(--s-4));
-    min-height: var(--s-10, 80px);
-    padding: var(--s-4, var(--s-4)) var(--s-4, var(--s-4)) var(--s-4, var(--s-4)) var(--s-5, var(--s-5));
-    color: var(--parchment);
-    text-decoration: none;
-    background: var(--rock-deep);
-    border: var(--rule, 1px) solid rgb(244 239 228 / 28%);
-    transition:
-      background var(--dur-1, 120ms) var(--ease-out, ease-out),
-      border-color var(--dur-1, 120ms) var(--ease-out, ease-out),
-      transform var(--dur-1, 120ms) var(--ease-out, ease-out);
-  }
-  .act:hover {
-    background: var(--hinge-ground);
-    border-color: var(--ochre);
-  }
-  .act-text {
-    display: grid;
-    gap: var(--s-1, var(--s-1));
-    min-width: 0;
-  }
-  .act-label {
-    font-size: 15px;
+  .h3 {
+    padding-bottom: var(--s-3);
+    border-bottom: var(--rule) solid var(--hair-strong);
+    font-size: 21px;
     line-height: 1.3;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
   }
-  .act-hint {
-    font-size: 16px;
-    line-height: 1.45;
-    opacity: 0.8;
+  .lead {
+    max-width: var(--measure);
+    margin: var(--s-4) 0 0;
+    font-size: 19px;
+    line-height: 1.6;
+    opacity: 0.86;
+    text-wrap: pretty;
   }
-  .act-arrow {
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: var(--tap, 48px);
-    height: var(--tap, 48px);
-    border: var(--rule, 1px) solid rgb(244 239 228 / 40%);
-    font-size: 20px;
-    line-height: 1;
-  }
-
-  /* the well mouth: the act sits ON the shaft. you lower it. */
-  .well-mouth {
-    margin-top: var(--head-gap);
-  }
-  .well-mouth:hover {
-    transform: translateY(var(--s-1, 4px));
-  }
-  /* the shaft runs behind the words, not across them: inside the stratum's
-     .wrap (its own stacking context) -1 sits under the text, over the plate */
-  .well-run :global(.well) {
-    z-index: -1;
-  }
-  .well-run {
-    position: relative;
-    height: var(--s-11, 96px);
-  }
-  @media (min-width: 1101px) {
-    .well-run {
-      height: var(--s-12, 128px);
+  @media (min-width: 600px) {
+    .lead {
+      font-size: var(--t-lead);
     }
   }
 
-  /* ─── II · GREEN ───────────────────────────────────────────────────── */
-  .green-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--block-gap);
-    margin-top: var(--head-gap);
+  /* photographs: full colour, full strength, no overlay */
+  .photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
-  @media (min-width: 768px) {
-    .green-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--s-8, var(--s-8));
-    }
-  }
-
-  /* a block head is a table head: capitals in the text colour, closed by
-     the emphasis rule; the rows below are hairlines */
-  .block-head {
+  .figure {
     margin: 0;
-    padding-bottom: var(--s-3, var(--s-3));
-    border-bottom: var(--rule-2, 2px) solid var(--line-strong);
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
   }
-  .block-meta {
-    margin: 0;
-    padding: var(--s-3, var(--s-3)) 0;
-    border-bottom: var(--rule, 1px) solid var(--line);
-    font-size: var(--t-label);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
+  .caption {
+    padding-top: var(--s-3);
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.5;
     opacity: 0.7;
   }
 
+  .zone {
+    position: relative;
+  }
+
+  /* ─── I · STÂNCA ───────────────────────────────────────────────────── */
+  .z-rock {
+    background: var(--rock-deep);
+    padding-bottom: var(--zone-pad);
+  }
+  .photo-hero {
+    aspect-ratio: 4 / 3;
+    object-position: 50% 78%;
+  }
+  .hero {
+    padding-top: var(--s-6);
+  }
+  .dedication {
+    margin: var(--s-2) 0 0;
+    font-size: 19px;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--gold);
+  }
+  .purpose {
+    max-width: var(--measure);
+    margin: var(--s-4) 0 0;
+    font-size: 18px;
+    line-height: 1.55;
+    opacity: 0.86;
+    text-wrap: pretty;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    margin-top: var(--s-6);
+  }
+  .btn {
+    flex: 1 1 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap);
+    padding: var(--s-3) var(--s-5);
+    border: var(--rule) solid transparent;
+    font-size: 17px;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color var(--dur-1) var(--ease-out),
+      border-color var(--dur-1) var(--ease-out),
+      color var(--dur-1) var(--ease-out);
+  }
+  .btn-primary {
+    background: var(--parchment);
+    color: var(--ink);
+  }
+  .btn-primary:hover {
+    background: var(--gold);
+  }
+  .btn-quiet {
+    border-color: var(--hair-strong);
+    color: var(--parchment);
+  }
+  .btn-quiet:hover {
+    border-color: var(--parchment);
+  }
+  @media (min-width: 600px) {
+    .photo-hero {
+      aspect-ratio: 16 / 9;
+    }
+    .hero {
+      padding-top: var(--s-8);
+    }
+    .btn {
+      flex: 0 0 auto;
+      padding-inline: var(--s-6);
+    }
+  }
+  @media (min-width: 1101px) {
+    .photo-hero {
+      aspect-ratio: auto;
+      height: clamp(320px, 50vh, 520px);
+    }
+    .dedication {
+      font-size: 22px;
+    }
+    .purpose {
+      font-size: var(--t-lead);
+    }
+  }
+
+  /* ─── II · MĂNĂSTIREA VIE ──────────────────────────────────────────── */
+  .z-green {
+    background: var(--green);
+    padding-bottom: var(--zone-pad);
+  }
+  .photo-wide {
+    aspect-ratio: 3 / 2;
+    object-position: 50% 58%;
+  }
+  @media (min-width: 600px) {
+    .photo-wide {
+      aspect-ratio: 2 / 1;
+    }
+  }
+  .zone-body {
+    padding-top: var(--s-8);
+  }
+  @media (min-width: 600px) {
+    .zone-body {
+      padding-top: var(--s-10);
+    }
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-8);
+    margin-top: var(--head-gap);
+  }
+  @media (min-width: 768px) {
+    .pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--s-8);
+    }
+  }
+
+  .meta {
+    margin: var(--s-3) 0 0;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.5;
+    opacity: 0.72;
+  }
   .hours {
-    margin: 0;
+    margin: var(--s-2) 0 0;
   }
   .hour {
     display: grid;
-    grid-template-columns: var(--s-10, 80px) minmax(0, 1fr);
+    grid-template-columns: var(--s-10) minmax(0, 1fr);
     align-items: baseline;
-    border-bottom: var(--rule, 1px) solid var(--line);
+    border-bottom: var(--rule) solid var(--hair);
   }
   .hours dt,
   .hours dd {
     margin: 0;
-    padding: var(--s-3, var(--s-3)) 0;
+    padding: var(--s-3) 0;
     line-height: 1.5;
-    font-variant-numeric: tabular-nums;
   }
   .hours dt {
-    letter-spacing: 0.06em;
-  }
-  .hours dd {
-    opacity: 0.88;
+    font-variant-numeric: tabular-nums lining-nums;
   }
 
-  .post-list {
+  .posts {
     list-style: none;
     margin: 0;
     padding: 0;
   }
-  .post-list a {
+  .posts a {
     display: grid;
-    gap: var(--s-1, var(--s-1));
-    padding: var(--s-4, var(--s-4)) 0;
-    border-bottom: var(--rule, 1px) solid var(--line);
-    text-decoration: none;
+    gap: var(--s-1);
+    padding: var(--s-4) 0;
+    border-bottom: var(--rule) solid var(--hair);
     color: inherit;
-    transition: color var(--dur-1, 120ms) var(--ease-out, ease-out);
+    text-decoration: none;
   }
-  .post-list a:hover .post-title {
-    color: var(--ochre);
-  }
-  .post-list time {
-    font-size: var(--t-label);
+  .posts time {
+    font-size: 14px;
     line-height: 1.4;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    opacity: 0.7;
+    opacity: 0.68;
+    font-variant-numeric: lining-nums;
   }
   .post-title {
     font-size: 17px;
     line-height: 1.45;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: var(--rule);
+    transition: text-decoration-color var(--dur-1) var(--ease-out);
+  }
+  .posts a:hover .post-title {
+    text-decoration-color: currentColor;
   }
   .empty {
     margin: 0;
-    padding: var(--s-4, var(--s-4)) 0;
-    border-bottom: var(--rule, 1px) solid var(--line);
-    opacity: 0.6;
+    padding: var(--s-4) 0;
+    border-bottom: var(--rule) solid var(--hair);
     font-style: italic;
+    opacity: 0.6;
   }
 
-  /* "more" closes a block: a full-width row with its arrow, not loose text */
+  /* a block closes with one plain text link, underlined */
   .more {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--s-4, var(--s-4));
-    min-height: var(--tap, 48px);
-    font-size: 12px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--ochre);
-    text-decoration: none;
+    min-height: var(--tap);
+    margin-top: var(--s-2);
+    font-size: 16px;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--hair-strong);
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: var(--rule);
+    transition: text-decoration-color var(--dur-1) var(--ease-out);
   }
-  .more::after,
-  .index a::after {
-    content: "";
-    flex: none;
-    inline-size: 16px;
-    block-size: 16px;
-    background: currentColor;
-    mask: var(--icon-arrow-right) center / contain no-repeat;
-    transition: transform var(--dur-1, 120ms) var(--ease-out, ease-out);
-  }
-  .more:hover::after,
-  .index a:hover::after {
-    transform: translateX(var(--s-1, 4px));
+  .more:hover {
+    text-decoration-color: currentColor;
   }
 
-  /* the chambers behind a stratum: ruled rows, the same in every zone */
-  .index {
-    list-style: none;
-    margin: var(--block-gap) 0 0;
-    padding: 0;
-    border-top: var(--rule-2, 2px) solid var(--line-strong);
+  /* ─── III · RACLA ──────────────────────────────────────────────────── */
+  .z-gold {
+    background: var(--pall);
+    padding: var(--zone-pad) 0;
+  }
+  .shrine {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    column-gap: var(--s-8, var(--s-8));
+    gap: var(--s-7);
   }
-  /* a row of the grid is one height: every cell's rule lands on one line */
-  .index li {
-    display: flex;
+  .photo-shrine-frame {
+    display: block;
   }
-  .index a {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--s-4, var(--s-4));
-    min-height: var(--tap, 48px);
-    padding: var(--s-2, var(--s-2)) 0;
-    border-bottom: var(--rule, 1px) solid var(--line);
-    color: inherit;
-    text-decoration: none;
-    font-size: 17px;
-    line-height: 1.4;
+  .photo-shrine {
+    aspect-ratio: 4 / 3;
+    object-position: 40% 50%;
   }
-  .index a::after {
-    color: var(--ochre);
-  }
-  .index a:hover {
-    color: var(--ochre);
-  }
-  @media (min-width: 768px) {
-    .index-green {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+  @media (max-width: 899px) {
+    /* on a phone every photograph runs edge to edge; the zone opens on it */
+    .z-gold {
+      padding-top: 0;
+    }
+    .photo-shrine {
+      width: calc(100% + 2 * var(--col-pad));
+      max-width: none;
+      margin-inline: calc(-1 * var(--col-pad));
     }
   }
-  @media (min-width: 1361px) {
-    .index-green {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+  @media (min-width: 600px) and (max-width: 899px) {
+    .photo-shrine {
+      aspect-ratio: 2 / 1;
     }
   }
-
-  /* ─── III · GOLD, the hinge ────────────────────────────────────────── */
-  .gold-label,
-  .gold-title {
+  .gold {
     color: var(--gold);
   }
-  /* a narrower title, so the door never covers it beside the text */
-  .gold-title {
-    letter-spacing: 0.06em;
-  }
-  @media (min-width: 600px) {
-    .gold-title {
-      font-size: clamp(28px, 3vw, 40px);
-    }
-  }
-  .acatist {
-    margin: 0;
-    padding-left: var(--s-5, var(--s-5));
-    border-left: var(--rule-2, 2px) solid var(--gold);
-    font-style: italic;
+  .prayer {
+    max-width: var(--measure-gold);
+    margin: var(--s-5) 0 0;
+    padding-left: var(--s-5);
+    border-left: var(--rule-2) solid var(--gold);
     font-size: var(--t-quote);
+    font-style: italic;
     line-height: 1.6;
     opacity: 0.9;
   }
-  /* the door's grid spaces quote and links (one row gap); no margin here */
-  .index-gold {
-    margin-top: 0;
-  }
-  .index-gold a,
-  .index-gold a::after,
-  .index-gold a:hover {
-    color: var(--gold);
-  }
-  .index-gold a:hover {
-    border-bottom-color: var(--gold);
-  }
-
-  /* ─── IV · RIVER. Movement: sideways — the only horizontal ─────────── */
-  .river-label-head {
-    color: var(--river-strong);
-  }
-  .river-row {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--lattice, 2px);
-    margin: var(--head-gap) 0 0;
-    padding: 0;
-  }
   @media (min-width: 900px) {
-    .river-row {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* the photograph beside the words, off their axis */
+    .shrine {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--s-8);
+      align-items: start;
+    }
+    .photo-shrine-frame {
+      order: 2;
+    }
+    .photo-shrine {
+      aspect-ratio: 4 / 5;
     }
   }
-  .river-row a {
+
+  /* ruled rows of plain links — the chambers behind a zone */
+  .rows {
+    list-style: none;
+    max-width: var(--measure-gold);
+    margin: var(--s-7) 0 0;
+    padding: 0;
+    border-top: var(--rule) solid var(--hair-strong);
+  }
+  .rows a {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: var(--s-4, var(--s-4));
-    height: 100%;
-    min-height: var(--s-12, 128px);
-    padding: var(--s-4, var(--s-4));
-    background: var(--river-ink);
-    border-top: var(--bar, 4px) solid var(--river);
-    color: var(--parchment);
+    align-items: center;
+    min-height: var(--tap);
+    padding: var(--s-2) 0;
+    border-bottom: var(--rule) solid var(--hair);
+    color: inherit;
+    font-size: 17px;
+    line-height: 1.4;
     text-decoration: none;
-    transition: background var(--dur-1, 120ms) var(--ease-out, ease-out);
+    transition: color var(--dur-1) var(--ease-out);
   }
-  .river-row a:hover {
-    background: var(--river-strong);
+  .z-gold .rows a:hover {
+    color: var(--gold);
   }
-  .tile-label {
+
+  /* ─── IV · NISTRU — bright, practical, read in a car park ──────────── */
+  .z-river {
+    background: var(--river-pale);
+    color: var(--river-ink);
+    padding-bottom: var(--zone-pad);
+  }
+  .photo-river {
+    aspect-ratio: 3 / 2;
+    object-position: 50% 78%;
+  }
+  @media (min-width: 600px) {
+    .photo-river {
+      aspect-ratio: 5 / 2;
+    }
+  }
+  .facts {
+    margin: 0;
+  }
+  .facts div {
+    padding: var(--s-4) 0;
+    border-top: var(--rule) solid var(--hair-strong);
+  }
+  .facts div + div {
+    border-top-color: var(--hair);
+  }
+  .facts dt {
     font-size: 15px;
-    line-height: 1.35;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    overflow-wrap: break-word;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--river-muted);
   }
-  .tile-arrow {
-    align-self: flex-end;
-    font-size: 20px;
-    line-height: 1;
-    transition: transform var(--dur-1, 120ms) var(--ease-out, ease-out);
+  .facts dd {
+    margin: var(--s-1) 0 0;
+    font-size: 17px;
+    line-height: 1.55;
   }
-  .river-row a:hover .tile-arrow {
-    transform: translateX(var(--s-1, 4px));
+  .tel {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    color: var(--river-strong);
+    font-variant-numeric: tabular-nums lining-nums;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: var(--rule);
+  }
+  .rows-river {
+    max-width: none;
+    margin-top: 0;
+  }
+  .rows-river a {
+    color: var(--river-strong);
+  }
+  .rows-river a:hover {
+    color: var(--river-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: var(--rule);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .act,
-    .well-mouth:hover,
-    .more::after,
-    .index a::after,
-    .tile-arrow {
+    .btn,
+    .more,
+    .post-title,
+    .rows a {
       transition: none;
-      transform: none;
     }
   }
 </style>

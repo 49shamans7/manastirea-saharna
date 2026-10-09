@@ -21,7 +21,7 @@ const today = new Date();
 const dateLocale = lang === "ru" ? "ru-RU" : lang === "en" ? "en-GB" : "ro-RO";
 ---
 
-<aside class="rail-right" aria-labelledby="calendar-rail-label">
+<aside class="rail-right" aria-labelledby="calendar-rail-label" data-frame-title={t("calendar.label")}>
   <p class="rail-label" id="calendar-rail-label">{t("calendar.label")}</p>
 
   {/* below 1360px the rail is not beside the text but after it, folded */}
@@ -111,6 +111,20 @@ const dateLocale = lang === "ru" ? "ru-RU" : lang === "en" ? "en-GB" : "ro-RO";
     });
   }
 
+  // The embed's iframe arrives untitled (WCAG 4.1.2): name it after the rail.
+  // Beside the text the rail scrolls inside itself once the embed is tall,
+  // so the keyboard must be able to reach that scroll (2.1.1).
+  if (slot && aside) {
+    const fit = () => {
+      const frame = slot.querySelector("iframe");
+      if (frame && !frame.title) frame.title = aside.dataset.frameTitle ?? "";
+      if (wide.matches && aside.scrollHeight > aside.clientHeight + 1) aside.tabIndex = 0;
+      else aside.removeAttribute("tabindex");
+    };
+    new MutationObserver(fit).observe(slot, { childList: true, subtree: true, attributes: true });
+    window.addEventListener("resize", fit, { passive: true });
+  }
+
   if (wide.matches) loadEmbed();
   wide.addEventListener("change", (event) => {
     if (event.matches) loadEmbed();
@@ -132,11 +146,12 @@ const dateLocale = lang === "ru" ? "ru-RU" : lang === "en" ? "en-GB" : "ro-RO";
   }
 
   .rail-label {
-    margin: 0 0 var(--s-3);
-    font-size: var(--t-label);
-    letter-spacing: 0.32em;
+    margin: 0 0 var(--s-2);
+    font-size: var(--t-kicker);
+    line-height: var(--s-4);
+    letter-spacing: var(--track-kicker);
     text-transform: uppercase;
-    color: var(--ochre);
+    color: var(--kicker, var(--ochre));
   }
 
   .calendar-toggle {
@@ -145,15 +160,17 @@ const dateLocale = lang === "ru" ? "ru-RU" : lang === "en" ? "en-GB" : "ro-RO";
 
   .today {
     display: block;
-    font-size: 15px;
+    font-size: var(--t-ui);
     line-height: 1.4;
-    opacity: 0.85;
+    opacity: 0.88;
     margin-bottom: var(--s-4);
-    text-transform: lowercase;
+  }
+  .today::first-letter {
+    text-transform: uppercase;
   }
 
   .calendar-slot {
-    border-top: var(--rule-2) solid var(--line-strong);
+    border-top: var(--rule) solid var(--line-strong);
     padding-top: var(--s-4);
   }
   .calendar-slot :global(iframe) {
@@ -208,7 +225,6 @@ const dateLocale = lang === "ru" ? "ru-RU" : lang === "en" ? "en-GB" : "ro-RO";
     }
     .calendar-toggle .rail-label {
       margin: 0;
-      font-size: 12px;
     }
     .chevron {
       width: var(--s-2);
@@ -223,7 +239,6 @@ const dateLocale = lang === "ru" ? "ru-RU" : lang === "en" ? "en-GB" : "ro-RO";
       transform: rotate(-135deg);
     }
     .today {
-      font-size: 16px;
       margin-bottom: var(--s-3);
     }
     .calendar-slot {

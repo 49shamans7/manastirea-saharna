@@ -26,6 +26,20 @@ An identity document must be shown in order to stay in the pilgrims' house.
 
 Keeping the daily routine, attending the services and taking part in the obediences are compulsory. Breaking these rules means being asked to leave.
 
+## Daily order
+
+From the guest house regulations as the monastery publishes them in Romanian.
+
+1. Keeping quiet and good order is the first condition of staying in the guest house. People of different ages and walks of life stay here, so please be friendly and understanding towards one another.
+2. The purpose of your visit is prayer, so the wake-up is at 5.30 (on feast days at 6.30), so that you can be present at the morning service. The evening service begins at 16.45. Attendance at the services is obligatory.
+3. Pilgrims eat after the monks and novices: at 9.30, 14.30 and 20.30 on weekdays; on Sundays and feast days at 13.30 and 20.30. Depending on the day and circumstances there may be changes, and pilgrims are told of them.
+4. Keep valuables and money on you, to avoid awkward situations such as theft or mix-ups. If you have very expensive things with you, please hand them for safekeeping to the father responsible for pilgrims' accommodation for as long as you are on the monastery grounds.
+5. The donation for accommodation is a symbolic one and does not cover all the costs of keeping the guest house, so please lend a hand with the daily work of the monastery.
+6. Accommodation is given on presentation of an identity document.
+7. Keeping these rules is obligatory for everyone.
+
+We ask your forgiveness for the simple conditions and for any inconvenience. For other information about the daily order of work and prayer, ask the father responsible for accommodation or the monastery secretary.
+
 ## Information
 
-<a class="tap" href="tel:+37369929280">+373 699 29280</a> — from 20:00 to 21:00, local time.
+<a class="tap" href="tel:+37369929280">+373 69 929 280</a> — from 20:00 to 21:00, local time.

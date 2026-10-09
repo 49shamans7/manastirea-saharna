@@ -90,6 +90,7 @@ const languageItems = [
   .brand {
     display: flex;
     align-items: center;
+    min-height: var(--tap);
     gap: var(--s-3);
     min-width: 0;
     color: var(--parchment);
@@ -101,9 +102,10 @@ const languageItems = [
   .brand-name {
     display: grid;
     gap: 2px;
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    /* Georgia, named first: ui-serif is New York on Apple — a third face */
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 13px;
-    line-height: 0.95;
+    line-height: 1;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -119,10 +121,10 @@ const languageItems = [
   .langs {
     display: flex;
     align-items: center;
-    color: color-mix(in srgb, var(--parchment) 80%, transparent);
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 12px;
+    color: color-mix(in srgb, var(--parchment) 82%, transparent);
+    font-size: 13px;
     line-height: 16px;
+    letter-spacing: 0.06em;
   }
   .lang {
     display: inline-flex;
@@ -132,8 +134,7 @@ const languageItems = [
     min-width: var(--s-7);
     margin-left: calc(-1 * var(--rule));
     padding: 0 var(--s-2);
-    border: var(--rule) solid color-mix(in srgb, var(--parchment) 30%, transparent);
-    font-weight: 700;
+    border: var(--rule) solid color-mix(in srgb, var(--parchment) 22%, transparent);
     transition:
       color var(--dur-1) var(--ease-out),
       border-color var(--dur-1) var(--ease-out);
@@ -160,8 +161,8 @@ const languageItems = [
     justify-content: center;
     width: var(--s-6);
     height: var(--s-6);
-    border: var(--rule) solid color-mix(in srgb, var(--parchment) 30%, transparent);
-    color: color-mix(in srgb, var(--parchment) 80%, transparent);
+    border: var(--rule) solid transparent;
+    color: color-mix(in srgb, var(--parchment) 82%, transparent);
     transition:
       color var(--dur-1) var(--ease-out),
       border-color var(--dur-1) var(--ease-out);
@@ -178,7 +179,7 @@ const languageItems = [
     justify-content: center;
     width: var(--tap);
     height: var(--tap);
-    border: var(--rule) solid color-mix(in srgb, var(--parchment) 40%, transparent);
+    border: var(--rule) solid color-mix(in srgb, var(--parchment) 22%, transparent);
     background: transparent;
     color: var(--parchment);
     cursor: pointer;
@@ -187,8 +188,7 @@ const languageItems = [
       background-color var(--dur-1) var(--ease-out);
   }
   .opener:hover {
-    border-color: var(--parchment);
-    background: color-mix(in srgb, var(--paper) 10%, transparent);
+    border-color: color-mix(in srgb, var(--parchment) 60%, transparent);
   }
 
   @media (width < 1100px) {
@@ -198,9 +198,13 @@ const languageItems = [
     .tools {
       gap: var(--s-2);
     }
+    /* on a phone the strip loses its frame: the current language is the
+       one filled cell, the others are plain letters beside it */
     .lang {
       height: var(--tap);
       min-width: var(--tap-min);
+      margin-left: 0;
+      border-color: transparent;
     }
     .find {
       width: var(--tap);

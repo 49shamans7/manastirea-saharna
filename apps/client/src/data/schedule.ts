@@ -114,12 +114,60 @@ export const schedule: ServiceDay[] = [
   },
 ];
 
-/** The lead times shown on the homepage — one line per day that has a Liturgy. */
+/**
+ * The lead times shown on the homepage: the Monday–Wednesday order (label it
+ * with `schedule.monWed`). For the reader's own day use `serviceDayFor`.
+ */
 export const homeHours: Service[] = [
   { time: "05.45", name: "Rugăciunile dimineții" },
   { time: "06.30", name: "Sfânta Liturghie" },
   { time: "08.30", name: "Tedeum la moaștele Sf. Cuv. Macarie" },
   { time: "17.00", name: "Vecernia și Utrenia" },
+];
+
+/**
+ * The feasts (hramuri) the monastery keeps, as its own texts date them. Dates
+ * are given old/new style where the monastery writes them so (it keeps the
+ * Julian calendar). Sources in msaharna-archive: the hram invitations in the
+ * chronicle (Holy Trinity, Pentecost), Viața Cuviosului Macarie (13/26 May),
+ * Istoria Sfintei Mănăstiri (Nativity of the Theotokos 8/21 Sept; Pochaev
+ * icon, 5 August). Not rendered yet — meant for /slujbe, under `schedule.feastsTitle`.
+ */
+export type Feast = { date: { ro: string; en: string; ru: string }; name: { ro: string; en: string; ru: string } };
+
+export const feasts: Feast[] = [
+  {
+    date: { ro: "Duminica Cincizecimii", en: "Sunday of Pentecost", ru: "День Святой Троицы" },
+    name: {
+      ro: "Hramul mănăstirii: Preasfânta Treime",
+      en: "Feast of the monastery: the Holy Trinity",
+      ru: "Престольный праздник обители: Святая Троица",
+    },
+  },
+  {
+    date: { ro: "13/26 mai", en: "13/26 May", ru: "13/26 мая" },
+    name: {
+      ro: "Cuviosul Macarie de la Saharna",
+      en: "Venerable Macarius of Saharna",
+      ru: "Преподобный Макарий Сахарнянский",
+    },
+  },
+  {
+    date: { ro: "5 august", en: "5 August", ru: "5 августа" },
+    name: {
+      ro: "Icoana Maicii Domnului de la Poceaev",
+      en: "The Pochaev Icon of the Mother of God",
+      ru: "Почаевская икона Божией Матери",
+    },
+  },
+  {
+    date: { ro: "8/21 septembrie", en: "8/21 September", ru: "8/21 сентября" },
+    name: {
+      ro: "Nașterea Maicii Domnului, hramul bisericii de iarnă",
+      en: "Nativity of the Theotokos, feast of the winter church",
+      ru: "Рождество Пресвятой Богородицы, престольный праздник зимнего храма",
+    },
+  },
 ];
 
 /**
@@ -171,11 +219,11 @@ const serviceNames: Record<string, { en: string; ru: string }> = {
     ru: "Божественная литургия в трапезном храме святителя Николая",
   },
   "Sfânta Liturghie în biserica „Nașterea Maicii Domnului”": {
-    en: "Divine Liturgy in the Church of the Nativity of the Mother of God",
+    en: "Divine Liturgy in the Church of the Nativity of the Theotokos",
     ru: "Божественная литургия в храме Рождества Пресвятой Богородицы",
   },
   "Sfânta Liturghie în biserica „Sf. Treime”": {
-    en: "Divine Liturgy in the Holy Trinity Church",
+    en: "Divine Liturgy in the Church of the Holy Trinity",
     ru: "Божественная литургия в Свято-Троицком храме",
   },
   "Sfânta Liturghie": { en: "Divine Liturgy", ru: "Божественная литургия" },
@@ -184,16 +232,27 @@ const serviceNames: Record<string, { en: string; ru: string }> = {
     ru: "Молебен у иконы Божией Матери «Неупиваемая Чаша»",
   },
   "Tedeum la moaștele Sf. Cuv. Macarie": {
-    en: "Moleben at the relics of St Macarius",
+    en: "Moleben at the relics of Venerable Macarius",
     ru: "Молебен у мощей преподобного Макария",
   },
   "Vecernia și Utrenia": { en: "Vespers and Matins", ru: "Вечерня и утреня" },
   "Vecernia și Utrenia, ceasul 1": { en: "Vespers, Matins and the First Hour", ru: "Вечерня, утреня и 1-й час" },
   "Miercuri la icoana cu o particică de moaște a Sf. Fer. Matrona de la Moscova": {
-    en: "On Wednesdays at the icon with a relic of St Matrona of Moscow",
+    en: "On Wednesdays at the icon with a particle of the relics of Blessed Matrona of Moscow",
     ru: "По средам — у иконы с частицей мощей блаженной Матроны Московской",
   },
 };
+
+/**
+ * The schedule entry for a weekday (0 = Sunday … 6 = Saturday, as Date#getDay).
+ * A static page cannot know the date, so call this in the browser with the
+ * monastery's own day: new Date().toLocaleString("en-US", { timeZone: "Europe/Chisinau" }).
+ */
+export function serviceDayFor(weekday: number): ServiceDay | undefined {
+  const key = ["sun", "monWed", "monWed", "monWed", "thu", "fri", "sat"][weekday];
+
+  return schedule.find((day) => day.key === key);
+}
 
 /** A service name or note in the reader's language; Romanian if untranslated. */
 export function serviceText(text: string, lang: string): string {

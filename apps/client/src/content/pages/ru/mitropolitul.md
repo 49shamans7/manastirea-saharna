@@ -3,7 +3,7 @@
 # Romanian original (src/data/pages.ts shows it under lang="ro").
 title: "Митрополит"
 eyebrow: "Живая обитель · зона II"
-lead: "Предстоятель Православной Церкви Молдовы."
+lead: "Высокопреосвященнейший Владимир, митрополит Кишинёвский и всея Молдовы, Предстоятель Православной Церкви Молдовы."
 zone: green
 template: chamber
 order: 2

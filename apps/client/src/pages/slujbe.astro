@@ -3,7 +3,7 @@
 // Saharna serves two Liturgies on Thursday, Saturday and Sunday, in three
 // different churches; that structure is the information, so the table keeps it.
 import TableLayout from "@layouts/TableLayout.astro";
-import { schedule, serviceText } from "@data/schedule";
+import { feasts, schedule, serviceText } from "@data/schedule";
 import type { AllTranslationKeys } from "@i18n";
 import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "@i18n/utils";
 
@@ -11,7 +11,7 @@ const lang = getLocaleFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<TableLayout title={t("zone.slujbe")} eyebrow={t("slujbe.eyebrow")} lead={t("slujbe.lead")}>
+<TableLayout title={t("zone.slujbe")} lead={t("slujbe.lead")}>
   {
     schedule.map((day) => (
       <section class="day">
@@ -19,7 +19,7 @@ const t = useTranslations(lang);
         {day.blocks.map((block) => (
           <>
             {block.titleKey && <h3 class="liturgy">{t(block.titleKey as AllTranslationKeys)}</h3>}
-            <dl>
+            <dl class="hours">
               {block.services.map((service) => (
                 <>
                   <dt>{service.time}</dt>
@@ -37,6 +37,21 @@ const t = useTranslations(lang);
   }
 
   <p class="caveat">{t("schedule.caveat")}</p>
+
+  <section class="feasts">
+    <h2>{t("schedule.feastsTitle")}</h2>
+    <dl>
+      {
+        feasts.map((feast) => (
+          <>
+            <dt>{feast.date[lang]}</dt>
+            <dd>{feast.name[lang]}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </section>
+
   <p><a href={getLocalizedPath("/posts", lang)}>{t("zone.cronica")}</a></p>
 </TableLayout>
 
@@ -44,31 +59,29 @@ const t = useTranslations(lang);
   .day {
     break-inside: avoid;
   }
+  /* the hour is the information: it reads at text size, in the strong
+     blue, on tabular figures */
+  .hours :global(dt) {
+    font-size: var(--t-body);
+    color: var(--river-strong);
+  }
   .liturgy {
-    font-size: 13px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--river-link);
     margin: var(--s-6) 0 var(--s-2);
+  }
+  h2 + .liturgy {
+    margin-top: 0;
   }
   .note {
     display: block;
-    font-size: 14px;
-    opacity: 0.66;
-    font-style: italic;
     margin-top: var(--s-1);
-  }
-  @media (max-width: 767px) {
-    .note,
-    .caveat {
-      font-size: 16px;
-    }
+    font-size: var(--t-meta);
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--river-muted);
   }
   .caveat {
     margin-top: var(--s-8);
-    padding-top: var(--s-4);
-    border-top: var(--rule) solid var(--line);
-    font-size: 14px;
-    opacity: 0.72;
+    font-size: var(--t-meta);
+    color: var(--river-muted);
   }
 </style>

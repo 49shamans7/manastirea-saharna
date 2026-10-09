@@ -65,4 +65,96 @@
     padding-left: max(var(--frame-pad), env(safe-area-inset-left));
     padding-right: max(var(--frame-pad), env(safe-area-inset-right));
   }
+
+  /* THE PAGE HEAD — one head for every page in the frame: an optional
+     kicker (only where it orients: a date, a count, an error code), the
+     title, an optional standfirst, one hairline. Chamber, Table, the
+     cronică, galerie, obștea, pomelnic, căutare and 404 all wear it. */
+  .page-head {
+    position: relative;
+    isolation: isolate;
+    padding-bottom: var(--s-6);
+    margin-bottom: var(--head-gap);
+    border-bottom: var(--rule) solid var(--line);
+  }
+  .page-kicker {
+    margin: 0 0 var(--s-4);
+    font-size: var(--t-meta);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    color: var(--kicker, var(--ochre));
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .page-title {
+    margin: 0;
+    font-size: var(--t-title);
+    font-weight: 400;
+    line-height: var(--lh-title);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  .page-title.is-long {
+    font-size: var(--t-title-long);
+    line-height: 1.18;
+  }
+  .page-lead {
+    max-width: var(--measure);
+    margin: var(--s-5) 0 0;
+    font-size: var(--t-standfirst);
+    line-height: var(--lh-lead);
+    text-wrap: pretty;
+    opacity: 0.86;
+  }
+  .page-meta {
+    margin: var(--s-4) 0 0;
+    font-size: var(--t-meta);
+    line-height: 1.4;
+    opacity: 0.72;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  /* BUTTONS — two, no third. A flat fill for the one thing a page asks of
+     you; a hairline for everything else. Sentence case, the text face, a
+     colour change on hover and nothing that moves. Grounds re-point
+     --btn / --btn-ink. */
+  .btn,
+  .btn-quiet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    min-height: var(--tap);
+    padding: 0 var(--s-5);
+    border: var(--rule) solid var(--btn, var(--ochre));
+    border-radius: var(--radius);
+    font: inherit;
+    font-size: var(--t-ui);
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-1) var(--ease-out),
+      border-color var(--dur-1) var(--ease-out),
+      color var(--dur-1) var(--ease-out);
+  }
+  .btn {
+    background: var(--btn, var(--ochre));
+    color: var(--btn-ink, var(--ink));
+  }
+  .btn:hover {
+    background: var(--btn-hover, var(--parchment));
+    border-color: var(--btn-hover, var(--parchment));
+  }
+  .btn-quiet {
+    border-color: var(--btn-line, color-mix(in srgb, currentColor 40%, transparent));
+    background: transparent;
+    color: inherit;
+  }
+  .btn-quiet:hover {
+    border-color: currentColor;
+  }
 }

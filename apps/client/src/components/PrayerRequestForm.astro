@@ -110,7 +110,7 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
   .f-form,
   .f-pair {
     display: grid;
-    gap: 20px;
+    gap: var(--s-6) var(--s-5);
   }
   @media (min-width: 768px) {
     .f-pair {
@@ -125,9 +125,8 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     margin: 0;
     padding: var(--s-3) var(--s-4);
     border-left: var(--bar) solid;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 600;
+    font-size: var(--t-meta);
+    line-height: 1.5;
   }
   .f-status[data-status="error"] {
     border-color: var(--error-line);
@@ -142,20 +141,20 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
 
   .f-label {
     display: block;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 700;
+    font-size: var(--t-ui);
+    line-height: 1.4;
     color: var(--field-label);
   }
   .f-required {
-    color: var(--error);
+    margin-left: 0.15em;
+    color: var(--f-accent, var(--error));
   }
   .f-help {
     display: block;
     padding-top: var(--s-1);
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 400;
+    font-size: var(--t-meta);
+    line-height: 1.45;
+    font-style: italic;
     color: var(--field-muted);
   }
 
@@ -163,6 +162,7 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     display: block;
     width: 100%;
     margin-top: var(--s-2);
+    min-height: var(--tap);
     padding: var(--s-3) var(--s-4);
     border: var(--rule) solid var(--field-line);
     background: var(--paper);
@@ -171,7 +171,12 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     font-size: 16px; /* 16px: iOS does not zoom into the field */
     line-height: 24px;
     font-weight: 400;
-    transition: border-color var(--dur-1) var(--ease-out);
+    transition:
+      border-color var(--dur-1) var(--ease-out),
+      background-color var(--dur-1) var(--ease-out);
+  }
+  .f-field:hover {
+    border-color: var(--field-ink);
   }
   .f-field:focus {
     border-color: var(--header);
@@ -179,7 +184,7 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     outline-offset: 0;
   }
   textarea.f-field {
-    min-height: 150px;
+    min-height: 144px;
     max-height: 280px;
     resize: vertical;
   }
@@ -193,14 +198,15 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--s-4);
-    padding-top: var(--s-1);
+    gap: var(--s-5);
+    padding-top: var(--s-2);
   }
   .f-note {
+    flex: 1 1 18rem;
     margin: 0;
-    max-width: 520px;
-    font-size: 14px;
-    line-height: 24px;
+    max-width: 32rem;
+    font-size: var(--t-meta);
+    line-height: 1.55;
     color: var(--field-muted);
   }
   .f-submit {
@@ -209,12 +215,16 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     justify-content: center;
     min-height: var(--tap);
     padding: 0 var(--s-6);
-    border: 0;
+    border: var(--rule) solid var(--header);
     background: var(--header);
     color: var(--paper);
     font: inherit;
-    font-weight: 700;
+    font-size: var(--t-ui);
+    letter-spacing: 0.01em;
     cursor: pointer;
-    transition: background-color var(--dur-1) var(--ease-out);
+    transition:
+      background-color var(--dur-1) var(--ease-out),
+      border-color var(--dur-1) var(--ease-out),
+      color var(--dur-1) var(--ease-out);
   }
 </style>

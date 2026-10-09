@@ -39,7 +39,7 @@ and 1440, and no page scrolls sideways (`overflowX: 0` from `shot.mjs`).
 | A chamber page's text (Istoria, Macarie, Cronologia, Starețul…) | `content/pages/ro/<slug>.md`. en/ru files hold translated titles; the body falls back to Romanian. |
 | A news post | `content/posts/ro/<slug>.md` (305 files). New file = new post. |
 | The service schedule, and its en/ru names | `data/schedule.ts` |
-| Home page (the descent) | `pages/index.astro` + `components/descent/*` (Stratum, Gate, Well, ShrineDoor) |
+| Home page (the descent) | `pages/index.astro` (one file; `components/descent/` keeps only Band, Panel, Well for `/walk`) |
 | The frame: left rail, calendar rail, phone drawer | `layouts/TempleFrame.astro`, `components/temple/*` (DescentRail, CalendarRail, RailDrawer) |
 | Templates | `layouts/Chamber.astro` (reading pages), `layouts/TableLayout.astro` (practical pages), `layouts/Layout.astro` (the `<head>`) |
 | Header and footer | `components/Navbar.astro`, `components/SiteFooter.astro` |

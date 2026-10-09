@@ -3,7 +3,7 @@
 # Romanian original (src/data/pages.ts shows it under lang="ro").
 title: "The Metropolitan"
 eyebrow: "The living monastery · zone II"
-lead: "The Primate of the Orthodox Church of Moldova."
+lead: "His Eminence Vladimir, Metropolitan of Chișinău and All Moldova, Primate of the Orthodox Church of Moldova."
 zone: green
 template: chamber
 order: 2

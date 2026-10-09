@@ -117,7 +117,8 @@ function toPostItem(entry: CollectionEntry<"posts">, viewing: Locale = defaultLo
     id: entry.id,
     slug: slugOf(entry),
     title: entry.data.title,
-    date: formatDate(entry.data.publishedAt, locale),
+    // dates in the reader's language, even when the text falls back to Romanian
+    date: formatDate(entry.data.publishedAt, viewing),
     isoDate: entry.data.publishedAt.toISOString(),
     year: yearOf(entry.data.publishedAt),
     excerpt: closeExcerpt(entry.data.excerpt, body),

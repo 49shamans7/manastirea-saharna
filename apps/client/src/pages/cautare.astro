@@ -31,10 +31,9 @@ const strings = {
 <Layout title={t("search.title")}>
   <TempleFrame lang={lang} zone="river" path={Astro.url.pathname}>
     <main class="search-page" data-pagefind-ignore="all" data-search-strings={JSON.stringify({ lang, ...strings })}>
-      <header class="search-head">
-        <p class="search-label">{t("search.eyebrow")}</p>
-        <h1 class="search-title">{t("search.title")}</h1>
-        <p class="search-lead">{t("search.lead")}</p>
+      <header class="page-head">
+        <h1 class="page-title">{t("search.title")}</h1>
+        <p class="page-lead">{t("search.lead")}</p>
       </header>
 
       <search>
@@ -61,7 +60,7 @@ const strings = {
 
       <p class="search-status" role="status" aria-live="polite" data-search-status></p>
       <ol class="search-results" data-search-results></ol>
-      <button class="search-more" type="button" data-search-more hidden>{t("search.more")}</button>
+      <button class="btn-quiet search-more" type="button" data-search-more hidden>{t("search.more")}</button>
     </main>
   </TempleFrame>
 </Layout>
@@ -245,35 +244,6 @@ const strings = {
     max-width: 64rem;
   }
 
-  /* the head, as every table opens: label, title, lead, the emphasis rule */
-  .search-head {
-    padding-bottom: var(--s-6);
-    border-bottom: var(--rule-2) solid var(--line-strong);
-    margin-bottom: var(--head-gap);
-  }
-  .search-label {
-    margin: 0;
-    font-size: var(--t-label);
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--river-link);
-  }
-  .search-title {
-    font-size: var(--t-h1);
-    font-weight: 400;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    line-height: 1.08;
-    margin: 0.35em 0 0;
-  }
-  .search-lead {
-    font-size: var(--t-lead);
-    line-height: 1.7;
-    max-width: var(--measure);
-    margin: 1em 0 0;
-    opacity: 0.82;
-  }
-
   /* field and button: one row of squares joined on a hairline */
   .search-form {
     margin: 0 0 var(--s-5);
@@ -281,9 +251,7 @@ const strings = {
   .search-field-label {
     display: block;
     margin-bottom: var(--s-2);
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: var(--t-ui);
   }
   .search-row {
     display: flex;
@@ -295,12 +263,17 @@ const strings = {
     min-width: 0;
     min-height: var(--tap);
     padding: 0 var(--s-4);
-    border: var(--rule) solid var(--river-ink);
+    border: var(--rule) solid var(--river-muted);
     border-radius: var(--radius);
     background: var(--paper);
     color: var(--river-ink);
     font: inherit;
     font-size: 17px; /* ≥16 so iOS does not zoom */
+    transition: border-color var(--dur-1) var(--ease-out);
+  }
+  .search-input:hover,
+  .search-input:focus {
+    border-color: var(--river-ink);
   }
   .search-input::placeholder {
     color: var(--river-muted);
@@ -318,13 +291,14 @@ const strings = {
     background: var(--river-ink);
     color: var(--river-ground);
     font: inherit;
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: var(--t-ui);
     cursor: pointer;
-    transition: background-color var(--dur-1) var(--ease-out);
+    transition:
+      background-color var(--dur-1) var(--ease-out),
+      border-color var(--dur-1) var(--ease-out);
   }
   .search-submit:hover {
+    border-color: var(--river-strong);
     background: var(--river-strong);
   }
   .search-page :where(input, button):focus-visible {
@@ -341,15 +315,19 @@ const strings = {
   .search-filters :global(.search-chip) {
     min-height: var(--tap-min);
     padding: 0 var(--s-4);
-    border: var(--rule) solid var(--line-strong);
+    border: var(--rule) solid color-mix(in srgb, var(--river-ink) 30%, transparent);
     border-radius: var(--radius);
     background: transparent;
     color: var(--river-ink);
     font: inherit;
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: var(--t-meta);
     cursor: pointer;
+    transition:
+      background-color var(--dur-1) var(--ease-out),
+      border-color var(--dur-1) var(--ease-out);
+  }
+  .search-filters :global(.search-chip:hover) {
+    border-color: var(--river-ink);
   }
   .search-filters :global(.search-chip[aria-pressed="true"]) {
     background: var(--river-ink);
@@ -360,10 +338,8 @@ const strings = {
   .search-status {
     margin: 0;
     min-height: calc(var(--t-body) * 1.75);
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    opacity: 0.78;
+    font-size: var(--t-meta);
+    color: var(--river-muted);
   }
 
   /* results: rows you scan, closed by hairlines */
@@ -371,7 +347,7 @@ const strings = {
     list-style: none;
     margin: var(--s-4) 0 0;
     padding: 0;
-    border-top: var(--rule-2) solid var(--river-ink);
+    border-top: var(--rule) solid var(--river-ink);
   }
   .search-results:empty {
     border-top: 0;
@@ -393,16 +369,14 @@ const strings = {
   }
   .search-results :global(.search-result-date) {
     display: block;
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    opacity: 0.66;
+    font-size: var(--t-meta);
+    color: var(--river-muted);
   }
   .search-results :global(.search-result-excerpt) {
     margin: var(--s-2) 0 0;
     max-width: var(--measure);
     font-size: var(--t-body);
-    line-height: 1.75;
+    line-height: var(--lh-body);
   }
   .search-results :global(mark) {
     background: transparent;
@@ -416,21 +390,6 @@ const strings = {
 
   .search-more {
     margin-top: var(--s-6);
-    min-height: var(--tap);
-    padding: 0 var(--s-5);
-    border: var(--rule) solid var(--river-ink);
-    border-radius: var(--radius);
-    background: transparent;
-    color: var(--river-ink);
-    font: inherit;
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-  .search-more:hover {
-    background: var(--river-ink);
-    color: var(--river-ground);
   }
 
   @media (max-width: 599px) {

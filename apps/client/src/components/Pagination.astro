@@ -73,9 +73,7 @@ const items = visiblePages.map((page, index) => ({
     align-items: center;
     justify-content: center;
     gap: var(--s-2);
-    margin-top: var(--s-9);
-    padding-top: var(--s-5);
-    border-top: var(--rule) solid var(--line);
+    margin-top: var(--s-8);
     color: var(--parchment);
   }
   .numbers {
@@ -96,19 +94,14 @@ const items = visiblePages.map((page, index) => ({
     height: var(--tap);
     text-decoration: none;
     color: inherit;
-    font-variant-numeric: tabular-nums;
-    opacity: 0.6;
-    transition:
-      opacity var(--dur-1) var(--ease-out),
-      background-color var(--dur-1) var(--ease-out);
-  }
-  .step {
-    border: var(--rule) solid var(--line);
+    font-size: var(--t-ui);
+    font-variant-numeric: lining-nums tabular-nums;
+    opacity: 0.72;
+    transition: opacity var(--dur-1) var(--ease-out);
   }
   .number:hover,
   .step:hover {
     opacity: 1;
-    background: rgb(244 239 228 / 8%);
   }
   .number.is-current {
     opacity: 1;
@@ -124,7 +117,7 @@ const items = visiblePages.map((page, index) => ({
     background: var(--line-strong);
   }
   .step.is-off {
-    opacity: 0.22;
+    opacity: 0.25;
   }
   .gap {
     opacity: 0.35;

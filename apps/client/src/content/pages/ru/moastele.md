@@ -3,8 +3,9 @@
 # Romanian original (src/data/pages.ts shows it under lang="ro").
 title: "Мощи преподобного Макария"
 eyebrow: "Рака · зона III"
-lead: "Мощи преподобного Макария покоятся в монастырском храме, утопая в живых цветах. Рака — это дверь, а не цель пути: мимо неё проходишь, спускаясь к Днестру."
+lead: "Рака с мощами преподобного игумена Макария (Тинку), прославленного 21 декабря 1995 года. Память — 13/26 мая."
 zone: gold
 template: chamber
 order: 2
+sourceUrl: "https://manastirea-saharna.md/moastele-sfantului-macarie/"
 ---

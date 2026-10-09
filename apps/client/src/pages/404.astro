@@ -13,12 +13,14 @@ const t = useTranslations(lang);
 <Layout title={t("notFound.title")}>
   <TempleFrame lang={lang} zone="rock" path={Astro.url.pathname}>
     <main class="lost">
-      <p class="label">{t("notFound.eyebrow")}</p>
-      <h1 class="stratum-title">{t("notFound.title")}</h1>
-      <p class="lead">{t("notFound.description")}</p>
+      <header class="page-head lost-head">
+        <p class="page-kicker">{t("notFound.eyebrow")}</p>
+        <h1 class="page-title">{t("notFound.title")}</h1>
+        <p class="page-lead">{t("notFound.description")}</p>
+      </header>
       <div class="ways">
-        <a class="way" href={getLocalizedPath("/", lang)}>{t("notFound.home")}</a>
-        <a class="way" href={getLocalizedPath("/pomelnic", lang)}>{t("notFound.pomelnic")}</a>
+        <a class="btn" href={getLocalizedPath("/", lang)}>{t("notFound.home")}</a>
+        <a class="btn-quiet" href={getLocalizedPath("/pomelnic", lang)}>{t("notFound.pomelnic")}</a>
       </div>
     </main>
   </TempleFrame>
@@ -26,36 +28,15 @@ const t = useTranslations(lang);
 
 <style>
   .lost {
-    padding: var(--s-12) 0 var(--s-12);
+    padding: var(--page-top) 0 var(--page-bottom);
     max-width: 40rem;
   }
-  .lost .lead {
-    margin-top: var(--s-4);
+  .lost-head {
+    margin-bottom: var(--s-7);
   }
   .ways {
     display: flex;
     flex-wrap: wrap;
     gap: var(--s-3);
-    margin-top: var(--s-8);
-  }
-  .way {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap);
-    padding: 0 var(--s-5);
-    border: var(--rule) solid rgb(244 239 228 / 40%);
-    color: var(--parchment);
-    font-size: 0.95rem;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    transition:
-      border-color var(--dur-1) var(--ease-out),
-      background-color var(--dur-1) var(--ease-out);
-  }
-  .way:first-child {
-    border: var(--rule-2) solid var(--ochre);
-  }
-  .way:hover {
-    background: rgb(244 239 228 / 8%);
   }
 </style>

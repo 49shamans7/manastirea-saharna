@@ -25,3 +25,10 @@ The Nistru valley is the legendary land of the Moldovan soul. Beyond the hills, 
 At Saharna, Orthodoxy is worthy of its tradition, and the Bessarabian soul breathes towards a dawn full of hope. It is proof that we can still answer our times in our own tongue, with that essential simplicity by which faith and deed, joined in pure union, are worthy to enter, with their lamps full, the chamber of the Heavenly Bridegroom.
 
 Saharna Monastery is a gift and a blessing of God not only for our right-believing people, with their ancient churches and holy ministers who have kept the unity of the people and of its apostolic faith; it is a gift and a blessing of God for the whole Christian world, and above all for the Orthodox Church, a martyr through the witness it has given for Christ across the centuries of its troubled history.
+
+
+## Welcome!
+
+This monastery is the place where the beautiful, life-giving love of the Holy Trinity pours out upon all who cross its threshold with faith. Here the prosphora and the wine, fruits of the earth and of your labour, become the Body and Blood of Christ, received for the renewal of life and for eternal blessedness. Here you receive the true good tidings through the Virgin Mother, who knows you as sons and heirs of her Son's Kingdom.
+
+*From the home page of the monastery's former website.*

@@ -22,7 +22,9 @@ if (!page) {
 }
 
 const { Content } = await renderChamber(page);
-const { title, eyebrow, lead, zone, template } = page.entry.data;
+// `eyebrow` (the zone's name and numeral) is not printed: the rails already
+// say where the reader is, and "zona III" means nothing to a pilgrim.
+const { title, lead, zone, template } = page.entry.data;
 // A missing translation shows the Romanian original; say so to screen readers
 // and translation tools, so they do not read Romanian as English or Russian.
 const contentLang = page.isFallback ? "ro" : undefined;
@@ -30,13 +32,13 @@ const contentLang = page.isFallback ? "ro" : undefined;
 
 {
   template === "table" ? (
-    <TableLayout title={title} eyebrow={eyebrow} lead={lead}>
+    <TableLayout title={title} lead={lead}>
       <div lang={contentLang}>
         <Content />
       </div>
     </TableLayout>
   ) : (
-    <ChamberLayout zone={zone} title={title} eyebrow={eyebrow} lead={lead}>
+    <ChamberLayout zone={zone} title={title} lead={lead}>
       <div lang={contentLang}>
         <Content />
       </div>

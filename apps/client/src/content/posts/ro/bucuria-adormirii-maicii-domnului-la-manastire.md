@@ -1,6 +1,6 @@
 ---
 title: "Bucuria Adormirii Maicii Domnului la mănăstire."
-excerpt: "Astăzi, la Sfânta Mănăstire Saharna, obștea monahală și numeroși credincioși s-au adunat în rugăciune pentru a práznui Adormirea Maicii Domnului. Atmosfera duhovnicească a fost înălțătoare, zeci de pelerini participând cu evlavie la slujba praznicală."
+excerpt: "Astăzi, la Sfânta Mănăstire Saharna, obștea monahală și numeroși credincioși s-au adunat în rugăciune pentru a prăznui Adormirea Maicii Domnului. Atmosfera duhovnicească a fost înălțătoare, zeci de pelerini participând cu evlavie la slujba praznicală."
 publishedAt: 2026-08-28T14:54:50.000Z
 author: "Iuvenalie Arhimandritul"
 draft: false
@@ -42,4 +42,4 @@ galleryImages:
     height: 450
 ---
 
-Astăzi, la Sfânta Mănăstire Saharna, obștea monahală și numeroși credincioși s-au adunat în rugăciune pentru a práznui Adormirea Maicii Domnului. Atmosfera duhovnicească a fost înălțătoare, zeci de pelerini participând cu evlavie la slujba praznicală. După încheierea Sfintei Liturghii, a urmat tradiționalul drumul crucii în jurul bisericii. Clerul au purtat pe brațe epitahul Maicii Domnului, intonând cântări de laudă și de cinstire a Născătoarei de Dumnezeu. La finalul rânduielilor liturgice, toți pelerinii și oaspeții prezenți au fost chemați la o bogată agapă frățească. Această masă comună a adus laolaltă suflete care au împărtășit bucuria praznicului și dragostea aproapelui.
+Astăzi, la Sfânta Mănăstire Saharna, obștea monahală și numeroși credincioși s-au adunat în rugăciune pentru a prăznui Adormirea Maicii Domnului. Atmosfera duhovnicească a fost înălțătoare, zeci de pelerini participând cu evlavie la slujba praznicală. După încheierea Sfintei Liturghii, a urmat tradiționalul drumul crucii în jurul bisericii. Clerul au purtat pe brațe epitahul Maicii Domnului, intonând cântări de laudă și de cinstire a Născătoarei de Dumnezeu. La finalul rânduielilor liturgice, toți pelerinii și oaspeții prezenți au fost chemați la o bogată agapă frățească. Această masă comună a adus laolaltă suflete care au împărtășit bucuria praznicului și dragostea aproapelui.

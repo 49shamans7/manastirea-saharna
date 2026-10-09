@@ -46,7 +46,7 @@ export const ui = {
       y2014: "Haine monahale negre, copaci desfrunziți, arcul de verdeață al stâncii.",
       abbotTitle: "Starețul",
       abbotName: "Arhimandritul Adrian Baciu",
-      abbotNote: "Egumenul Sfintei Mănăstiri Saharna.",
+      abbotNote: "Starețul Sfintei Mănăstiri Saharna din aprilie 1991.",
       provenance:
         "Fotografii din arhiva mănăstirii. Pagina veche cuprinde exact aceste trei portrete de obște; nu există altele.",
     },
@@ -58,6 +58,7 @@ export const ui = {
       sun: "Duminică",
       firstLiturgy: "Prima Liturghie",
       secondLiturgy: "A doua Liturghie",
+      feastsTitle: "Hramuri și praznice ale mănăstirii",
       caveat: "Programul slujbelor poate suferi modificări în funcție de tipicul specific anumitor sărbători.",
     },
     gallery: {
@@ -70,7 +71,7 @@ export const ui = {
       next: "Înainte",
       complex: "Complexul din defileu",
       sfantaTreime: "Biserica „Sfânta Treime”",
-      cave: "Schitul rupestru „Buna Vestire”",
+      cave: "Biserica rupestră „Bunavestirea”",
       nasterea: "Biserica „Nașterea Maicii Domnului”",
       macarie: "Cuviosul Macarie",
       relics: "Racla și moaștele",
@@ -93,6 +94,23 @@ export const ui = {
     pomelnicPage: {
       eyebrow: "Stânca · zona I",
       lead: "Fântâna. Numele coboară pe axul mănăstirii, ca piatra scoasă din peșteră.",
+      guideTitle: "Despre pomelnic",
+      guide1:
+        "În fiecare moment al vieții noastre, dar mai ales în clipele de grea încercare, fiecare dintre noi avem nevoie de ajutorul Prea Milostivului Dumnezeu, dar acest ajutor îl putem primi numai dacă îl cerem prin rugăciune. În acest sens este foarte importantă atât rugăciunea noastră personală, cât și a celor care și-au închinat întreaga viață slujirii lui Dumnezeu – preoții și călugării – care prin apropierea lor permanentă de Dumnezeu pot fi mijlocitori pentru toți creștinii în fața Divinității. Modalitatea tradițională de a cere rugăciunile preoților este alcătuirea unui pomelnic care cuprinde NUMELE DEPLIN DE BOTEZ (ex. Anastasia, Ioan, Elizaveta, Maria, Vasile, Alexandru, Anatolie, Constantin, Gheorghe) ale celor pentru care doriți să fie înălțate rugăciuni înaintea lui Dumnezeu, fie ei vii sau adormiți, rude, prieteni și chiar dușmani.",
+      guide2:
+        "Nu pot fi trecuți în pomelnic cei de altă credință (heterodocși sau adepți ai altor religii), vrăjitorii, descântătorii sau cei care sunt cunoscuți ca trăind, persistând, în păcate grave (ucidere, adulter etc.).",
+      guide3:
+        "În cazul celor adormiți, nu pot fi trecuți în pomelnic cei care s-au sinucis pentru că, omorându-se, au refuzat darul vieții primit de la Dumnezeu și L-au refuzat pe Dumnezeu. Nu pot fi trecuți în pomelnic nici copiii morți nebotezați sau pruncii avortați.",
+      guide4:
+        "Acest serviciu de trimitere mesaje-pomelnice prin intermediul site-ului Mănăstirii Saharna a fost creat special pentru acele persoane, care, din anumite motive, nu pot ajunge pentru a înmâna personal preotului pomelnicele de pomenit la Sfintele Rugăciuni. Un alt motiv este acela că mesajul-pomelnic ajunge la mănăstire instantaneu și astfel poate fi pomenit mai repede decât atunci când este trimis prin scrisoare.",
+      guide5:
+        "Să luați aminte, că prin trimiterea pomelnicului on-line nu sunteți scutiți de pravila zilnică a creștinului, frecventarea Sfintei Biserici, precum și respectarea posturilor de peste an (miercurile și vinerile), mărturisire la duhovnic și Sfânta Împărtășanie.",
+      guide6:
+        "Toate mesajele sunt recepționate de către administratorul paginii, secretarul Sfintei Mănăstiri, care va răspunde la e-mailul indicat în formularul completării pomelnicului.",
+      guide7:
+        "În cazul în care nu primiți confirmarea primirii pomelnicului Dvs., verificați minuțios datele completate în câmpurile obligatorii ale formularului.",
+      guide8:
+        "Donațiile Dvs. care însoțesc aceste pomelnice nu sunt obligatorii sau taxate, însă sunt bine primite, oricare sumă ar fi.",
     },
     // ── TEMPLE ── the four zones, the descent, the rails ──
     zone: {
@@ -103,7 +121,7 @@ export const ui = {
       sourceNote: "Text din arhiva mănăstirii",
       fallbackNote: "Text disponibil doar în limba română",
       descentIndex: "Coborârea",
-      backToDescent: "Înapoi la coborâre",
+      backToDescent: "Înapoi la pagina principală",
       rock: "Stânca",
       green: "Mănăstirea vie",
       gold: "Racla",
@@ -222,9 +240,7 @@ export const ui = {
     },
     home: {
       descentTitle: "Casa Dumnezeieștii Treimi",
-      descentLead:
-        "Comoara duhovnicească de pe malul Nistrului. Coborârea începe în stâncă, trece prin codru și se oprește la apă.",
-      wellHint: "Lasă numele pentru pomenire în fântână.",
+      descentLead: "Comoara duhovnicească de pe malul Nistrului.",
       greenTitle: "Obștea și ceasurile",
       greenLead: "Viața de zi cu zi a obștii: slujbele, rugăciunea și cronica mănăstirii.",
       scrollHint: "derulează",
@@ -235,7 +251,7 @@ export const ui = {
       shrineTitle: "Cuviosul Macarie",
       shrineQuote:
         "Alesule, de minuni făcătorule și prea minunate plăcutule al lui Hristos, grabnice ajutătorule și rugătorule al nostru…",
-      riverTitle: "Malul",
+      riverTitle: "Pentru pelerini",
       riverLead: "Pentru drum: cum ajungeți, unde vă puteți opri, cum ne scrieți și cum puteți ajuta.",
       allNews: "Toate noutățile",
       mapTitle: "Hartă către Mănăstirea Saharna",
@@ -249,8 +265,8 @@ export const ui = {
       emailLabel: "E-mail",
       directionsLink: "Cum ajungeți la mănăstire: autocar, maxi-taxi, hartă",
       phoneSecretariat: "+373 254 78737",
-      phoneMain: "0254 78600",
-      phoneMobile: "+373 699 29280",
+      phoneMain: "+373 254 78600",
+      phoneMobile: "+373 69 929 280",
     },
     footer: {
       addressName: "Sfânta Mănăstire Saharna",
@@ -265,7 +281,7 @@ export const ui = {
       eyebrow: "Search the site",
       lead: "The monastery's pages and its chronicle, from 2013 to today.",
       label: "What are you looking for?",
-      placeholder: "e.g. Macarie, feast, guesthouse",
+      placeholder: "e.g. Macarie, guest house, Akathist",
       submit: "Search",
       loading: "Searching…",
       empty: "No results for",
@@ -286,9 +302,9 @@ export const ui = {
       y2012: "Green vestments, high summer, the wooded slope of the gorge.",
       y2013: "Blue and white vestments, deep snow, the blue chapel and the cliff.",
       y2014: "Black monastic habits, bare trees, the cliff's arch of greenery.",
-      abbotTitle: "The abbot",
+      abbotTitle: "The Abbot",
       abbotName: "Archimandrite Adrian Baciu",
-      abbotNote: "Abbot of the Holy Saharna Monastery.",
+      abbotNote: "Abbot of the Holy Monastery of Saharna since April 1991.",
       provenance:
         "Photographs from the monastery archive. The old page holds exactly these three group portraits; there are no others.",
     },
@@ -300,7 +316,8 @@ export const ui = {
       sun: "Sunday",
       firstLiturgy: "First Liturgy",
       secondLiturgy: "Second Liturgy",
-      caveat: "The schedule may change according to the typikon of particular feasts.",
+      feastsTitle: "Feasts of the monastery",
+      caveat: "The order of services may change on particular feasts, according to the Typikon.",
     },
     gallery: {
       eyebrow: "The living monastery · zone II",
@@ -311,11 +328,11 @@ export const ui = {
       previous: "Previous",
       next: "Next",
       complex: "The complex in the gorge",
-      sfantaTreime: "Holy Trinity church",
-      cave: "The Annunciation cave skete",
-      nasterea: "Nativity of the Theotokos church",
-      macarie: "Saint Macarie",
-      relics: "The shrine and the relics",
+      sfantaTreime: "Holy Trinity Church",
+      cave: "The Annunciation cave church",
+      nasterea: "Church of the Nativity of the Theotokos",
+      macarie: "Venerable Macarius",
+      relics: "The reliquary and the relics",
       brotherhood: "The brotherhood",
     },
     slujbe: {
@@ -335,19 +352,36 @@ export const ui = {
     pomelnicPage: {
       eyebrow: "The Rock · zone I",
       lead: "The well. Names are lowered down the monastery's axis, like stone taken out of the cave.",
+      guideTitle: "About the commemoration list",
+      guide1:
+        "At every moment of our lives, and above all in times of hard trial, each of us needs the help of the All-merciful God, and we can receive this help only if we ask for it in prayer. Our own prayer matters greatly, and so does the prayer of those who have given their whole life to the service of God – priests and monks – who, through their constant nearness to God, can intercede before Him for all Christians. The traditional way of asking for the prayers of priests is to write a pomelnic, a commemoration list with the FULL BAPTISMAL NAMES (e.g. Anastasia, Ioan, Elizaveta, Maria, Vasile, Alexandru, Anatolie, Constantin, Gheorghe) of those for whom you wish prayers to be raised before God, whether living or departed, relatives, friends and even enemies.",
+      guide2:
+        "Those of another faith (heterodox Christians or followers of other religions), sorcerers, charmers, or those known to be living, and persisting, in grave sin (murder, adultery and the like) cannot be included in the list.",
+      guide3:
+        "Among the departed, those who took their own life cannot be included, for in killing themselves they refused the gift of life received from God, and refused God Himself. Children who died unbaptised and aborted infants cannot be included either.",
+      guide4:
+        "This way of sending commemoration lists through the website of Saharna Monastery was made for those who, for whatever reason, cannot come and hand their lists to the priest in person for commemoration at the holy services. It also reaches the monastery at once, and so can be commemorated sooner than a list sent by post.",
+      guide5:
+        "Please remember that sending a list online does not release you from a Christian's daily rule of prayer, from going to church, from keeping the fasts of the year (Wednesdays and Fridays), from confession to your spiritual father and from Holy Communion.",
+      guide6:
+        "All messages are received by the administrator of the page, the secretary of the Holy Monastery, who will reply to the e-mail address given in the form.",
+      guide7:
+        "If you do not receive a confirmation that your list has arrived, check carefully what you entered in the required fields of the form.",
+      guide8:
+        "A donation sent with a commemoration list is neither required nor charged, but it is gratefully received, whatever the amount.",
     },
     zone: {
       prezentare: "Introduction",
       mitropolitul: "The Metropolitan",
       acatistul: "The Akathist",
-      slujba: "The Saint's service",
+      slujba: "The Service to the Saint",
       sourceNote: "Text from the monastery archive",
       fallbackNote: "This text exists only in Romanian",
       descentIndex: "The descent",
-      backToDescent: "Back to the descent",
+      backToDescent: "Back to the home page",
       rock: "The Rock",
       green: "The living monastery",
-      gold: "The Shrine",
+      gold: "The Reliquary",
       river: "The Nistru",
       istoria: "History",
       pomelnic: "Commemoration",
@@ -357,10 +391,10 @@ export const ui = {
       cronologie: "Chronology of the monastery",
       bunavestirea: "The Annunciation cave church",
       staretul: "The Abbot",
-      sfantaTreime: "Holy Trinity church",
-      nasterea: "Nativity of the Theotokos church",
+      sfantaTreime: "Holy Trinity Church",
+      nasterea: "Church of the Nativity of the Theotokos",
       galerie: "Gallery",
-      macarie: "Saint Macarie",
+      macarie: "Venerable Macarius",
       moastele: "The relics",
       biblioteca: "Library",
       directions: "Getting here",
@@ -390,11 +424,11 @@ export const ui = {
       ru: "Russian",
     },
     nav: {
-      directions: "How to get here?",
+      directions: "Getting here",
       serviceSchedule: "Service schedule",
-      contact: "Contact Us",
+      contact: "Contact",
       donations: "Donations",
-      pomelnic: "Pomelnic",
+      pomelnic: "Commemoration",
       menu: "Menu",
       openMenu: "Open menu",
       closeMenu: "Close menu",
@@ -402,7 +436,7 @@ export const ui = {
     news: {
       title: "News",
       subtitle: "Updates and announcements from the life of Saharna Monastery.",
-      readMore: "Read More",
+      readMore: "Read more",
       backToArticles: "Back to articles",
       notFoundTitle: "News item not found",
       notFoundDescription: "The requested article does not exist or has been moved.",
@@ -412,7 +446,7 @@ export const ui = {
       title: "Page not found",
       description: "The page you are looking for does not exist or has been moved.",
       home: "Back home",
-      pomelnic: "Submit a pomelnic",
+      pomelnic: "Send names for commemoration",
     },
     donations: {
       title: "Donations",
@@ -422,7 +456,7 @@ export const ui = {
       detailsIntro: "For those who wish to help us, we provide the following details:",
       bankNote: "The bank details are for donation transfers.",
       bankDetailsTitle: "Bank details",
-      monastery: "Holy Trinity Monastery Saharna",
+      monastery: "Mănăstirea „Sfânta Treime” Saharna",
       bank: "BC Moldindconbank S.A.",
       fiscalCode: "193641",
       bankCode: "MOLDMD2X335",
@@ -441,7 +475,7 @@ export const ui = {
       copied: "Copied",
     },
     pomelnic: {
-      title: "Submit your pomelnic",
+      title: "Send names for commemoration",
       name: "Your name",
       nameHelp: "Write your name.",
       email: "Your email",
@@ -453,18 +487,16 @@ export const ui = {
       message: "Your message",
       messagePlaceholder: "Leave any details for the service here.",
       requiredHelp: "The request will be sent to the monastery for commemoration. Fields marked with * are required.",
-      submit: "Submit pomelnic",
-      success: "The pomelnic has been sent.",
-      error: "We could not send the pomelnic. Please try again.",
+      submit: "Send the names",
+      success: "Your names for commemoration have been sent.",
+      error: "We could not send your names. Please try again.",
       challengeError: "Anti-spam verification is not complete. Please complete the check and submit again.",
       sendError: "The form reached the server, but the email could not be sent.",
       invalidError: "The submitted form is not valid. Please try again.",
     },
     home: {
       descentTitle: "The House of the Holy Trinity",
-      descentLead:
-        "The spiritual treasure on the shore of the Nistru. The descent begins in the rock, passes through the forest, and stops at the water.",
-      wellHint: "Lower the names for commemoration into the well.",
+      descentLead: "The spiritual treasure on the bank of the Nistru.",
       greenTitle: "The brotherhood and the hours",
       greenLead: "The daily life of the brotherhood: the services, prayer and the monastery's chronicle.",
       scrollHint: "scroll",
@@ -472,10 +504,10 @@ export const ui = {
       noPosts: "No entries yet.",
       postCount: "entries",
       playVideo: "Watch video",
-      shrineTitle: "Saint Macarie",
+      shrineTitle: "Venerable Macarius",
       shrineQuote:
         "Chosen one, worker of wonders and most wondrous pleaser of Christ, our swift helper and intercessor…",
-      riverTitle: "The shore",
+      riverTitle: "For pilgrims",
       riverLead: "For the journey: how to get here, where to stay, how to reach us and how to help.",
       allNews: "All news",
       mapTitle: "Map to Saharna Monastery",
@@ -489,14 +521,14 @@ export const ui = {
       emailLabel: "E-mail",
       directionsLink: "How to reach the monastery: coach, minibus, map",
       phoneSecretariat: "+373 254 78737",
-      phoneMain: "0254 78600",
-      phoneMobile: "+373 699 29280",
+      phoneMain: "+373 254 78600",
+      phoneMobile: "+373 69 929 280",
     },
     footer: {
       addressName: "Holy Monastery of Saharna",
       addressLine: "Saharna village, MD-5431, Rezina district, Republic of Moldova",
       email: "info@manastirea-saharna.md, secretariat@manastirea-saharna.md",
-      copyright: "Saharna “Holy Trinity” Monastery © 2005–2026 · Official site",
+      copyright: "Holy Trinity Monastery, Saharna © 2005–2026 · Official site",
     },
   },
   ru: {
@@ -505,7 +537,7 @@ export const ui = {
       eyebrow: "Поиск по сайту",
       lead: "Страницы монастыря и его летопись — с 2013 года до сегодняшнего дня.",
       label: "Что вы ищете?",
-      placeholder: "напр. Макарий, праздник, гостиница",
+      placeholder: "напр. Макарий, акафист, дом паломника",
       submit: "Найти",
       loading: "Идёт поиск…",
       empty: "Ничего не найдено по запросу",
@@ -527,8 +559,8 @@ export const ui = {
       y2013: "Голубые и белые облачения, глубокий снег, голубая часовня и скала.",
       y2014: "Чёрные монашеские одеяния, голые деревья, зелёная арка скалы.",
       abbotTitle: "Настоятель",
-      abbotName: "Архимандрит Адриан Бачиу",
-      abbotNote: "Игумен Свято-Троицкой Сахарнянской обители.",
+      abbotName: "Архимандрит Адриан (Бачиу)",
+      abbotNote: "Настоятель Сахарнянского Свято-Троицкого монастыря с апреля 1991 года.",
       provenance: "Фотографии из архива монастыря. На старой странице ровно эти три групповых портрета; других нет.",
     },
     schedule: {
@@ -539,7 +571,8 @@ export const ui = {
       sun: "Воскресенье",
       firstLiturgy: "Первая литургия",
       secondLiturgy: "Вторая литургия",
-      caveat: "Расписание может меняться согласно уставу отдельных праздников.",
+      feastsTitle: "Праздники обители",
+      caveat: "Порядок богослужений может меняться в отдельные праздники согласно Типикону.",
     },
     gallery: {
       eyebrow: "Живая обитель · зона II",
@@ -551,7 +584,7 @@ export const ui = {
       next: "Вперёд",
       complex: "Комплекс в ущелье",
       sfantaTreime: "Храм Святой Троицы",
-      cave: "Пещерный скит «Благовещение»",
+      cave: "Пещерная церковь «Благовещение»",
       nasterea: "Храм Рождества Богородицы",
       macarie: "Преподобный Макарий",
       relics: "Рака и мощи",
@@ -574,6 +607,23 @@ export const ui = {
     pomelnicPage: {
       eyebrow: "Скала · зона I",
       lead: "Колодец. Имена опускаются по оси обители, как камень, вынутый из пещеры.",
+      guideTitle: "О поминовении",
+      guide1:
+        "В каждое мгновение нашей жизни, а особенно в минуты тяжёлых испытаний, каждый из нас нуждается в помощи Всемилостивого Бога, но эту помощь мы можем получить, только если просим её в молитве. Поэтому очень важна и наша личная молитва, и молитва тех, кто посвятил всю жизнь служению Богу, – священников и монахов, которые, постоянно предстоя Богу, могут быть молитвенниками за всех христиан. Издревле молитвы священников испрашивают, подавая записку (помянник) с ПОЛНЫМИ ИМЕНАМИ, ДАННЫМИ ПРИ КРЕЩЕНИИ (напр. Анастасия, Иоанн, Елизавета, Мария, Василий, Александр, Анатолий, Константин, Георгий), тех, о ком вы хотите вознести молитвы ко Господу, – живых или усопших, родных, друзей и даже врагов.",
+      guide2:
+        "Нельзя вписывать в записку иноверцев (инославных или последователей других религий), колдунов, знахарей, а также тех, кто, как известно, живёт и упорствует в тяжких грехах (убийство, прелюбодеяние и т. п.).",
+      guide3:
+        "Из усопших нельзя вписывать самоубийц, ибо, убив себя, они отвергли дар жизни, полученный от Бога, и отвергли Самого Бога. Нельзя вписывать и детей, умерших некрещёными, и младенцев, убитых во чреве.",
+      guide4:
+        "Возможность подать записку через сайт Сахарнянского монастыря создана для тех, кто по каким-либо причинам не может приехать и лично передать священнику записку для поминовения за богослужением. Кроме того, записка приходит в монастырь сразу и может быть помянута раньше, чем отправленная письмом.",
+      guide5:
+        "Помните, что подача записки через интернет не освобождает вас от ежедневного молитвенного правила христианина, посещения храма, соблюдения постов в течение года (среда и пятница), исповеди у духовника и Святого Причастия.",
+      guide6:
+        "Все сообщения получает администратор страницы, секретарь святой обители, который ответит на адрес электронной почты, указанный в форме.",
+      guide7:
+        "Если вы не получили подтверждения, что ваша записка принята, внимательно проверьте данные в обязательных полях формы.",
+      guide8:
+        "Пожертвования, сопровождающие записки, не обязательны и не взимаются, но с благодарностью принимаются, какой бы ни была сумма.",
     },
     zone: {
       prezentare: "О монастыре",
@@ -583,7 +633,7 @@ export const ui = {
       sourceNote: "Текст из архива монастыря",
       fallbackNote: "Текст доступен только на румынском языке",
       descentIndex: "Спуск",
-      backToDescent: "Назад к спуску",
+      backToDescent: "На главную страницу",
       rock: "Скала",
       green: "Живая обитель",
       gold: "Рака",
@@ -630,10 +680,10 @@ export const ui = {
     },
     nav: {
       directions: "Как добраться?",
-      serviceSchedule: "Расписание служб",
+      serviceSchedule: "Расписание богослужений",
       contact: "Контакты",
       donations: "Пожертвования",
-      pomelnic: "Помянник",
+      pomelnic: "Поминовение",
       menu: "Меню",
       openMenu: "Открыть меню",
       closeMenu: "Закрыть меню",
@@ -651,7 +701,7 @@ export const ui = {
       title: "Страница не найдена",
       description: "Страница, которую вы ищете, не существует или была перемещена.",
       home: "На главную",
-      pomelnic: "Подать помянник",
+      pomelnic: "Подать записку",
     },
     donations: {
       title: "Пожертвования",
@@ -661,7 +711,7 @@ export const ui = {
       detailsIntro: "Для тех, кто желает нам помочь, предоставляем следующие реквизиты:",
       bankNote: "Банковские реквизиты предназначены для перевода пожертвований.",
       bankDetailsTitle: "Банковские реквизиты",
-      monastery: "Монастырь «Святая Троица» Сахарна",
+      monastery: "Mănăstirea „Sfânta Treime” Saharna",
       bank: "BC Moldindconbank S.A.",
       fiscalCode: "193641",
       bankCode: "MOLDMD2X335",
@@ -680,11 +730,11 @@ export const ui = {
       copied: "Скопировано",
     },
     pomelnic: {
-      title: "Подать помянник",
+      title: "Подать записку о поминовении",
       name: "Ваше имя",
       nameHelp: "Укажите ваше имя.",
       email: "Ваш email",
-      emailHelp: "На этот адрес придет подтверждение.",
+      emailHelp: "На этот адрес придёт подтверждение.",
       living: "Имена о здравии",
       livingPlaceholder: "Напр.: Иоанн, Мария, Александр",
       departed: "Имена об упокоении",
@@ -692,18 +742,16 @@ export const ui = {
       message: "Ваше сообщение",
       messagePlaceholder: "Оставьте здесь дополнительные сведения для службы.",
       requiredHelp: "Записка будет отправлена в монастырь для поминовения. Поля, отмеченные *, обязательны.",
-      submit: "Отправить помянник",
-      success: "Помянник отправлен.",
-      error: "Не удалось отправить помянник. Пожалуйста, попробуйте еще раз.",
-      challengeError: "Антиспам-проверка не завершена. Пожалуйста, пройдите проверку и отправьте форму еще раз.",
+      submit: "Отправить записку",
+      success: "Записка отправлена.",
+      error: "Не удалось отправить записку. Пожалуйста, попробуйте ещё раз.",
+      challengeError: "Антиспам-проверка не завершена. Пожалуйста, пройдите проверку и отправьте форму ещё раз.",
       sendError: "Форма дошла до сервера, но письмо не удалось отправить.",
-      invalidError: "Отправленная форма недействительна. Пожалуйста, попробуйте еще раз.",
+      invalidError: "Отправленная форма недействительна. Пожалуйста, попробуйте ещё раз.",
     },
     home: {
       descentTitle: "Дом Святой Троицы",
-      descentLead:
-        "Духовное сокровище на берегу Днестра. Спуск начинается в скале, проходит через лес и останавливается у воды.",
-      wellHint: "Опустите имена для поминовения в колодец.",
+      descentLead: "Духовное сокровище на берегу Днестра.",
       greenTitle: "Братия и часы",
       greenLead: "Повседневная жизнь братии: богослужения, молитва и летопись монастыря.",
       scrollHint: "листайте",
@@ -713,7 +761,7 @@ export const ui = {
       playVideo: "Смотреть видео",
       shrineTitle: "Преподобный Макарий",
       shrineQuote: "Избранный чудотворче и предивный угодниче Христов, скорый помощниче и молитвенниче наш…",
-      riverTitle: "Берег",
+      riverTitle: "Паломникам",
       riverLead: "Для поездки: как добраться, где остановиться, как связаться с нами и как помочь.",
       allNews: "Все новости",
       mapTitle: "Карта к монастырю Сахарна",
@@ -727,14 +775,14 @@ export const ui = {
       emailLabel: "E-mail",
       directionsLink: "Как добраться до монастыря: автобус, маршрутка, карта",
       phoneSecretariat: "+373 254 78737",
-      phoneMain: "0254 78600",
-      phoneMobile: "+373 699 29280",
+      phoneMain: "+373 254 78600",
+      phoneMobile: "+373 69 929 280",
     },
     footer: {
       addressName: "Сахарнянский Свято-Троицкий монастырь",
       addressLine: "с. Сахарна, MD-5431, Резинский район, Республика Молдова",
       email: "info@manastirea-saharna.md, secretariat@manastirea-saharna.md",
-      copyright: "Монастырь «Святая Троица» в Сахарне © 2005–2026 · Официальный сайт",
+      copyright: "Сахарнянский Свято-Троицкий монастырь © 2005–2026 · Официальный сайт",
     },
   },
 } as const;
