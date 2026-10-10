@@ -6,6 +6,8 @@ import Chamber from "@layouts/Chamber.astro";
 import { getAllPostSlugs, getPostBySlug, getPostNeighbours, getPublishedPosts } from "@data/posts";
 import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "@i18n/utils";
 import Icon from "@components/marks/Icon.astro";
+import { rebase } from "@data/pages";
+import { getEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const slugs = await getAllPostSlugs();
@@ -47,6 +49,11 @@ const plates = post
       ...post.galleryImages,
     ]
   : [];
+// The body as markdown, not as raw paragraphs: entries written in the admin
+// carry bold, links, headings and photographs. Site paths get the base path
+// and the reader's locale, as in the chambers.
+const entry = post ? await getEntry("posts", post.id) : undefined;
+const bodyHtml = entry?.rendered?.html ? rebase(entry.rendered.html, lang) : "";
 const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
 ---
 
@@ -98,9 +105,7 @@ const shown = post ? (post.image ? 1 : 0) + post.galleryImages.length : 0;
         </div>
       ))}
 
-      {post.body.map((paragraph) => (
-        <p>{paragraph}</p>
-      ))}
+      {bodyHtml ? <div class="post-body" set:html={bodyHtml} /> : post.body.map((paragraph) => <p>{paragraph}</p>)}
 
       {post.galleryImages.length > 0 && (
         <div class="post-gallery">

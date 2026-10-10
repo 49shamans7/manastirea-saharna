@@ -87,7 +87,7 @@ const hasBase = (path: string) => stripBasePath(path) !== path;
  * because the base path is a deployment setting and the locale prefix depends
  * on who is reading. Links get both; images and srcsets get the base only.
  */
-function rebase(html: string, locale: Locale): string {
+export function rebase(html: string, locale: Locale): string {
   return html
     .replace(/(\shref)="([^"]*)"/g, (match, attr: string, path: string) =>
       isSitePath(path) && !hasBase(path)
