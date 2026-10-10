@@ -16,6 +16,13 @@ Everything is prepared in the repo:
 ## Before the session
 
 - [ ] Who controls the domain `manastirea-saharna.md` today (registrar login)?
+- [ ] **The domain is already on Cloudflare** (checked 2026-10-10: nameservers
+      `greg.ns.cloudflare.com` / `kim.ns.cloudflare.com`, proxying the old
+      WordPress). Find out whose Cloudflare account holds that zone. If the
+      monastery can log into it, use that account for everything below and skip
+      step 6.1/6.3 (the zone is already there). If it is the previous developer's
+      or the old host's, either get the zone moved to the monastery's account
+      (Cloudflare → zone → *Move domain*) or re-add it there and switch nameservers.
 - [ ] **Email on the domain.** `info@` and `secretariat@manastirea-saharna.md` are
       in use. Export the current DNS records (MX, SPF, DKIM, any TXT) first. If
       they are lost in the move, the monastery's email stops.
@@ -93,5 +100,19 @@ Dashboard → Web Analytics → enable for the domain (no cookies, no banner).
   `apps/cms/`, `workers/pomelnic/`, `.github/workflows/deploy-worker.yml`,
   the `dev:cms` / `build:cms` scripts and the `apps/*` workspace glob in the root
   `package.json` (→ `apps/client`).
-- Optionally add a deploy step to `.github/workflows/ci.yml` with a Cloudflare
-  API token stored as a repo secret, so a push to `dev` deploys.
+- Delete `workers/pomelnic/` only — `deploy-worker.yml` now deploys
+  `workers/saharna-pomelnic/` and stays.
+
+## 10. Deploy on every push — required for the admin (5 min)
+
+`.github/workflows/deploy-cloudflare.yml` is already in the repo and skips
+itself until it has credentials. Each save in `/admin` is a push to `dev`, so
+without this the admin's edits would not reach the live site.
+
+1. Cloudflare → My Profile → API Tokens → *Create token* → template
+   **Edit Cloudflare Workers** → limited to the monastery account.
+2. GitHub repo → Settings → Secrets and variables → Actions:
+   - secret `CLOUDFLARE_API_TOKEN` = that token
+   - secret `CLOUDFLARE_ACCOUNT_ID` = the account id (`bunx wrangler whoami`)
+   - variables `PUBLIC_POMELNIC_WORKER_URL`, `PUBLIC_TURNSTILE_SITE_KEY` (step 7)
+3. Actions → *Deploy to Cloudflare* → Run workflow. From then on every push deploys.

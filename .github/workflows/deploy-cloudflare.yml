@@ -1,0 +1,56 @@
+name: Deploy to Cloudflare
+
+# Every push to dev — including each save from the admin (/admin) — builds the
+# site for the domain root and uploads it to the monastery's Cloudflare
+# account (apps/client/wrangler.jsonc). Dormant until the two repo secrets
+# exist: CLOUDFLARE_API_TOKEN (template "Edit Cloudflare Workers") and
+# CLOUDFLARE_ACCOUNT_ID. Until then the job is skipped, not failed.
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-cloudflare
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+    defaults:
+      run:
+        working-directory: apps/client
+    steps:
+      - name: Not connected yet
+        if: env.HAS_TOKEN != 'true'
+        working-directory: .
+        run: echo "CLOUDFLARE_API_TOKEN is not set — skipping (docs/CLOUDFLARE-HANDOVER.md)."
+
+      - uses: actions/checkout@v6
+        if: env.HAS_TOKEN == 'true'
+
+      - uses: oven-sh/setup-bun@v2
+        if: env.HAS_TOKEN == 'true'
+        with:
+          bun-version-file: .tool-versions
+
+      - name: Install
+        if: env.HAS_TOKEN == 'true'
+        run: bun install --frozen-lockfile
+
+      - name: Build and deploy
+        if: env.HAS_TOKEN == 'true'
+        uses: cloudflare/wrangler-action@v3
+        env:
+          PUBLIC_POMELNIC_WORKER_URL: ${{ vars.PUBLIC_POMELNIC_WORKER_URL }}
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/client
+          command: deploy
