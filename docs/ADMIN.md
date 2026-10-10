@@ -67,6 +67,5 @@ românesc.
   out of Pagefind and `robots.txt`.
 - Posts saved from the admin carry `galleryImages` as `{ src }` only;
   `content.config.ts` derives the thumbnail. Old posts keep their 800w/360w pairs.
-- Images in a post's body use `/uploads/…`. Under the GitHub Pages base path
-  (`/manastirea-saharna`) those in-body images will 404 until the Cloudflare
-  switch puts the site at `/`; the main photo and gallery are base-path aware.
+- Post bodies render as markdown and pass through `rebase()` (data/pages.ts), so
+  `/uploads/…` and other site paths in the text work under any base path.
