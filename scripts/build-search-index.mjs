@@ -38,6 +38,7 @@ const site = path.resolve(process.argv[2] || process.env.OUT_DIR || path.join(he
 const SKIP = [
   /^ro\//,
   /^pagefind\//,
+  /^admin\//,
   /^(?:(?:en|ru)\/)?404(?:\/index)?\.html$/,
   /^(?:(?:en|ru)\/)?cautare\/index\.html$/,
   /^(?:(?:en|ru)\/)?posts\/(?:index\.html|page\/|an\/)/,

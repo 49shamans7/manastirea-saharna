@@ -6,5 +6,6 @@ Allow: /
 Disallow: /cautare/
 Disallow: /en/cautare/
 Disallow: /ru/cautare/
+Disallow: /admin/
 
 Sitemap: https://manastirea-saharna.md/sitemap-index.xml

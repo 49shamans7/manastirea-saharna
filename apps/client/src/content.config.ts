@@ -43,12 +43,16 @@ const posts = defineCollection({
       .array(
         z.union([
           z.string().transform((src) => ({ src, thumb: src, width: 0, height: 0 })),
-          z.object({
-            src: z.string(),
-            thumb: z.string(),
-            width: z.number().default(0),
-            height: z.number().default(0),
-          }),
+          // entries saved from the admin carry only `src`; the list thumb
+          // falls back to the photograph itself
+          z
+            .object({
+              src: z.string(),
+              thumb: z.string().optional(),
+              width: z.number().default(0),
+              height: z.number().default(0),
+            })
+            .transform((plate) => ({ ...plate, thumb: plate.thumb ?? plate.src })),
         ]),
       )
       .default([]),
