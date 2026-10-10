@@ -128,26 +128,28 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     font-size: var(--t-meta);
     line-height: 1.5;
   }
+  /* on the seal's navy: the message sits on the deep ground, its bar in
+     the rubric (error) or the gold (sent) */
   .f-status[data-status="error"] {
-    border-color: var(--error-line);
-    background: var(--error-bg);
-    color: var(--error);
+    border-color: var(--rubric);
+    background: var(--seal-deep);
+    color: var(--rubric);
   }
   .f-status[data-status="success"] {
-    border-color: var(--success-line);
-    background: var(--success-bg);
-    color: var(--success);
+    border-color: var(--seal-gold);
+    background: var(--seal-deep);
+    color: var(--seal-gold-text);
   }
 
   .f-label {
     display: block;
     font-size: var(--t-ui);
     line-height: 1.4;
-    color: var(--field-label);
+    color: var(--parchment);
   }
   .f-required {
     margin-left: 0.15em;
-    color: var(--f-accent, var(--error));
+    color: var(--f-accent, var(--seal-gold-text));
   }
   .f-help {
     display: block;
@@ -155,7 +157,7 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     font-size: var(--t-meta);
     line-height: 1.45;
     font-style: italic;
-    color: var(--field-muted);
+    color: var(--seal-mist);
   }
 
   .f-field {
@@ -164,9 +166,9 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     margin-top: var(--s-2);
     min-height: var(--tap);
     padding: var(--s-3) var(--s-4);
-    border: var(--rule) solid var(--field-line);
-    background: var(--paper);
-    color: var(--field-ink);
+    border: var(--rule) solid var(--seal-gold);
+    background: var(--seal-deep);
+    color: var(--parchment);
     font: inherit;
     font-size: 16px; /* 16px: iOS does not zoom into the field */
     line-height: 24px;
@@ -175,12 +177,15 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
       border-color var(--dur-1) var(--ease-out),
       background-color var(--dur-1) var(--ease-out);
   }
+  .f-field::placeholder {
+    color: var(--seal-mist);
+  }
   .f-field:hover {
-    border-color: var(--field-ink);
+    border-color: var(--seal-gold-text);
   }
   .f-field:focus {
-    border-color: var(--header);
-    outline: var(--rule-2) solid var(--header);
+    border-color: var(--seal-gold-text);
+    outline: var(--rule-2) solid var(--seal-gold-text);
     outline-offset: 0;
   }
   textarea.f-field {
@@ -207,7 +212,7 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     max-width: 32rem;
     font-size: var(--t-meta);
     line-height: 1.55;
-    color: var(--field-muted);
+    color: var(--seal-mist);
   }
   .f-submit {
     display: inline-flex;
@@ -215,9 +220,9 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
     justify-content: center;
     min-height: var(--tap);
     padding: 0 var(--s-6);
-    border: var(--rule) solid var(--header);
-    background: var(--header);
-    color: var(--paper);
+    border: var(--rule) solid var(--seal-gold-text);
+    background: var(--seal-gold-text);
+    color: var(--seal-deep);
     font: inherit;
     font-size: var(--t-ui);
     letter-spacing: 0.01em;
@@ -226,5 +231,9 @@ const redirectUrl = `${Astro.url.origin}${Astro.url.pathname}#pomelnic-form`;
       background-color var(--dur-1) var(--ease-out),
       border-color var(--dur-1) var(--ease-out),
       color var(--dur-1) var(--ease-out);
+  }
+  .f-submit:hover {
+    border-color: var(--parchment);
+    background: var(--parchment);
   }
 </style>

@@ -116,7 +116,8 @@ function toPostItem(entry: CollectionEntry<"posts">, viewing: Locale = defaultLo
   return {
     id: entry.id,
     slug: slugOf(entry),
-    title: entry.data.title,
+    // the old site closed every headline with a full stop; a heading takes none
+    title: entry.data.title.replace(/(?<!\.)\.\s*$/, ""),
     // dates in the reader's language, even when the text falls back to Romanian
     date: formatDate(entry.data.publishedAt, viewing),
     isoDate: entry.data.publishedAt.toISOString(),

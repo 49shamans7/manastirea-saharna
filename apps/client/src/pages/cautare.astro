@@ -1,5 +1,5 @@
 ---
-// CĂUTARE — Zone IV, the river: practical, bright, a tool and not a chamber.
+// CĂUTARE — a tool, not a chamber; on the seal's navy like every page.
 // Pagefind indexes the built site (postbuild: `pagefind --site dist`), one
 // index per <html lang>, so /cautare/ searches the Romanian pages, /en/cautare/
 // the English ones and /ru/cautare/ the Russian ones — the language filter is
@@ -238,18 +238,30 @@ const strings = {
 </script>
 
 <style>
+  /* a title in capitals is never broken by a hyphen */
+  :global(.page-title) {
+    hyphens: manual;
+  }
   .search-page {
     padding: var(--page-top) 0 var(--page-bottom);
     color: var(--river-ink);
     max-width: 64rem;
+    margin-inline: auto;
   }
 
   /* field and button: one row of squares joined on a hairline */
   .search-form {
     margin: 0 0 var(--s-5);
   }
+  .search-status,
+  .search-filters:not([hidden]) {
+    max-width: 40rem;
+    margin-inline: auto;
+  }
   .search-field-label {
     display: block;
+    max-width: 40rem;
+    margin-inline: auto;
     margin-bottom: var(--s-2);
     font-size: var(--t-ui);
   }
@@ -257,23 +269,24 @@ const strings = {
     display: flex;
     gap: 0;
     max-width: 40rem;
+    margin-inline: auto;
   }
   .search-input {
     flex: 1;
     min-width: 0;
     min-height: var(--tap);
     padding: 0 var(--s-4);
-    border: var(--rule) solid var(--river-muted);
+    border: var(--rule) solid var(--seal-gold);
     border-radius: var(--radius);
-    background: var(--paper);
-    color: var(--river-ink);
+    background: var(--seal-deep);
+    color: var(--parchment);
     font: inherit;
     font-size: 17px; /* ≥16 so iOS does not zoom */
     transition: border-color var(--dur-1) var(--ease-out);
   }
   .search-input:hover,
   .search-input:focus {
-    border-color: var(--river-ink);
+    border-color: var(--seal-gold-text);
   }
   .search-input::placeholder {
     color: var(--river-muted);
@@ -285,11 +298,11 @@ const strings = {
     min-height: var(--tap);
     min-width: var(--tap);
     padding: 0 var(--s-5);
-    border: var(--rule) solid var(--river-ink);
+    border: var(--rule) solid var(--seal-gold-text);
     border-left: 0;
     border-radius: var(--radius);
-    background: var(--river-ink);
-    color: var(--river-ground);
+    background: var(--seal-gold-text);
+    color: var(--seal-deep);
     font: inherit;
     font-size: var(--t-ui);
     cursor: pointer;
@@ -298,8 +311,8 @@ const strings = {
       border-color var(--dur-1) var(--ease-out);
   }
   .search-submit:hover {
-    border-color: var(--river-strong);
-    background: var(--river-strong);
+    border-color: var(--parchment);
+    background: var(--parchment);
   }
   .search-page :where(input, button):focus-visible {
     outline: var(--rule-2) solid var(--river-strong);
@@ -310,12 +323,13 @@ const strings = {
     display: flex;
     flex-wrap: wrap;
     gap: var(--lattice);
-    margin: 0 0 var(--s-5);
+    justify-content: center;
+    margin: 0 auto var(--s-5);
   }
   .search-filters :global(.search-chip) {
     min-height: var(--tap-min);
     padding: 0 var(--s-4);
-    border: var(--rule) solid color-mix(in srgb, var(--river-ink) 30%, transparent);
+    border: var(--rule) solid var(--line);
     border-radius: var(--radius);
     background: transparent;
     color: var(--river-ink);
@@ -327,16 +341,17 @@ const strings = {
       border-color var(--dur-1) var(--ease-out);
   }
   .search-filters :global(.search-chip:hover) {
-    border-color: var(--river-ink);
+    border-color: var(--seal-gold-text);
   }
   .search-filters :global(.search-chip[aria-pressed="true"]) {
-    background: var(--river-ink);
-    border-color: var(--river-ink);
-    color: var(--river-ground);
+    background: var(--seal-gold-text);
+    border-color: var(--seal-gold-text);
+    color: var(--seal-deep);
   }
 
   .search-status {
-    margin: 0;
+    margin: 0 auto;
+    text-align: center;
     min-height: calc(var(--t-body) * 1.75);
     font-size: var(--t-meta);
     color: var(--river-muted);
@@ -347,7 +362,7 @@ const strings = {
     list-style: none;
     margin: var(--s-4) 0 0;
     padding: 0;
-    border-top: var(--rule) solid var(--river-ink);
+    border-top: var(--rule) solid var(--line-strong);
   }
   .search-results:empty {
     border-top: 0;

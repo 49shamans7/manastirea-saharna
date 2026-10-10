@@ -167,7 +167,7 @@ export const ui = {
       ru: "Rusă",
     },
     nav: {
-      directions: "Cum de ajuns?",
+      directions: "Cum de ajuns",
       serviceSchedule: "Programul slujbelor",
       contact: "Contacte",
       donations: "Donații",
@@ -679,7 +679,7 @@ export const ui = {
       ru: "Русский",
     },
     nav: {
-      directions: "Как добраться?",
+      directions: "Как добраться",
       serviceSchedule: "Расписание богослужений",
       contact: "Контакты",
       donations: "Пожертвования",

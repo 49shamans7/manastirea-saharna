@@ -21,11 +21,11 @@ export const schedule: ServiceDay[] = [
       {
         services: [
           { time: "05.45", name: "Rugăciunile dimineții, Miezonoptica, Ceasurile 3 și 6, Acatistul zilei" },
-          { time: "06.30", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
+          { time: "06.30", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
           {
             time: "08.30",
-            name: "Tedeum la moaștele Sf. Cuv. Macarie",
-            note: "Miercuri la icoana cu o particică de moaște a Sf. Fer. Matrona de la Moscova",
+            name: "Tedeum la moaștele Sf. Cuv. Macarie",
+            note: "Miercuri la icoana cu o particică de moaște a Sf. Fer. Matrona de la Moscova",
           },
           { time: "17.00", name: "Vecernia și Utrenia, ceasul 1" },
           { time: "19.20", name: "Pravila călugărească" },
@@ -39,16 +39,16 @@ export const schedule: ServiceDay[] = [
       {
         titleKey: "schedule.firstLiturgy",
         services: [
-          { time: "05.30", name: "Rugăciunile dimineții, Ceasurile 3 și 6, Acatistul Sf. Ierarh Nicolae" },
-          { time: "06.30", name: "Sfânta Liturghie în biserica din trapeză „Sf. Ierarh Nicolae”" },
+          { time: "05.30", name: "Rugăciunile dimineții, Ceasurile 3 și 6, Acatistul Sf. Ierarh Nicolae" },
+          { time: "06.30", name: "Sfânta Liturghie în biserica din trapeză „Sf. Ierarh Nicolae”" },
         ],
       },
       {
         titleKey: "schedule.secondLiturgy",
         services: [
           { time: "05.45", name: "Rugăciunile dimineții, Miezonoptica, Ceasurile 3 și 6, Acatistul zilei" },
-          { time: "07.00", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
-          { time: "08.45", name: "Tedeum la moaștele Sf. Cuv. Macarie" },
+          { time: "07.00", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
+          { time: "08.45", name: "Tedeum la moaștele Sf. Cuv. Macarie" },
           { time: "17.00", name: "Vecernia și Utrenia, ceasul 1" },
           { time: "19.20", name: "Pravila călugărească" },
         ],
@@ -61,8 +61,8 @@ export const schedule: ServiceDay[] = [
       {
         services: [
           { time: "06.45", name: "Rugăciunile dimineții, Miezonoptica, Ceasurile 3 și 6, Acatistul zilei" },
-          { time: "07.45", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
-          { time: "08.30", name: "Tedeum la moaștele Sf. Cuv. Macarie" },
+          { time: "07.45", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
+          { time: "08.30", name: "Tedeum la moaștele Sf. Cuv. Macarie" },
           { time: "17.00", name: "Vecernia și Utrenia, ceasul 1" },
         ],
       },
@@ -82,7 +82,7 @@ export const schedule: ServiceDay[] = [
         titleKey: "schedule.secondLiturgy",
         services: [
           { time: "08.00", name: "Rugăciunile dimineții, Ceasurile 3 și 6, Acatistul Maicii Domnului „Potir Nesecat”" },
-          { time: "09.30", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
+          { time: "09.30", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
           { time: "10.45", name: "Tedeum la icoana Maicii Domnului „Potir Nesecat”" },
           { time: "11.00", name: "Parastas" },
           { time: "17.00", name: "Privegherea duminicală" },
@@ -97,7 +97,7 @@ export const schedule: ServiceDay[] = [
         titleKey: "schedule.firstLiturgy",
         services: [
           { time: "05.30", name: "Rugăciunile dimineții, Ceasurile 3 și 6, Acatistul Maicii Domnului „Moldovenească”" },
-          { time: "06.30", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
+          { time: "06.30", name: "Sfânta Liturghie în biserica „Sf. Treime”" },
         ],
       },
       {
@@ -121,7 +121,7 @@ export const schedule: ServiceDay[] = [
 export const homeHours: Service[] = [
   { time: "05.45", name: "Rugăciunile dimineții" },
   { time: "06.30", name: "Sfânta Liturghie" },
-  { time: "08.30", name: "Tedeum la moaștele Sf. Cuv. Macarie" },
+  { time: "08.30", name: "Tedeum la moaștele Sf. Cuv. Macarie" },
   { time: "17.00", name: "Vecernia și Utrenia" },
 ];
 
@@ -206,7 +206,7 @@ const serviceNames: Record<string, { en: string; ru: string }> = {
     en: "Morning prayers, Third and Sixth Hours, Akathist to the Mother of God",
     ru: "Утренние молитвы, 3-й и 6-й часы, акафист Божией Матери",
   },
-  "Rugăciunile dimineții, Ceasurile 3 și 6, Acatistul Sf. Ierarh Nicolae": {
+  "Rugăciunile dimineții, Ceasurile 3 și 6, Acatistul Sf. Ierarh Nicolae": {
     en: "Morning prayers, Third and Sixth Hours, Akathist to St Nicholas",
     ru: "Утренние молитвы, 3-й и 6-й часы, акафист святителю Николаю",
   },
@@ -214,7 +214,7 @@ const serviceNames: Record<string, { en: string; ru: string }> = {
     en: "Morning prayers, Midnight Office, Third and Sixth Hours, Akathist of the day",
     ru: "Утренние молитвы, полунощница, 3-й и 6-й часы, акафист дня",
   },
-  "Sfânta Liturghie în biserica din trapeză „Sf. Ierarh Nicolae”": {
+  "Sfânta Liturghie în biserica din trapeză „Sf. Ierarh Nicolae”": {
     en: "Divine Liturgy in the refectory church of St Nicholas",
     ru: "Божественная литургия в трапезном храме святителя Николая",
   },
@@ -222,7 +222,7 @@ const serviceNames: Record<string, { en: string; ru: string }> = {
     en: "Divine Liturgy in the Church of the Nativity of the Theotokos",
     ru: "Божественная литургия в храме Рождества Пресвятой Богородицы",
   },
-  "Sfânta Liturghie în biserica „Sf. Treime”": {
+  "Sfânta Liturghie în biserica „Sf. Treime”": {
     en: "Divine Liturgy in the Church of the Holy Trinity",
     ru: "Божественная литургия в Свято-Троицком храме",
   },
@@ -231,13 +231,13 @@ const serviceNames: Record<string, { en: string; ru: string }> = {
     en: "Moleben before the icon of the Mother of God “The Inexhaustible Cup”",
     ru: "Молебен у иконы Божией Матери «Неупиваемая Чаша»",
   },
-  "Tedeum la moaștele Sf. Cuv. Macarie": {
+  "Tedeum la moaștele Sf. Cuv. Macarie": {
     en: "Moleben at the relics of Venerable Macarius",
     ru: "Молебен у мощей преподобного Макария",
   },
   "Vecernia și Utrenia": { en: "Vespers and Matins", ru: "Вечерня и утреня" },
   "Vecernia și Utrenia, ceasul 1": { en: "Vespers, Matins and the First Hour", ru: "Вечерня, утреня и 1-й час" },
-  "Miercuri la icoana cu o particică de moaște a Sf. Fer. Matrona de la Moscova": {
+  "Miercuri la icoana cu o particică de moaște a Sf. Fer. Matrona de la Moscova": {
     en: "On Wednesdays at the icon with a particle of the relics of Blessed Matrona of Moscow",
     ru: "По средам — у иконы с частицей мощей блаженной Матроны Московской",
   },
